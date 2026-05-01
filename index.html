@@ -1064,6 +1064,55 @@
   </footer>
 
   <script>
+    // Hero heading: split into chars and animate each
+    (function() {
+      const heading = document.querySelector('.hero-heading');
+      if (!heading) return;
+
+      heading.style.opacity = '1';
+      heading.style.animation = 'none';
+
+      const baseDelay = 0.5;
+      const stagger = 0.09;
+      let charIndex = 0;
+
+      function processNode(node, container) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent.replace(/\n\s*/g, '');
+          for (const char of text) {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.cssText = `display:inline-block;opacity:0;animation:fadeUp 0.5s ${(baseDelay + charIndex * stagger).toFixed(2)}s forwards`;
+            container.appendChild(span);
+            charIndex++;
+          }
+        } else if (node.nodeName === 'BR') {
+          container.appendChild(document.createElement('br'));
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          const el = document.createElement(node.tagName.toLowerCase());
+          el.className = node.className;
+          Array.from(node.childNodes).forEach(child => processNode(child, el));
+          container.appendChild(el);
+        }
+      }
+
+      const children = Array.from(heading.childNodes);
+      heading.innerHTML = '';
+      children.forEach(child => processNode(child, heading));
+
+      // highlight underline: 今の自分に、(6) + 革命を。(4) = 10chars, last at index9
+      // last char delay = 0.5 + 9*0.09 = 1.31s, ends at ~1.81s → underline at 1.9s
+      const s = document.createElement('style');
+      s.textContent = '.hero-heading .highlight::after{animation:lineIn 0.8s 1.9s forwards!important}';
+      document.head.appendChild(s);
+    })();
+
+    // Hero intro: scroll lock until all animations finish (~2.5s)
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(() => {
+      document.documentElement.style.overflow = '';
+    }, 2500);
+
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
