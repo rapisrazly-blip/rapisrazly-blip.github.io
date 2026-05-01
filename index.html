@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAPIS — AIで、今に革命を。</title>
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray: #f5f5f5;
+      --mid: #888;
+      --accent: #1a1a1a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--black);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+
+    .hero-heading {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s forwards;
+    }
+
+    .hero-heading .highlight {
+      display: inline-block;
+      position: relative;
+    }
+
+    .hero-heading .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 0.05em;
+      left: 0; right: 0;
+      height: 0.12em;
+      background: var(--black);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: lineIn 0.8s 1.2s forwards;
+    }
+
+    .hero-sub {
+      margin-top: 2rem;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--mid);
+      max-width: 36rem;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--black);
+      border: 1.5px solid var(--black);
+    }
+
+    .btn-secondary:hover {
+      background: var(--black);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 4rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.4s forwards;
+    }
+
+    .hero-scroll::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--mid);
+    }
+
+    .hero-number {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 4rem;
+      font-size: 10rem;
+      font-weight: 900;
+      color: var(--gray);
+      line-height: 1;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 4rem; }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 20rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--black);
+      color: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    #about .section-label { color: #666; }
+
+    #about .section-title { color: var(--white); max-width: 100%; }
+
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #aaa;
+    }
+
+    .about-text strong { color: var(--white); }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .stat-item { border-top: 1px solid #333; padding-top: 1rem; }
+
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: #666;
+      margin-top: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--white); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 4rem;
+      border-top: 1px solid #eee;
+    }
+
+    .service-item {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s;
+    }
+
+    .service-item:hover { background: var(--gray); }
+
+    .service-num {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .service-desc {
+      font-size: 0.88rem;
+      color: #666;
+      line-height: 1.8;
+    }
+
+    /* ── WORKS ── */
+    #works { background: var(--gray); }
+
+    .works-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .work-card {
+      background: var(--white);
+      padding: 2rem;
+      border: 1px solid #e8e8e8;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+
+    .work-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+
+    .work-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .work-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+    }
+
+    .work-desc {
+      font-size: 0.78rem;
+      color: #888;
+      line-height: 1.7;
+    }
+
+    .work-tag {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      border: 1px solid #ddd;
+      padding: 0.2rem 0.6rem;
+    }
+
+    /* ── PHILOSOPHY ── */
+    #philosophy {
+      background: var(--white);
+      text-align: center;
+      padding: 8rem 4rem;
+    }
+
+    .philosophy-quote {
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      max-width: 48rem;
+      margin: 0 auto;
+    }
+
+    .philosophy-quote em {
+      font-style: normal;
+      display: inline-block;
+      border-bottom: 3px solid var(--black);
+    }
+
+    .philosophy-sub {
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: var(--mid);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 8rem 4rem;
+    }
+
+    #contact .section-title {
+      color: var(--white);
+      max-width: 100%;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      margin: 1.5rem auto;
+    }
+
+    #contact .section-label { color: #666; }
+
+    .contact-sub {
+      font-size: 1.05rem;
+      color: #666;
+      margin-bottom: 3rem;
+      letter-spacing: 0.03em;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.3rem;
+      margin-bottom: 3rem;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s;
+    }
+
+    .contact-email:hover { border-color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid #1a1a1a;
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #444;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes lineIn {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      .nav-links { gap: 1.5rem; }
+      section { padding: 5rem 2rem; }
+      #hero { padding: 7rem 2rem 4rem; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .works-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-number { font-size: 6rem; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 6rem 1.5rem 4rem; }
+      .works-grid { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">RAPIS</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-label">AI Creator × Freelancer</div>
+    <h1 class="hero-heading">
+      今の自分に、<br>
+      <span class="highlight">革命を。</span>
+    </h1>
+    <p class="hero-sub">
+      Claude Codeを武器に、業務自動化からコンテンツ生成まで。<br>
+      「動きながら考える」AIクリエイターが、あなたの仕事を変えます。
+    </p>
+    <div class="hero-cta">
+      <a href="#works" class="btn btn-primary">実績を見る</a>
+      <a href="#contact" class="btn btn-secondary">相談する</a>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+    <div class="hero-number">16</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="reveal">
+      <div class="section-label">About</div>
+      <h2 class="section-title">考える前に<br>動いて、<br>作る。</h2>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-number">16</div>
+          <div class="stat-label">自作AIツール稼働中</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">革命への意欲</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <p class="about-text">
+        テレビやゲームに使っていた時間を、<strong>AI活用に全振り</strong>した。<br><br>
+        技術を完全に理解していなくても、<strong>「動くものを手にする」</strong>ことができる。
+        それが自分の強みだと気づいた。<br><br>
+        「話す力」と「動きながら考える行動力」を武器に、
+        <strong>業務自動化・コンテンツ生成</strong>の領域でフリーランスとして動き始めている。<br><br>
+        Claude Codeをはじめとするツールを使いこなし、
+        今この瞬間も<strong>自分自身に革命を起こし続けている。</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="reveal">
+      <div class="section-label">Services</div>
+      <h2 class="section-title">できること</h2>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-item">
+        <div class="service-num">01</div>
+        <h3 class="service-title">業務自動化<br>ツール開発</h3>
+        <p class="service-desc">繰り返し作業をAIで自動化。X投稿・スクレイピング・データ整理など、あなたの「面倒な作業」を仕組みに変えます。</p>
+      </div>
+      <div class="service-item">
+        <div class="service-num">02</div>
+        <h3 class="service-title">コンテンツ<br>生成システム</h3>
+        <p class="service-desc">SNS投稿・LP・スライドなど、コンテンツ制作をAIで高速化。アイデアをすぐ形にするフローを構築します。</p>
+      </div>
+      <div class="service-item">
+        <div class="service-num">03</div>
+        <h3 class="service-title">AIツール<br>導入支援</h3>
+        <p class="service-desc">ChatGPT・Claude・その他AIツールの選定から導入・運用まで。「何から始めれば？」という方の最初の一歩を一緒に踏み出します。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works">
+    <div class="works-header reveal">
+      <div>
+        <div class="section-label">Works</div>
+        <h2 class="section-title">自作AIツール 16本</h2>
+      </div>
+    </div>
+    <div class="works-grid reveal">
+      <div class="work-card">
+        <div class="work-icon">🐦</div>
+        <div class="work-title">X自動投稿</div>
+        <div class="work-desc">x-auto-post</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">🖼️</div>
+        <div class="work-title">AIスライド生成</div>
+        <div class="work-desc">cc-slides</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">🔍</div>
+        <div class="work-title">Web情報収集</div>
+        <div class="work-desc">scraping-agent</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">💼</div>
+        <div class="work-title">案件自動取得</div>
+        <div class="work-desc">job-scout</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">💬</div>
+        <div class="work-title">LINE回答効率化</div>
+        <div class="work-desc">oc-responder</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">🎬</div>
+        <div class="work-title">動画字幕付与</div>
+        <div class="work-desc">cc-video-editor</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">📄</div>
+        <div class="work-title">LP制作自動化</div>
+        <div class="work-desc">cc-lp-v2</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">📋</div>
+        <div class="work-title">業務洗い出し自動化</div>
+        <div class="work-desc">work-lister</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">👥</div>
+        <div class="work-title">LINEグループBot</div>
+        <div class="work-desc">line-group-bot</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">⚙️</div>
+        <div class="work-title">システム開発支援</div>
+        <div class="work-desc">cc-project-builder</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">🤖</div>
+        <div class="work-title">FAQ自動生成＋UTAGE連携</div>
+        <div class="work-desc">oc-responder-v2</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">📈</div>
+        <div class="work-title">SEO記事自動生成</div>
+        <div class="work-desc">seo-article-agent</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">📑</div>
+        <div class="work-title">URLをPDF変換</div>
+        <div class="work-desc">doc-to-pdf</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">✍️</div>
+        <div class="work-title">AI記事リライト</div>
+        <div class="work-desc">article-humanizer</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">📊</div>
+        <div class="work-title">PPTXスライド自動生成</div>
+        <div class="work-desc">pptx-agent</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">🎭</div>
+        <div class="work-title">AIアバター動画生成</div>
+        <div class="work-desc">avatar-video-maker</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- X TIMELINE -->
+  <section id="x-timeline" style="background:#fff; padding: 7rem 4rem;">
+    <div class="reveal">
+      <div class="section-label">X / Twitter</div>
+      <h2 class="section-title" style="margin-bottom:3rem;">最新の活動</h2>
+      <div style="max-width:600px; margin: 0 auto; border: 1px solid #eee; border-radius:4px; overflow:hidden;">
+        <a class="twitter-timeline"
+           data-height="600"
+           data-theme="light"
+           data-chrome="noheader nofooter noborders"
+           href="https://twitter.com/rapisrazly1">
+          Tweets by rapisrazly1
+        </a>
+      </div>
+    </div>
+  </section>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <!-- PHILOSOPHY -->
+  <section id="philosophy">
+    <div class="reveal">
+      <p class="philosophy-quote">
+        「何が起きてるかわからないけど、<br>
+        <em>動くものが手にある</em>。」
+      </p>
+      <p class="philosophy-sub">— それが、私の出発点。</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">一緒に<br>革命を。</h2>
+      <p class="contact-sub">AI活用・業務自動化・コンテンツ生成について<br>まずは気軽にご相談ください。</p>
+      <a href="mailto:rapisrazly@gmail.com" class="contact-email">rapisrazly@gmail.com</a>
+      <br>
+      <a href="mailto:rapisrazly@gmail.com" class="btn btn-primary">メールで相談する</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 RAPIS. All rights reserved.</span>
+    <span>Built with Claude Code</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
