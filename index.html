@@ -272,25 +272,96 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: background 0.2s;
       cursor: pointer;
       border: none;
+      overflow: hidden;
+      position: relative;
     }
+
+    .btn-text {
+      display: block;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-hover {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn:hover .btn-text { transform: translateY(-110%); }
+    .btn:hover .btn-hover { transform: translateY(-100%); }
 
     .btn-primary {
       background: var(--black);
       color: var(--white);
+      transition: background 0.35s;
     }
 
-    .btn-primary:hover {
-      background: #333;
-      transform: translateY(-2px);
-    }
+    .btn-primary:hover { background: #f97316; }
 
     .btn-secondary {
       background: transparent;
       color: var(--black);
       border: 1.5px solid var(--black);
+      transition: background 0.35s, color 0.35s, border-color 0.35s;
+    }
+
+    .btn-secondary:hover { background: #f97316; color: var(--white); border-color: #f97316; }
+
+    .btn-3d-wrap {
+      display: inline-block;
+      perspective: 500px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .btn-3d-inner {
+      display: block;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .btn-3d-wrap:hover .btn-3d-inner { transform: rotateX(90deg); }
+    .btn-3d-wrap:hover .btn-face-front { background: transparent; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0s; }
+
+    .btn-face-front,
+    .btn-face-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.9rem 2.2rem;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .btn-face-front {
+      background: var(--black);
+      color: var(--white);
+      transform: translateZ(23px);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0s 0.5s;
+    }
+
+    .btn-face-bottom {
+      position: absolute;
+      inset: -2px;
+      background: white;
+      color: var(--black);
+      transform: rotateX(-90deg) translateZ(23px);
     }
 
     .btn-secondary:hover {
@@ -783,8 +854,8 @@
         「動きながら考える」AIクリエイターが、あなたの仕事を変えます。
       </p>
       <div class="hero-cta">
-        <a href="#works" class="btn btn-primary">実績を見る</a>
-        <a href="#contact" class="btn btn-secondary">相談する</a>
+        <a href="#works" class="btn btn-primary"><span class="btn-text">実績を見る</span><span class="btn-hover">CLICK</span></a>
+        <a href="#contact" class="btn btn-secondary"><span class="btn-text">相談する</span><span class="btn-hover">CLICK</span></a>
       </div>
       <div class="hero-scroll">Scroll</div>
     </div>
@@ -1053,7 +1124,12 @@
       <p class="contact-sub">AI活用・業務自動化・コンテンツ生成について<br>まずは気軽にご相談ください。</p>
       <a href="mailto:rapisrazly@gmail.com" class="contact-email">rapisrazly@gmail.com</a>
       <br>
-      <a href="mailto:rapisrazly@gmail.com" class="btn btn-primary">メールで相談する</a>
+      <a href="mailto:rapisrazly@gmail.com" class="btn-3d-wrap">
+        <span class="btn-3d-inner">
+          <span class="btn-face-front">メールで相談する</span>
+          <span class="btn-face-bottom">CLICK</span>
+        </span>
+      </a>
     </div>
   </section>
 
