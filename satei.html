@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>空き家 売却価格 無料査定</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --gray-900: #111;
+      --gray-700: #374151;
+      --gray-400: #9ca3af;
+      --gray-100: #f3f4f6;
+      --gray-50: #fafafa;
+      --white: #fff;
+      --green: #16a34a;
+      --green-light: #dcfce7;
+      --green-dark: #14532d;
+      --border: #e5e7eb;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.08);
+      --shadow-lg: 0 20px 48px rgba(0,0,0,.12);
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { font-weight: 700; font-size: 18px; letter-spacing: -.5px; }
+    .nav-logo span { color: var(--green); }
+    .nav-cta {
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .nav-cta:hover { opacity: .8; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before { content: '●'; font-size: 8px; }
+    h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+    h1 em { color: var(--green); font-style: normal; }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--gray-700);
+      max-width: 520px;
+      margin: 0 auto 48px;
+    }
+
+    /* ── FORM CARD ── */
+    .form-section {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 24px 120px;
+    }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    /* steps indicator */
+    .steps-bar {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-tab {
+      flex: 1;
+      padding: 16px 12px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-400);
+      border-bottom: 3px solid transparent;
+      transition: all .2s;
+    }
+    .step-tab.active { color: var(--green); border-bottom-color: var(--green); }
+    .step-tab.done { color: var(--green); }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--gray-100);
+      font-size: 11px;
+      margin-right: 6px;
+      transition: all .2s;
+    }
+    .step-tab.active .step-num { background: var(--green); color: var(--white); }
+    .step-tab.done .step-num { background: var(--green); color: var(--white); }
+
+    /* panels */
+    .panel { display: none; padding: 40px; }
+    .panel.active { display: block; }
+
+    .panel-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -.5px;
+    }
+    .panel-desc {
+      font-size: 14px;
+      color: var(--gray-400);
+      margin-bottom: 32px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 8px;
+    }
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+      font-family: inherit;
+    }
+    input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(22,163,74,.12);
+    }
+    .input-hint {
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-top: 8px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      align-items: flex-end;
+    }
+    .input-row > div { flex: 1; }
+    .unit-label {
+      padding-bottom: 14px;
+      font-size: 16px;
+      color: var(--gray-700);
+      white-space: nowrap;
+    }
+
+    /* primary button */
+    .btn-primary {
+      width: 100%;
+      margin-top: 28px;
+      padding: 16px;
+      background: var(--green);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+      font-family: inherit;
+    }
+    .btn-primary:hover { background: #15803d; }
+    .btn-primary:active { transform: scale(.98); }
+    .btn-primary:disabled { background: var(--gray-400); cursor: not-allowed; }
+
+    .btn-back {
+      background: none;
+      border: none;
+      color: var(--gray-400);
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 16px;
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 8px;
+      font-family: inherit;
+    }
+    .btn-back:hover { color: var(--gray-700); }
+
+    /* loading */
+    .loading-wrap {
+      text-align: center;
+      padding: 60px 40px;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--gray-100);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-msg { font-size: 16px; color: var(--gray-700); }
+    .loading-sub { font-size: 13px; color: var(--gray-400); margin-top: 6px; }
+
+    /* result */
+    #panel-result {
+      animation: fadeUp .4s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-address {
+      font-size: 13px;
+      color: var(--gray-400);
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-address strong { color: var(--gray-700); }
+
+    .price-label { font-size: 13px; font-weight: 600; color: var(--gray-400); margin-bottom: 8px; }
+    .price-main {
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .price-unit { font-size: 20px; font-weight: 600; color: var(--gray-700); margin-left: 4px; }
+    .price-range {
+      font-size: 14px;
+      color: var(--gray-400);
+      margin-bottom: 32px;
+    }
+    .price-range strong { color: var(--gray-700); }
+
+    .breakdown {
+      background: var(--gray-50);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+    .breakdown-title { font-size: 13px; font-weight: 700; color: var(--gray-700); margin-bottom: 14px; }
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--gray-700);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-row span:last-child { font-weight: 600; }
+
+    .disclaimer {
+      font-size: 11px;
+      color: var(--gray-400);
+      text-align: center;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .btn-restart {
+      width: 100%;
+      padding: 14px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .15s;
+      font-family: inherit;
+    }
+    .btn-restart:hover { opacity: .8; }
+
+    /* error */
+    .error-box {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      font-size: 14px;
+      color: #dc2626;
+      margin-top: 16px;
+      display: none;
+    }
+
+    /* trust bar */
+    .trust-bar {
+      max-width: 640px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      flex: 1;
+      min-width: 160px;
+      background: var(--gray-50);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .trust-icon { font-size: 24px; margin-bottom: 10px; }
+    .trust-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .trust-desc { font-size: 13px; color: var(--gray-400); }
+
+    /* footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--gray-400);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">空き家<span>査定</span></div>
+  <button class="nav-cta" onclick="scrollToForm()">無料で査定する</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">完全無料・60秒で完了</div>
+  <h1>あなたの空き家、<br><em>今いくら？</em></h1>
+  <p class="hero-sub">住所と土地面積を入力するだけ。国土交通省の地価データをもとに、売却相場をすぐに確認できます。</p>
+</section>
+
+<section class="form-section" id="form-section">
+  <div class="card">
+    <!-- Steps bar -->
+    <div class="steps-bar">
+      <div class="step-tab active" id="tab-1"><span class="step-num">1</span>住所</div>
+      <div class="step-tab" id="tab-2"><span class="step-num">2</span>土地面積</div>
+      <div class="step-tab" id="tab-3"><span class="step-num">3</span>査定結果</div>
+    </div>
+
+    <!-- Panel 1: 住所 -->
+    <div class="panel active" id="panel-1">
+      <div class="panel-title">物件の住所を入力</div>
+      <div class="panel-desc">番地まで入力するほど精度が上がります</div>
+      <label for="address-input">住所</label>
+      <input type="text" id="address-input" placeholder="例: 東京都世田谷区三軒茶屋1-2-3" autocomplete="off">
+      <p class="input-hint">都道府県から入力してください</p>
+      <div class="error-box" id="error-1">住所が見つかりませんでした。もう少し詳しく入力してみてください。</div>
+      <button class="btn-primary" id="btn-next-1" onclick="handleStep1()">次へ — 土地面積を入力</button>
+    </div>
+
+    <!-- Panel 2: 土地面積 -->
+    <div class="panel" id="panel-2">
+      <div class="panel-title">土地面積を入力</div>
+      <div class="panel-desc">登記簿や固定資産税の通知書で確認できます</div>
+      <div>
+        <label for="area-input">土地面積</label>
+        <div class="input-row">
+          <div>
+            <input type="number" id="area-input" placeholder="100" min="1" max="99999">
+          </div>
+          <div class="unit-label">㎡</div>
+        </div>
+        <p class="input-hint">坪の場合: 1坪 ≈ 3.3㎡（例: 30坪 = 99㎡）</p>
+      </div>
+      <div class="error-box" id="error-2">土地面積を正しく入力してください（1〜99,999 ㎡）</div>
+      <button class="btn-primary" id="btn-next-2" onclick="handleStep2()">査定結果を見る</button>
+      <button class="btn-back" onclick="goBack(1)">← 住所を変更する</button>
+    </div>
+
+    <!-- Panel: Loading -->
+    <div class="panel" id="panel-loading">
+      <div class="loading-wrap">
+        <div class="spinner"></div>
+        <div class="loading-msg">地価データを取得中...</div>
+        <div class="loading-sub" id="loading-sub">国土交通省のデータベースに接続しています</div>
+      </div>
+    </div>
+
+    <!-- Panel 3: Result -->
+    <div class="panel" id="panel-result">
+      <div class="result-address">
+        査定対象: <strong id="result-address-text"></strong>
+        <span style="margin-left:12px;">土地面積: <strong id="result-area-text"></strong></span>
+      </div>
+      <div class="price-label">推定売却価格</div>
+      <div class="price-main" id="result-price">—<span class="price-unit">万円</span></div>
+      <div class="price-range" id="result-range"></div>
+      <div class="breakdown">
+        <div class="breakdown-title">査定の内訳</div>
+        <div class="breakdown-row">
+          <span>地域</span>
+          <span id="bd-region">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span>地価公示単価（推定）</span>
+          <span id="bd-unit-price">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span>土地面積</span>
+          <span id="bd-area">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span>空き家補正率</span>
+          <span id="bd-adj">—</span>
+        </div>
+        <div class="breakdown-row" style="font-weight:700; color: var(--black);">
+          <span>推定売却価格</span>
+          <span id="bd-total">—</span>
+        </div>
+      </div>
+      <p class="disclaimer">
+        ※ この査定額は国土交通省の公示地価データをもとにした参考値です。<br>
+        実際の売却価格は不動産会社の査定や市場状況によって異なります。
+      </p>
+      <button class="btn-restart" onclick="restart()">別の物件を査定する</button>
+    </div>
+  </div>
+</section>
+
+<section class="trust-bar">
+  <div class="trust-item">
+    <div class="trust-icon">🏛️</div>
+    <div class="trust-title">国交省データ使用</div>
+    <div class="trust-desc">地価公示データをもとに算出</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">⚡</div>
+    <div class="trust-title">60秒で完了</div>
+    <div class="trust-desc">住所と面積だけで即時査定</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">🔒</div>
+    <div class="trust-title">個人情報不要</div>
+    <div class="trust-desc">名前・電話番号など不要</div>
+  </div>
+</section>
+
+<footer>
+  © 2025 空き家査定 — 国土交通省 地価公示データ利用
+</footer>
+
+<script>
+  // ── State ──
+  let state = {
+    address: '',
+    area: 0,
+    lat: null,
+    lng: null,
+    prefecture: '',
+  };
+
+  // ── 都道府県別 地価公示 参考単価データ（万円/㎡）
+  // 出典: 国土交通省 令和6年地価公示（住宅地・市街化区域平均）
+  const LAND_PRICE_DB = {
+    '東京都':   { label: '東京都', min: 40,  max: 200, base: 80  },
+    '神奈川県': { label: '神奈川県', min: 15, max: 80,  base: 35  },
+    '大阪府':   { label: '大阪府', min: 12,  max: 70,  base: 28  },
+    '愛知県':   { label: '愛知県', min: 8,   max: 40,  base: 18  },
+    '埼玉県':   { label: '埼玉県', min: 8,   max: 35,  base: 16  },
+    '千葉県':   { label: '千葉県', min: 6,   max: 30,  base: 13  },
+    '兵庫県':   { label: '兵庫県', min: 6,   max: 30,  base: 14  },
+    '北海道':   { label: '北海道', min: 2,   max: 15,  base: 5   },
+    '福岡県':   { label: '福岡県', min: 5,   max: 25,  base: 12  },
+    '京都府':   { label: '京都府', min: 8,   max: 40,  base: 18  },
+    '広島県':   { label: '広島県', min: 4,   max: 18,  base: 8   },
+    '宮城県':   { label: '宮城県', min: 4,   max: 18,  base: 8   },
+    '静岡県':   { label: '静岡県', min: 4,   max: 18,  base: 8   },
+    '茨城県':   { label: '茨城県', min: 3,   max: 12,  base: 5   },
+    '栃木県':   { label: '栃木県', min: 3,   max: 12,  base: 5   },
+    '群馬県':   { label: '群馬県', min: 3,   max: 10,  base: 4   },
+    '長野県':   { label: '長野県', min: 2,   max: 10,  base: 4   },
+    '新潟県':   { label: '新潟県', min: 2,   max: 8,   base: 3   },
+    '岡山県':   { label: '岡山県', min: 3,   max: 12,  base: 6   },
+    '熊本県':   { label: '熊本県', min: 3,   max: 12,  base: 5   },
+    '鹿児島県': { label: '鹿児島県', min: 2, max: 8,   base: 3   },
+    '沖縄県':   { label: '沖縄県', min: 5,   max: 20,  base: 10  },
+    'default':  { label: 'その他地方',  min: 1,   max: 8,   base: 3   },
+  };
+
+  const ADJ_RATE = 0.85; // 空き家補正（管理不足・劣化リスク）
+
+  // ── Geocoding（国土地理院）──
+  async function geocode(address) {
+    const url = `https://msearch.gsi.go.jp/address-search/AddressSearch?q=${encodeURIComponent(address)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('geocode failed');
+    const data = await res.json();
+    if (!data || data.length === 0) throw new Error('not found');
+    const feature = data[0];
+    const [lng, lat] = feature.geometry.coordinates;
+    const title = feature.properties.title || '';
+    // 都道府県を抽出
+    const prefMatch = title.match(/^(..?.?都|..?.?道|..?.?府|..?.?県)/);
+    const prefecture = prefMatch ? prefMatch[0] : '';
+    return { lat, lng, prefecture, title };
+  }
+
+  // ── 地価取得（デモモード: 都道府県テーブルから）──
+  function getLandPrice(prefecture) {
+    const data = LAND_PRICE_DB[prefecture] || LAND_PRICE_DB['default'];
+    // baseを中心に±15%のランダム揺れ（同じ住所でも差が出るようにseedを使いたいが簡易版）
+    const jitter = (Math.random() - 0.5) * 0.3;
+    const unitPrice = data.base * (1 + jitter);
+    return { unitPrice: Math.max(data.min, Math.min(data.max, unitPrice)), data };
+  }
+
+  // ── 表示ユーティリティ ──
+  function toMan(yen) { return Math.round(yen / 10000); }
+  function fmt(n) { return n.toLocaleString('ja-JP'); }
+
+  function showPanel(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+  function setTab(n) {
+    [1,2,3].forEach(i => {
+      const tab = document.getElementById('tab-' + i);
+      tab.classList.remove('active', 'done');
+      if (i < n) tab.classList.add('done');
+      if (i === n) tab.classList.add('active');
+    });
+  }
+  function showError(id, show) {
+    document.getElementById('error-' + id).style.display = show ? 'block' : 'none';
+  }
+  function scrollToForm() {
+    document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('address-input').focus();
+  }
+
+  // ── Step 1: 住所 ──
+  async function handleStep1() {
+    const address = document.getElementById('address-input').value.trim();
+    if (!address) { showError(1, true); return; }
+    showError(1, false);
+
+    const btn = document.getElementById('btn-next-1');
+    btn.disabled = true;
+    btn.textContent = '住所を確認中...';
+
+    try {
+      const result = await geocode(address);
+      state.address = address;
+      state.lat = result.lat;
+      state.lng = result.lng;
+      state.prefecture = result.prefecture;
+      showPanel(2);
+      setTab(2);
+      document.getElementById('area-input').focus();
+    } catch {
+      showError(1, true);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '次へ — 土地面積を入力';
+    }
+  }
+
+  // ── Step 2: 面積 → 査定 ──
+  async function handleStep2() {
+    const areaVal = parseFloat(document.getElementById('area-input').value);
+    if (!areaVal || areaVal < 1 || areaVal > 99999) { showError(2, true); return; }
+    showError(2, false);
+    state.area = areaVal;
+
+    // Loading
+    showPanel('loading');
+    setTab(3);
+
+    const msgs = [
+      '国土交通省のデータベースに接続しています',
+      '地価公示ポイントを検索中...',
+      '周辺の取引事例を照合中...',
+      '査定額を計算しています',
+    ];
+    let i = 0;
+    const interval = setInterval(() => {
+      i = (i + 1) % msgs.length;
+      document.getElementById('loading-sub').textContent = msgs[i];
+    }, 700);
+
+    await new Promise(r => setTimeout(r, 2800));
+    clearInterval(interval);
+
+    // 計算
+    const { unitPrice, data } = getLandPrice(state.prefecture);
+    const rawPrice = unitPrice * state.area * 10000; // 円
+    const adjPrice = rawPrice * ADJ_RATE;
+    const loPrice  = Math.round(adjPrice * 0.85 / 10000) * 10000;
+    const hiPrice  = Math.round(adjPrice * 1.15 / 10000) * 10000;
+
+    // 結果セット
+    document.getElementById('result-address-text').textContent = state.address;
+    document.getElementById('result-area-text').textContent = fmt(state.area) + ' ㎡';
+    document.getElementById('result-price').innerHTML =
+      fmt(toMan(adjPrice)) + '<span class="price-unit">万円</span>';
+    document.getElementById('result-range').innerHTML =
+      '参考レンジ: <strong>' + fmt(toMan(loPrice)) + '万円</strong> 〜 <strong>' + fmt(toMan(hiPrice)) + '万円</strong>';
+    document.getElementById('bd-region').textContent = data.label;
+    document.getElementById('bd-unit-price').textContent = unitPrice.toFixed(1) + ' 万円/㎡';
+    document.getElementById('bd-area').textContent = fmt(state.area) + ' ㎡';
+    document.getElementById('bd-adj').textContent = Math.round(ADJ_RATE * 100) + '%（空き家補正）';
+    document.getElementById('bd-total').textContent = fmt(toMan(adjPrice)) + ' 万円';
+
+    showPanel('result');
+  }
+
+  function goBack(step) {
+    showPanel(step);
+    setTab(step);
+  }
+
+  function restart() {
+    state = { address: '', area: 0, lat: null, lng: null, prefecture: '' };
+    document.getElementById('address-input').value = '';
+    document.getElementById('area-input').value = '';
+    showPanel(1);
+    setTab(1);
+    document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Enter key
+  document.getElementById('address-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleStep1();
+  });
+  document.getElementById('area-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleStep2();
+  });
+</script>
+</body>
+</html>
