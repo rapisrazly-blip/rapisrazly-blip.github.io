@@ -66,12 +66,143 @@
     /* ── HERO ── */
     #hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
       padding: 8rem 4rem 4rem;
       position: relative;
       overflow: hidden;
+    }
+
+    .hero-left { display: flex; flex-direction: column; }
+
+    /* ── HERO VISUAL CARD ── */
+    .hero-visual {
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 1s 0.8s forwards;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      border-radius: 1.2rem;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.25);
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(255,165,0,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -40px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(100,100,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .card-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #f97316, #f59e0b);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.9rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-sub {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 2rem;
+    }
+
+    .card-tools {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .card-tool {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.5rem;
+      padding: 0.6rem 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-tool-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px #4ade80;
+    }
+
+    .card-tool-name {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.7);
+      font-family: monospace;
+      letter-spacing: 0.03em;
+    }
+
+    .card-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.2rem;
+    }
+
+    .card-stat {
+      text-align: center;
+    }
+
+    .card-stat-num {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.03em;
+    }
+
+    .card-stat-label {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.2rem;
+      letter-spacing: 0.05em;
+    }
+
+    .card-tag {
+      font-size: 0.68rem;
+      color: #f97316;
+      border: 1px solid rgba(249,115,22,0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 2rem;
     }
 
     .hero-label {
@@ -301,6 +432,144 @@
       line-height: 1.8;
     }
 
+    /* ── PORTFOLIO ── */
+    #portfolio { background: var(--white); }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .portfolio-card {
+      border: 1px solid #e8e8e8;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+
+    .portfolio-thumb {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 60%, #16213e 100%);
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-thumb::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 140px; height: 140px;
+      background: radial-gradient(circle, rgba(249,115,22,0.2) 0%, transparent 70%);
+    }
+
+    .portfolio-thumb-icon {
+      font-size: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .portfolio-thumb-label {
+      position: absolute;
+      top: 1rem; left: 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      font-family: monospace;
+    }
+
+    .portfolio-body {
+      padding: 1.5rem;
+    }
+
+    .portfolio-type {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 0.5rem;
+    }
+
+    .portfolio-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .portfolio-desc {
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .portfolio-actions {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .portfolio-btn {
+      display: inline-block;
+      padding: 0.5rem 1.1rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border-radius: 0.3rem;
+      transition: all 0.2s;
+    }
+
+    .portfolio-btn-primary {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .portfolio-btn-primary:hover { background: #333; }
+
+    .portfolio-btn-secondary {
+      background: transparent;
+      color: var(--black);
+      border: 1px solid #ddd;
+    }
+
+    .portfolio-btn-secondary:hover { background: var(--gray); }
+
+    .portfolio-add {
+      border: 2px dashed #ddd;
+      border-radius: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 280px;
+      color: #ccc;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      gap: 0.8rem;
+    }
+
+    .portfolio-add-icon { font-size: 2rem; }
+
+    @media (max-width: 900px) {
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+    }
+
     /* ── WORKS ── */
     #works { background: var(--gray); }
 
@@ -465,11 +734,11 @@
       nav { padding: 1rem 2rem; }
       .nav-links { gap: 1.5rem; }
       section { padding: 5rem 2rem; }
-      #hero { padding: 7rem 2rem 4rem; }
+      #hero { grid-template-columns: 1fr; padding: 7rem 2rem 4rem; gap: 3rem; }
+      .hero-visual { display: none; }
       #about { grid-template-columns: 1fr; gap: 3rem; }
       .services-grid { grid-template-columns: 1fr; }
       .works-grid { grid-template-columns: repeat(2, 1fr); }
-      .hero-number { font-size: 6rem; }
     }
 
     @media (max-width: 600px) {
@@ -497,21 +766,71 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-label">AI Creator × Freelancer</div>
-    <h1 class="hero-heading">
-      今の自分に、<br>
-      <span class="highlight">革命を。</span>
-    </h1>
-    <p class="hero-sub">
-      Claude Codeを武器に、業務自動化からコンテンツ生成まで。<br>
-      「動きながら考える」AIクリエイターが、あなたの仕事を変えます。
-    </p>
-    <div class="hero-cta">
-      <a href="#works" class="btn btn-primary">実績を見る</a>
-      <a href="#contact" class="btn btn-secondary">相談する</a>
+    <!-- LEFT -->
+    <div class="hero-left">
+      <div class="hero-label">AI Creator × Freelancer</div>
+      <h1 class="hero-heading">
+        今の自分に、<br>
+        <span class="highlight">革命を。</span>
+      </h1>
+      <p class="hero-sub">
+        Claude Codeを武器に、業務自動化からコンテンツ生成まで。<br>
+        「動きながら考える」AIクリエイターが、あなたの仕事を変えます。
+      </p>
+      <div class="hero-cta">
+        <a href="#works" class="btn btn-primary">実績を見る</a>
+        <a href="#contact" class="btn btn-secondary">相談する</a>
+      </div>
+      <div class="hero-scroll">Scroll</div>
     </div>
-    <div class="hero-scroll">Scroll</div>
-    <div class="hero-number">16</div>
+
+    <!-- RIGHT VISUAL CARD -->
+    <div class="hero-visual">
+      <div class="hero-card">
+        <span class="card-badge">⚡ 稼働中 16ツール</span>
+        <div class="card-title">Claude Codeで<br>仕事を自動化する</div>
+        <div class="card-sub">AI × 行動力 = 革命</div>
+        <div class="card-tools">
+          <div class="card-tool">
+            <div class="card-tool-dot"></div>
+            <span class="card-tool-name">x-auto-post</span>
+          </div>
+          <div class="card-tool">
+            <div class="card-tool-dot"></div>
+            <span class="card-tool-name">cc-slides</span>
+          </div>
+          <div class="card-tool">
+            <div class="card-tool-dot"></div>
+            <span class="card-tool-name">job-scout</span>
+          </div>
+          <div class="card-tool">
+            <div class="card-tool-dot"></div>
+            <span class="card-tool-name">seo-article-agent</span>
+          </div>
+          <div class="card-tool">
+            <div class="card-tool-dot"></div>
+            <span class="card-tool-name">avatar-video-maker</span>
+          </div>
+          <div class="card-tool">
+            <div class="card-tool-dot"></div>
+            <span class="card-tool-name">cc-lp-v2</span>
+          </div>
+        </div>
+        <div class="card-stat-row">
+          <div class="card-stat">
+            <div class="card-stat-num">16</div>
+            <div class="card-stat-label">自作ツール</div>
+          </div>
+          <div class="card-stat">
+            <div class="card-stat-num">∞</div>
+            <div class="card-stat-label">可能性</div>
+          </div>
+          <div class="card-stat">
+            <span class="card-tag">稼働中</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ABOUT -->
@@ -565,6 +884,39 @@
         <h3 class="service-title">AIツール<br>導入支援</h3>
         <p class="service-desc">ChatGPT・Claude・その他AIツールの選定から導入・運用まで。「何から始めれば？」という方の最初の一歩を一緒に踏み出します。</p>
       </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="reveal">
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">制作物一覧</h2>
+    </div>
+    <div class="portfolio-grid reveal">
+
+      <!-- 作品1: portfolio.pptx -->
+      <div class="portfolio-card">
+        <div class="portfolio-thumb">
+          <span class="portfolio-thumb-label">PPTX / 提案書</span>
+          <div class="portfolio-thumb-icon">📊</div>
+        </div>
+        <div class="portfolio-body">
+          <div class="portfolio-type">提案書</div>
+          <div class="portfolio-title">マーケティングAIツール<br>ポートフォリオ</div>
+          <div class="portfolio-desc">LP制作・セールスコンテンツ・LINE Bot・SEO記事など自作AIツールをまとめた提案書。</div>
+          <div class="portfolio-actions">
+            <a href="works/portfolio.pptx" download class="portfolio-btn portfolio-btn-primary">ダウンロード</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 追加枠（今後ここに増やす） -->
+      <div class="portfolio-add">
+        <div class="portfolio-add-icon">＋</div>
+        <span>制作物を追加</span>
+      </div>
+
     </div>
   </section>
 

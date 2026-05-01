@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLAM WEB | 夜職専門HP制作</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #e91e8c;
+  --pink-light: #ff6eb4;
+  --pink-pale: #fff0f7;
+  --pink-pale2: #ffe0f0;
+  --dark: #1a1a2e;
+  --text: #1a1a2e;
+  --text-muted: #777;
+  --white: #ffffff;
+  --grad: linear-gradient(135deg, #e91e8c, #ff6eb4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#fff;line-height:1.7;}
+img{max-width:100%;height:auto;}
+a{text-decoration:none;}
+.container{max-width:1280px;margin:0 auto;padding:0 80px;}
+section{padding:100px 0;position:relative;overflow:hidden;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:18px 36px;border-radius:50px;font-weight:900;font-size:16px;cursor:pointer;border:none;transition:transform 0.2s ease,box-shadow 0.2s ease;font-family:'Noto Sans JP',sans-serif;}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 8px 30px rgba(233,30,140,0.35);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(233,30,140,0.45);}
+.btn-outline{background:transparent;color:var(--pink);border:2px solid var(--pink);}
+.btn-outline:hover{transform:translateY(-3px);background:var(--pink-pale);}
+.btn-white{background:#fff;color:var(--pink);box-shadow:0 8px 30px rgba(0,0,0,0.12);}
+.btn-white:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,0.18);}
+
+/* SECTION LABELS */
+.sec-label{display:inline-flex;align-items:center;gap:12px;font-size:12px;font-weight:700;letter-spacing:0.35em;color:var(--pink);margin-bottom:16px;text-transform:uppercase;}
+.sec-label::before{content:'';width:32px;height:2px;background:var(--grad);}
+.sec-label.center{justify-content:center;}
+.sec-label.center::before{display:none;}
+.sec-label.light{color:#ff6eb4;}
+.sec-label.light::before{background:#ff6eb4;}
+
+.sec-heading{font-size:clamp(32px,4vw,54px);font-weight:900;line-height:1.2;margin-bottom:24px;letter-spacing:-0.02em;}
+.sec-sub{font-size:16px;color:var(--text-muted);max-width:580px;}
+.text-center{text-align:center;}
+.text-center .sec-sub{margin:0 auto;}
+.pink{color:var(--pink);}
+
+/* DECO */
+.deco{position:absolute;border-radius:50%;pointer-events:none;}
+
+/* HERO */
+#hero{min-height:100vh;background:linear-gradient(135deg,#fff0f7 0%,#ffe0f0 60%,#ffd6ec 100%);display:flex;align-items:center;}
+.hero-d1{width:700px;height:700px;background:radial-gradient(circle,rgba(233,30,140,0.15) 0%,transparent 65%);top:-150px;right:-150px;}
+.hero-d2{width:400px;height:400px;background:radial-gradient(circle,rgba(255,110,180,0.1) 0%,transparent 65%);bottom:-80px;left:-80px;}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:#fff;padding:8px 20px;border-radius:50px;font-size:13px;font-weight:700;color:var(--pink);box-shadow:0 4px 20px rgba(233,30,140,0.15);margin-bottom:24px;animation:fadeUp 0.6s ease-out 0.1s both;}
+.hero-title{font-size:clamp(48px,5.5vw,84px);font-weight:900;line-height:1.05;letter-spacing:-0.03em;margin-bottom:28px;animation:fadeUp 0.6s ease-out 0.25s both;}
+.hero-offer{background:#fff;border-radius:20px;padding:24px 32px;margin-bottom:32px;box-shadow:0 8px 32px rgba(233,30,140,0.12);display:inline-block;animation:fadeUp 0.6s ease-out 0.4s both;}
+.offer-label{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:0.1em;margin-bottom:10px;}
+.offer-row{display:flex;align-items:center;gap:16px;}
+.price-old{font-size:22px;font-weight:700;color:#bbb;text-decoration:line-through;}
+.price-arrow{font-size:20px;color:var(--pink);}
+.price-new{font-size:clamp(40px,4.5vw,60px);font-weight:900;color:var(--pink);line-height:1;}
+.offer-note{font-size:13px;color:var(--text-muted);margin-top:6px;}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:48px;animation:fadeUp 0.6s ease-out 0.55s both;}
+.hero-stats{display:flex;gap:36px;animation:fadeUp 0.6s ease-out 0.7s both;}
+.stat-num{font-size:28px;font-weight:900;color:var(--pink);}
+.stat-lbl{font-size:13px;color:var(--text-muted);}
+.hero-illust{width:100%;max-width:460px;animation:fadeUp 0.8s ease-out 0.8s both;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* PROBLEM */
+#problem{background:#fff;}
+.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px;}
+.prob-card{background:var(--pink-pale);border-radius:20px;padding:32px;border-left:4px solid var(--pink);transition:transform 0.2s ease,box-shadow 0.2s ease;}
+.prob-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(233,30,140,0.1);}
+.prob-icon{color:var(--pink);margin-bottom:14px;}
+.prob-title{font-size:16px;font-weight:700;margin-bottom:8px;}
+.prob-sub{font-size:14px;color:var(--text-muted);}
+.dot-bg{background-image:radial-gradient(circle,rgba(233,30,140,0.06) 1px,transparent 1px);background-size:24px 24px;}
+
+/* REASONS */
+#reasons{background:var(--dark);color:#fff;}
+.rea-d1{width:500px;height:500px;background:radial-gradient(circle,rgba(233,30,140,0.2) 0%,transparent 65%);top:-100px;right:-100px;}
+.rea-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px;}
+.rea-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:36px;transition:transform 0.2s ease,background 0.2s ease;}
+.rea-card:hover{transform:translateY(-6px);background:rgba(255,255,255,0.09);}
+.rea-num{font-size:12px;font-weight:700;letter-spacing:0.25em;color:#ff6eb4;margin-bottom:14px;}
+.rea-icon{color:#ff6eb4;margin-bottom:14px;}
+.rea-title{font-size:19px;font-weight:900;margin-bottom:10px;color:#fff;}
+.rea-desc{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.75;}
+
+/* RESULTS */
+#results{background:var(--pink-pale);}
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:60px;}
+.result-item{text-align:center;}
+.result-num{font-size:clamp(64px,8vw,100px);font-weight:900;color:var(--pink);line-height:1;font-variant-numeric:tabular-nums;}
+.result-unit{font-size:32px;}
+.result-lbl{font-size:16px;color:var(--text-muted);margin-top:10px;}
+.result-note{font-size:13px;color:#aaa;margin-top:4px;}
+
+/* TESTIMONIALS */
+#testimonials{background:#fff;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;}
+.testi-card{background:#fff;border-radius:20px;padding:36px;box-shadow:0 4px 32px rgba(233,30,140,0.08);border-top:4px solid var(--pink);transition:transform 0.2s ease,box-shadow 0.2s ease;}
+.testi-card:hover{transform:translateY(-6px);box-shadow:0 14px 48px rgba(233,30,140,0.15);}
+.testi-stars{display:flex;gap:4px;color:var(--pink);margin-bottom:14px;}
+.testi-quote{font-size:52px;color:#ffd6ec;font-weight:900;line-height:0.8;margin-bottom:10px;}
+.testi-text{font-size:15px;line-height:1.8;margin-bottom:24px;}
+.testi-author{display:flex;align-items:center;gap:14px;}
+.testi-avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;}
+.testi-name{font-weight:900;font-size:15px;}
+.testi-role{font-size:13px;color:var(--text-muted);}
+
+/* PRICING */
+#pricing{background:var(--pink-pale);}
+.pri-d1{width:400px;height:400px;background:radial-gradient(circle,rgba(233,30,140,0.1) 0%,transparent 65%);top:-50px;right:-50px;}
+.pricing-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;align-items:start;}
+.pri-card{background:#fff;border-radius:24px;padding:40px;border:2px solid #f0d8ea;transition:transform 0.2s ease,box-shadow 0.2s ease;}
+.pri-card:hover{transform:translateY(-6px);}
+.pri-card.featured{border-color:var(--pink);box-shadow:0 8px 48px rgba(233,30,140,0.22);transform:scale(1.04);position:relative;}
+.pri-card.featured:hover{transform:scale(1.04) translateY(-6px);}
+.feat-badge{position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:var(--grad);color:#fff;padding:6px 24px;border-radius:50px;font-size:12px;font-weight:700;white-space:nowrap;}
+.pri-name{font-size:14px;font-weight:700;color:var(--text-muted);margin-bottom:14px;}
+.pri-old{font-size:15px;color:#bbb;text-decoration:line-through;margin-bottom:4px;}
+.pri-price{font-size:clamp(36px,4vw,52px);font-weight:900;color:var(--pink);line-height:1;margin-bottom:4px;}
+.pri-period{font-size:13px;color:#aaa;margin-bottom:20px;}
+.pri-divider{border:none;border-top:1px solid #f0e0ea;margin:20px 0;}
+.pri-features{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.pri-feat{display:flex;align-items:flex-start;gap:10px;font-size:14px;}
+.feat-ok{color:var(--pink);flex-shrink:0;margin-top:2px;}
+.feat-no{color:#ddd;flex-shrink:0;margin-top:2px;}
+.pri-cta{margin-top:32px;width:100%;justify-content:center;}
+
+/* FAQ */
+#faq{background:#fff;}
+.faq-list{margin-top:60px;display:flex;flex-direction:column;gap:14px;max-width:780px;margin-left:auto;margin-right:auto;}
+.faq-item{background:#fff;border-radius:16px;border:1px solid #f0e0ea;overflow:hidden;transition:box-shadow 0.2s ease;}
+.faq-item:hover{box-shadow:0 4px 24px rgba(233,30,140,0.08);}
+.faq-q{padding:22px 28px;font-weight:700;font-size:16px;display:flex;align-items:center;gap:14px;}
+.faq-qnum{color:var(--pink);font-weight:900;font-size:13px;flex-shrink:0;}
+.faq-a{padding:0 28px 22px 70px;font-size:14px;color:var(--text-muted);line-height:1.8;}
+
+/* FINAL CTA */
+#final-cta{background:var(--dark);text-align:center;padding:120px 0;}
+.fcta-d1{width:600px;height:600px;background:radial-gradient(circle,rgba(233,30,140,0.25) 0%,transparent 65%);top:-150px;left:-100px;}
+.fcta-d2{width:400px;height:400px;background:radial-gradient(circle,rgba(255,110,180,0.18) 0%,transparent 65%);bottom:-100px;right:-80px;}
+.fcta-title{font-size:clamp(36px,5vw,68px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:20px;letter-spacing:-0.02em;}
+.fcta-sub{font-size:18px;color:rgba(255,255,255,0.6);margin-bottom:40px;}
+.fcta-phone{font-size:clamp(32px,4.5vw,56px);font-weight:900;color:#fff;display:block;letter-spacing:0.04em;margin-bottom:32px;}
+.fcta-btns{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;}
+.fcta-note{font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:48px;}
+.fcta-trust{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;}
+.trust-item{text-align:center;}
+.trust-num{font-size:28px;font-weight:900;color:#fff;display:block;}
+.trust-lbl{font-size:13px;color:rgba(255,255,255,0.45);}
+
+/* FOOTER */
+footer{background:#0f0f1a;padding:40px 0;text-align:center;color:rgba(255,255,255,0.3);font-size:13px;}
+.footer-brand{font-size:18px;font-weight:900;color:rgba(255,255,255,0.6);margin-bottom:8px;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .container{padding:0 20px;}
+  section{padding:60px 0;}
+  .hero-grid{grid-template-columns:1fr!important;gap:40px!important;}
+  .hero-visual{display:none;}
+  .hero-cta{flex-direction:column;}
+  .hero-cta .btn{width:100%;justify-content:center;min-height:52px;}
+  .hero-stats{gap:20px;}
+  .prob-grid{grid-template-columns:1fr!important;}
+  .rea-grid{grid-template-columns:1fr!important;}
+  .results-grid{grid-template-columns:1fr!important;gap:24px!important;}
+  .testi-grid{grid-template-columns:1fr!important;}
+  .pricing-cards{grid-template-columns:1fr!important;}
+  .pri-card.featured{transform:none!important;}
+  .pri-card.featured:hover{transform:translateY(-6px)!important;}
+  .fcta-btns{flex-direction:column;align-items:center;}
+  .fcta-btns .btn{width:100%;max-width:320px;justify-content:center;}
+  .fcta-trust{gap:24px;}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+<style data-figma-reset>
+/* ==========================================================
+   Figma取り込み用リセット（build-figma-ready.mjs が自動注入）
+   このブロックは Figma 書き出し専用。lp/index.html 側には入らない。
+   ========================================================== */
+*, *::before, *::after {
+  animation: none !important;
+  animation-delay: 0s !important;
+  animation-duration: 0s !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+/* スクロール出現系でよく使われるクラス・属性は transform も強制リセット */
+.fade-in, .fade-up, .fade-down, .fade-left, .fade-right,
+.slide-in, .slide-up, .slide-down, .slide-left, .slide-right,
+.reveal, .scroll-animate, .scroll-reveal, .animate-on-scroll,
+.wow, .appear, .hidden-initial, .invisible-initial,
+[data-aos], [data-animate], [data-scroll], [data-reveal] {
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<section id="hero">
+  <div class="deco hero-d1"></div>
+  <div class="deco hero-d2"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          夜職専門 HP制作サービス
+        </div>
+        <h1 class="hero-title">夜職専門、<br><span class="pink">最速3日</span>で<br>公開します</h1>
+        <div class="hero-offer">
+          <div class="offer-label">★ 期間限定キャンペーン実施中</div>
+          <div class="offer-row">
+            <span class="price-old">¥100,000</span>
+            <span class="price-arrow">→</span>
+            <span class="price-new">¥30,000</span>
+          </div>
+          <div class="offer-note">今すぐお問い合わせの方のみ適用</div>
+        </div>
+        <div class="hero-cta">
+          <a href="tel:09057350597" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l-.06-.15L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46Z"/></svg>
+            今すぐ電話で相談する
+          </a>
+          <a href="#pricing" class="btn btn-outline">料金詳細を見る →</a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="stat-num">150<span style="font-size:18px">+</span></div><div class="stat-lbl">制作実績</div></div>
+          <div><div class="stat-num">98<span style="font-size:18px">%</span></div><div class="stat-lbl">顧客満足度</div></div>
+          <div><div class="stat-num">最短3<span style="font-size:18px">日</span></div><div class="stat-lbl">納品スピード</div></div>
+        </div>
+      </div>
+      <div class="hero-visual" style="display:flex;justify-content:center;">
+        <img class="hero-illust" src="data:image/svg+xml;base64,PHN2ZyBpZD0iZWQ0YmFmZDUtMmU3ZC00ZmYwLTlmNDAtNDc2YjlhN2ZkOWU0IiBkYXRhLW5hbWU9IkxheWVyIDEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDgyMS43NTg5MiA2MDEuNzMzMDMiPjxwb2x5Z29uIHBvaW50cz0iODAwLjM0NCA1ODQuMDAyIDc5Mi4yIDU4Ni42MDcgNzc4LjI3OSA1NTYuNDM2IDc5MC4yOTggNTUyLjU5MSA4MDAuMzQ0IDU4NC4wMDIiIGZpbGw9IiNmZmI2YjYiLz48cGF0aCBkPSJNOTk0LjA2Niw3NDAuMzY1bC0yNi4yNTgsOC4zOTgzNS0uMTA2MjMtLjMzMjEyYTEwLjczMSwxMC43MzEsMCwwLDEsNi45NTEtMTMuNDg5MzJsLjAwMDY0LS4wMDAyMSwzLjYzMjM2LTUuMTczLDEwLjExMy43NzY3MywyLjI5MjE3LS43MzMxMloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiMyZjJlNDEiLz48cG9seWdvbiBwb2ludHM9IjcyMy4xMzQgNTkyLjEyNCA3MTQuNTg0IDU5Mi4xMjQgNzEwLjUxNyA1NTkuMTQ2IDcyMy4xMzUgNTU5LjE0NiA3MjMuMTM0IDU5Mi4xMjQiIGZpbGw9IiNmZmI2YjYiLz48cGF0aCBkPSJNOTE0LjQzNSw3NDkuNTQ1NTVsLTI3LjU2ODM5LS4wMDF2LS4zNDg3QTEwLjczMSwxMC43MzEsMCwwLDEsODk3LjU5Nyw3MzguNDY1NjJoLjAwMDY5bDUuMDM1NzMtMy44MjAzNyw5LjM5NTU1LDMuODIwOTUsMi40MDY1NS4wMDAxWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4OS4xMjA1NCAtMTQ5LjEzMzQ5KSIgZmlsbD0iIzJmMmU0MSIvPjxwYXRoIGQ9Ik04NzEuNDE4Miw0MDAuNDU3YTcuMDEzMjEsNy4wMTMyMSwwLDAsMCwyLjExMzU1LDEwLjU0NDE2bC00LjEwMTEyLDI0LjU4MjgsMTEuODM3NjctNS4yNTM1Mkw4ODMuMzQ4LDQwNy43OTE2QTcuMDUxMjEsNy4wNTEyMSwwLDAsMCw4NzEuNDE4Miw0MDAuNDU3WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4OS4xMjA1NCAtMTQ5LjEzMzQ5KSIgZmlsbD0iI2ZmYjZiNiIvPjxwYXRoIGQ9Ik05NzkuMzQyNjksNjA0LjM4MDIxczEuOTk0MTQtMjUuOTY5NjEtNS4wNzM3My0zMC43OTI0OGMtNy4wNjczOC00LjgyMjg4LTY1LjMzOTg0LTcuMjUwOTItNjUuMzM5ODQtNy4yNTA5MmwtMy42MTgxNiw0Ljc1ODQzcy0uMzI3NjQsMi4yMjIxNi01LjgxNTQzLDIwLjMyNjA1TDg5Ny4yNjAxNyw2OTIuNDc0MmMtLjIyMTY4LDkuODUyMDgtMS45Mzk0NSwyMi4yMzAwNywyLjE3NTMsMjQuNzYwNjhsMiwxMGgxMWw2LjA3NzE1LTE2LjgxMjUzYTIyLjEwNzQxLDIyLjEwNzQxLDAsMCwwLDMuMTY2NS0xNC4xNjI0NGwzLjMxODM2LTE0Ljg0MjUzYTEuNzk3MTgsMS43OTcxOCwwLDAsMS0uNDcyMTctLjg0NjU2LDguNjY4MTMsOC42NjgxMywwLDAsMSwxLjM4NjcyLTYuMzM1NTcsMTEuMTc2NDcsMTEuMTc2NDcsMCwwLDEsLjk2NjgtMS4yMzI2bDEyLjE1NzcxLTU0LjM4MTg0LDE2LjM5ODkzLDYzLjYxNDA3LDEwLjEyMTA5LDIyLjU5NTkyYy0uOTk1MTIsMi4zNjg2Mi0uMzM0LDQuNTE0NSwxLjQ3OTQ5LDYuNTA1NDktLjY3MzgzLDEuODUyNiwyLjIzODc3LDMuMTUyODQsMy40ODk3NSw1LjU0ODQ0bDMuOTA5NjcsNy4zNTAxNSwxMS02LDEtNmMuNjY2LTEuNzc5Mi0xLjEyNS0yLjk1ODc3LTIuNDQ0ODMtNi42NTQxMSwyLjQ2MjQxLTIuNjE1NDgsMi4zMjg2Mi01LjE2MjQ0LS4wNDQ5Mi03LjY1MDM5bC00LjE1ODQyLTE3LjkzMTEtLjA0ODMzLTguMjIwMTktLjA1MTY2LTguNzg2WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4OS4xMjA1NCAtMTQ5LjEzMzQ5KSIgZmlsbD0iIzJmMmU0MSIvPjxjaXJjbGUgY3g9Ijc0NC4yMjkzIiBjeT0iMjgxLjc0NDY3IiByPSIxOS4xMDg5MSIgZmlsbD0iI2ZmYjZiNiIvPjxwYXRoIGQ9Ik05NTIuNTczODgsNDMzLjg2OTg1bC0uMzE1NjUtLjYzMWMtLjQ4Nzg2LS45NzYtNC41Mjg1NS05LjA5LTUuMDM1NjgtMTEuMTc2M2wtNS4wODUxNy41OTgxMi0xMy4yNDIxNC4wMDIwNywxLjg0LTIuNzYtNC44NjQ2Ni42MzQ1N2ExMS4xNjQ4NywxMS4xNjQ4NywwLDAsMC00Ljk1NzI4LDEuODY4NDUsNy41OTU0Miw3LjU5NTQyLDAsMCwwLTIuMjQ4NTcsMi4zMTgzN2MtMS43Mzc3NCwyLjk3NTc2LTQuMzkyNjYsNy44NDMwOC00LjQxOTMzLDcuODkybC0uMjUzODYuNDY1NjMtMi4yMDYxOC0zLjcxMTExYy0uMDI4OS0uMTQ0LTIuNzYzMS0xNC40MDQ4OCw2LjM4NzIxLTE5LjI0MTM4YTE0LjcyNTY4LDE0LjcyNTY4LDAsMCwxLDEzLjk5Nzk0LTcuOTg5Miw2LjAyNTY5LDYuMDI1NjksMCwwLDEsNC4wOTY4NS0yLjAzNjVjMi4xNzA2Mi0uMTEzMjIsNC40MjM3OCwxLjAyNyw2LjY4NjQzLDMuNDAzMTUsMy4wMDU2OSwzLjE1Niw3LjEyMjI2LDcuNDc3OTQsOS42MTE5NCwxMi4yNzY4bC42ODY4OS45Nzk4NmE3LjcyMyw3LjcyMywwLDAsMSwxLjM3NDA3LDQuNzk1LDE2LjAwODMzLDE2LjAwODMzLDAsMCwxLS41NDU1MSw4LjE2NTg2WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4OS4xMjA1NCAtMTQ5LjEzMzQ5KSIgZmlsbD0iIzJmMmU0MSIvPjxwYXRoIGQ9Ik05NzkuMjUzODMsNDY3LjI0MjUxbC0yMC43NzA1MS01LjgxNTczLTEwLjU3MzczLTcuODQ0MTItMjAuNzcwNTEsMy4zMTM3OC0uMDkwMzUuMTE3MzdjLTMuNjM2NjMsNC43MjQtOS4yNDMxOSw5LjM5MTA2LTE1LjIwMiw5LjU3N2EyMC44Njc0MywyMC44Njc0MywwLDAsMC00LjU0MTY4LjY1MTcyTDkwNS4zMTEsNTAzLjcwMjcydjMyLjU5ODM5YTEuOTEyMjcsMS45MTIyNywwLDAsMSwxLjI1NTM3LDEuMzkzMDYsMjYuNDc1NTQsMjYuNDc1NTQsMCwwLDEtLjE2MzA5LDEwLjAzLDE2Ljc3MzI4LDE2Ljc3MzI4LDAsMCwxLTEuMDkyMjgsMy4zNDk2MSw4Ljg0Mzg0LDguODQzODQsMCwwLDEsMCw3LjY5NjU2Yy0xLjc3NTQsMS42OTI1Ny0xLjU0NTksMy41MzY2OSwwLDUuNDgwMzJ2Ni44NDQ2MWMzMy43MTI4OSwyOC4xMjgyMyw2OC44NzEwOSw0LjA0MzIxLDY4Ljg3MTA5LDQuMDQzMjFsLTEuMTI3OTMtNTMuNTQxWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4OS4xMjA1NCAtMTQ5LjEzMzQ5KSIgZmlsbD0iIzNmM2Q1NiIvPjxwYXRoIGQ9Ik05MTEuOTYzOTMsNDcyLjI1MDYxbC00LjY1ODY0LTUuMDA4MDctMjUuNjcyODMtMi45MDc4OCwyLjQwOTExLTM5LjQzMDY3LTEzLjk5Ny05Ljk4NTIzTDg2My43MDYsNDQ5LjEzNTM0Yy0yLjE3OTY4LDEuODg1NzQtMi41ODQsMy43NDMxLTEuMDMxNzMsNS41NjkyNy0xLjc0NTEyLDMuNDkwMTctMi4xOTM4NSw2LjMyODEzLTEuNjAwNTksOC42NDE0MmwtMS4zMTI0LDcuMDgzNTUsNDcuNTAzMzIsMzMuMjczMTJaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTg5LjEyMDU0IC0xNDkuMTMzNDkpIiBmaWxsPSIjM2YzZDU2Ii8+PHBhdGggZD0iTTk3NS40NjM4Niw2MDEuMTgxMTlhNy4wMTMyMSw3LjAxMzIxLDAsMCwxLDMuMjIzMDUtMTAuMjU5NTVsLTEuNDYzMi0yNC44Nzk1NiwxMS4yMTE3Niw2LjQ4Mjc5LS4zMjk0MSwyMi42MzIxN2E3LjA1MTIsNy4wNTEyLDAsMCwxLTEyLjY0MjIsNi4wMjQxNVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiNmZmI2YjYiLz48cGF0aCBkPSJNOTcxLjQ1MDcsNDczLjQ2NDYybDcuODAzMzMtNi4yMjIwOHM3Ljk3ODg4LDQuNDAxMDYsMTAuNDA2OTEsMTIuMjkyMTYsNi42NzcwOSw1Mi44MDk2OSw2LjY3NzA5LDUyLjgwOTY5bC42NTUsMTYuNzI0ODRjLjgzOTM2LDIuNjUyNzEuNjE5NjMsNS4wMTkxNy0xLjM4MDg2LDYuOTA0OTEsMy4wMDY4NCwzLjExMDExLDIuNTU4MTEsNS43MDA0MS0xLjU0ODM0LDcuNzQwNzZsLTQuMjU5LDI2LjI5NTIzLTEzLjM2OTQxLTIuNzc1MjUsMS42OTIzMi01MS44NTU0NUw5NjcuMjAxNjUsNTAxLjk5NFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiMzZjNkNTYiLz48cGF0aCBkPSJNNDM3LjQzNTQ3LDI2Ny40NzY0MmgtMi43MzYyNlYxOTIuNTE3NjNhNDMuMzg0MDksNDMuMzg0MDksMCwwLDAtNDMuMzg0MDYtNDMuMzg0MTRIMjMyLjUwNDczYTQzLjM4NDEsNDMuMzg0MSwwLDAsMC00My4zODQxOSw0My4zODRWNjAzLjc0NzM4YTQzLjM4NDEzLDQzLjM4NDEzLDAsMCwwLDQzLjM4NDA3LDQzLjM4NDE1SDM5MS4zMTQ5NGE0My4zODQxMSw0My4zODQxMSwwLDAsMCw0My4zODQyMy00My4zODRWMzIwLjgzMzM3aDIuNzM2M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiMzZjNkNTYiLz48cGF0aCBkPSJNMzkzLjA2NTU1LDE2MC40MjA1NGgtMjAuNzNhMTUuMzkyNiwxNS4zOTI2LDAsMCwxLTE0LjI1MTQzLDIxLjIwNTk0SDI2Ny4xMDM2OWExNS4zOTI1NiwxNS4zOTI1NiwwLDAsMS0xNC4yNTE0My0yMS4yMDZIMjMzLjQ5MDM4YTMyLjM5ODc4LDMyLjM5ODc4LDAsMCwwLTMyLjM5ODgsMzIuMzk4NzNWNjAzLjQ0NTcxYTMyLjM5ODc3LDMyLjM5ODc3LDAsMCwwLDMyLjM5ODc1LDMyLjM5ODhIMzkzLjA2NTU1YTMyLjM5ODc3LDMyLjM5ODc3LDAsMCwwLDMyLjM5ODc5LTMyLjM5ODc2aDBWMTkyLjgxOTI3QTMyLjM5ODc0LDMyLjM5ODc0LDAsMCwwLDM5My4wNjU1NSwxNjAuNDIwNTRaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTg5LjEyMDU0IC0xNDkuMTMzNDkpIiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTM5MS41MzEsMzE0LjIxNTQ5YTc3LjkxNTIsNzcuOTE1MiwwLDAsMS00LjkxMDkxLDI3LjMyMTc0LDc1Ljc3NjM4LDc1Ljc3NjM4LDAsMCwxLTUuNDI3MzcsMTEuNTcxNjUsNzguMjc3MDgsNzguMjc3MDgsMCwwLDEtMTM1LjgzLDBxLTEuMDQwNjQtMS44MDQtMS45NzM2My0zLjY2MTkxQTc4LjI1OTcyLDc4LjI1OTcyLDAsMSwxLDM5MS41MzEsMzE0LjIxNTQ5WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4OS4xMjA1NCAtMTQ5LjEzMzQ5KSIgZmlsbD0iI2YxZjFmMSIvPjxjaXJjbGUgY3g9IjEyOC4yMjU1OSIgY3k9IjE2My4zMzIzNCIgcj0iMTQuOTYwNDMiIGZpbGw9IiNmZjY1ODIiLz48cGF0aCBkPSJNMjQzLjM4OTI1LDM0OS40NDdjNi41OTE0NS03LjEyMzM5LDE1LjQwMzE3LTE4LjQzMjkyLDIzLjY2NzUzLTEwLjI2MTA3LDQuMTQ3NiwzLjg1NDY0LDEwLjYzODgyLDEzLjQwNjQ2LDE2Ljg1MjUxLDcuMTYxOTNsNDguNTIyMjktNDguNTIyMjhhOS42MzI4OSw5LjYzMjg5LDAsMCwxLDEzLjc3NjUuMjQ2NjlsNDAuNDEyMTEsNDMuNDY1YTc1Ljc5OTQ4LDc1Ljc5OTQ4LDAsMCwxLTUuNDI3MzQsMTEuNTcxNjVoLTEzNS44M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjxwYXRoIGlkPSJhNjllZDM0Yy0zYWEzLTQ1MjEtOTg4YS1mMzNhYjg5MzVjODYiIGRhdGEtbmFtZT0iUGF0aCA2ODAiIGQ9Ik0zNDkuOTk0ODcsNDczLjEyMzQyYTIuMDIxNjQsMi4wMjE2NCwwLDAsMCwwLDQuMDQzMjdIMzcxLjIwOWEyLjAyMTYzLDIuMDIxNjMsMCwxLDAsMC00LjA0MzI3WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4OS4xMjA1NCAtMTQ5LjEzMzQ5KSIgZmlsbD0iY3VycmVudENvbG9yIi8+PHBhdGggaWQ9ImE4MmI2OTY1LWU3NDUtNGE3OS1hYzIxLTJiMDhhZGViZmFiZiIgZGF0YS1uYW1lPSJQYXRoIDY4MCIgZD0iTTI1NC40MTksNDQzLjQzYTIuMDIxNjMsMi4wMjE2MywwLDEsMCwwLDQuMDQzMjZIMzcyLjEzNjkyYTIuMDIxNjMsMi4wMjE2MywwLDEsMCwwLTQuMDQzMjZaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTg5LjEyMDU0IC0xNDkuMTMzNDkpIiBmaWxsPSIjZTVlNWU1Ii8+PHBhdGggaWQ9ImEwMWNjNzc0LTJjMDEtNGJhYS1iYTczLWY2YzMxNmZhZTE1MyIgZGF0YS1uYW1lPSJQYXRoIDY4MCIgZD0iTTI1NC40MTksNDU4LjI3NjY4YTIuMDIxNjQsMi4wMjE2NCwwLDAsMCwwLDQuMDQzMjdIMzcyLjEzNjkyYTIuMDIxNjQsMi4wMjE2NCwwLDEsMCwwLTQuMDQzMjdaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTg5LjEyMDU0IC0xNDkuMTMzNDkpIiBmaWxsPSIjZTVlNWU1Ii8+PHBhdGggaWQ9ImY2ZWNmYmQwLWI3MjItNDdmMi04Njg3LTgwYjY4NWVhYTFlMiIgZGF0YS1uYW1lPSJQYXRoIDY4MCIgZD0iTTM0OS45OTQ4Nyw1NjguMzlhMi4wMjE2MywyLjAyMTYzLDAsMCwwLDAsNC4wNDMyN0gzNzEuMjA5YTIuMDIxNjMsMi4wMjE2MywwLDEsMCwwLTQuMDQzMjdaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTg5LjEyMDU0IC0xNDkuMTMzNDkpIiBmaWxsPSJjdXJyZW50Q29sb3IiLz48cGF0aCBpZD0iYmVhZmYyNDMtMWY5Yi00MjBjLWJjMjgtZjA2NDFkMTJmYWQ4IiBkYXRhLW5hbWU9IlBhdGggNjgwIiBkPSJNMjU0LjQxOSw1MzguNjk2NTFhMi4wMjE2MywyLjAyMTYzLDAsMCwwLDAsNC4wNDMyN0gzNzIuMTM2OTJhMi4wMjE2NCwyLjAyMTY0LDAsMSwwLDAtNC4wNDMyN1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiNlNWU1ZTUiLz48cGF0aCBpZD0iYTg2MDUxNzktOGIwMy00ZTRhLTkzYTItMWE4MjA0MThhOGQwIiBkYXRhLW5hbWU9IlBhdGggNjgwIiBkPSJNMjU0LjQxOSw1NTMuNTQzMjVhMi4wMjE2MywyLjAyMTYzLDAsMCwwLDAsNC4wNDMyNkgzNzIuMTM2OTJhMi4wMjE2MywyLjAyMTYzLDAsMSwwLDAtNC4wNDMyNloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiNlNWU1ZTUiLz48cGF0aCBkPSJNODYwLjIwMDQ0LDM3Ny4wMjA0OGwtMTYuMTUyNjctNy4zMDM3NWExMy4xNjI5MiwxMy4xNjI5MiwwLDAsMS0xOC41NzYwNiwxMS41MDIzM2wtNzAuODkxMjctMzIuMDU0OTRhMTMuMTYyOTEsMTMuMTYyOTEsMCwwLDEtMy42MzMxNi0yMS41NDQ3MmwtMTUuMDg2NjMtNi44MjE3M2EyNy43MDU3MSwyNy43MDU3MSwwLDAsMC0zNi42NTk4OCwxMy44Mjk4NUw1NTQuNTI1NTksNjU0LjU4NDY1YTI3LjcwNTcxLDI3LjcwNTcxLDAsMCwwLDEzLjgyOTg3LDM2LjY1OTg5bC4wMDAwNiwwLDEyNC4zMzk3Nyw1Ni4yMjI3N2EyNy43MDU3MSwyNy43MDU3MSwwLDAsMCwzNi42NTk4OS0xMy44Mjk4NmgwTDg3NC4wMzAzNiw0MTMuNjgwMzRBMjcuNzA1NjksMjcuNzA1NjksMCwwLDAsODYwLjIwMDQ0LDM3Ny4wMjA0OFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiNlNGU0ZTQiLz48cGF0aCBkPSJNNzE2LjI5NzgzLDUyOS4zNjcxM2E2OC4xMjk0Miw2OC4xMjk0MiwwLDAsMS0zOS42MzMzOC01NS40MDc4NWMtLjExNjYyLTEuMTgwMjItLjIwMTExLTIuMzkzNjEtLjI1MTE2LTMuNjAzNzRhNjcuMTYwNyw2Ny4xNjA3LDAsMCwxLDUuOTgzMzItMzAuODUyMjcsNjcuOTE4LDY3LjkxOCwwLDEsMSwxMTAuMTE2MTYsNzUuODE3MjYsNjYuMDEwODYsNjYuMDEwODYsMCwwLDEtOC40MzE1Niw3LjIxMTU5QTY4LjEzNDkyLDY4LjEzNDkyLDAsMCwxLDcxNi4yOTc4Myw1MjkuMzY3MTNaTTc3MS40Mzk0LDQwNy40MTg1MUE2NS45OTI4NSw2NS45OTI4NSwwLDAsMCw2ODQuMjE5LDQ0MC4zMjcyOWE2NS4xODIyNCw2NS4xODIyNCwwLDAsMC01LjgwNzQ0LDI5Ljk0MzYzYy4wNDg2NCwxLjE3NDEzLjEzMDMyLDIuMzQ5MjcuMjQzMzgsMy40OTQxMmE2NS45Mzg3Nyw2NS45Mzg3NywwLDAsMCwxMDQuMjU3MjIsNDcuMTQ0MTksNjQuMDEzLDY0LjAxMywwLDAsMCw4LjE3OTQ3LTYuOTk2LDY1Ljk0NzI1LDY1Ljk0NzI1LDAsMCwwLTE5LjY1MjItMTA2LjQ5NDcyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4OS4xMjA1NCAtMTQ5LjEzMzQ5KSIgZmlsbD0iI2ZmZiIvPjxyZWN0IHg9Ijc0NC44MjAzMyIgeT0iMzk5Ljk2ODU5IiB3aWR0aD0iMi4wMDAxNiIgaGVpZ2h0PSIxMzIuODQ3NSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMwNi42MDQ5NyAxNDguNTE0NDgpIHJvdGF0ZSgtMjAuOTU5NjcpIiBmaWxsPSIjZmZmIi8+PHJlY3QgeD0iNjc2Ljc1MDI4IiB5PSI0NjYuMzkwNjEiIHdpZHRoPSIxMzIuODQ3NSIgaGVpZ2h0PSIyLjAwMDE2IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMzA3LjEyNTUgMTQ3LjU3NDg5KSByb3RhdGUoLTIwLjk1NTc0KSIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik03NDMuMzIxMzgsNjI2LjI5NDc2LDYyNS45NjU1OSw1NzMuMjI5OTNhMy42MDY1NywzLjYwNjU3LDAsMCwxLTEuNzk4MDYtNC43NjY3NGwxMS4wMzk3NC0yNC40MTVhMy42MDY1OCwzLjYwNjU4LDAsMCwxLDQuNzY2NjItMS43OTgzOWwxMTcuMzU1NzksNTMuMDY0ODNhMy42MDY1NywzLjYwNjU3LDAsMCwxLDEuNzk4MDYsNC43NjY3NGwtMTEuMDM5NzQsMjQuNDE1QTMuNjA2NTcsMy42MDY1NywwLDAsMSw3NDMuMzIxMzgsNjI2LjI5NDc2Wk02MzkuMTQ5ODcsNTQ0LjA3MjE3YTEuNjA0MTMsMS42MDQxMywwLDAsMC0yLjEyMDI0LjhsLTExLjAzOTc0LDI0LjQxNWExLjYwNDExLDEuNjA0MTEsMCwwLDAsLjc5OTcyLDIuMTIwMzZMNzQ0LjE0NTQsNjI0LjQ3MjRhMS42MDQxMSwxLjYwNDExLDAsMCwwLDIuMTIwMjQtLjhsMTEuMDM5NzQtMjQuNDE1YTEuNjA0MTEsMS42MDQxMSwwLDAsMC0uNzk5NzItMi4xMjAzNloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNNzE0Ljg5Mjc4LDY4OS4xNjYxNyw1OTcuNTM3LDYzNi4xMDEzNWEzLjYwNjU3LDMuNjA2NTcsMCwwLDEtMS43OTgwNi00Ljc2Njc0bDExLjAzOTc0LTI0LjQxNWEzLjYwNjU3LDMuNjA2NTcsMCwwLDEsNC43NjY2Mi0xLjc5ODM4bDExNy4zNTU3OSw1My4wNjQ4M2EzLjYwNjU3LDMuNjA2NTcsMCwwLDEsMS43OTgwNiw0Ljc2Njc0bC0xMS4wMzk3NCwyNC40MTVBMy42MDY1NywzLjYwNjU3LDAsMCwxLDcxNC44OTI3OCw2ODkuMTY2MTdaTTYxMC43MjEyNyw2MDYuOTQzNTlhMS42MDQxMSwxLjYwNDExLDAsMCwwLTIuMTIwMjQuOGwtMTEuMDM5NzQsMjQuNDE1YTEuNjA0MTEsMS42MDQxMSwwLDAsMCwuNzk5NzIsMi4xMjAzNkw3MTUuNzE2OCw2ODcuMzQzODFhMS42MDQxMSwxLjYwNDExLDAsMCwwLDIuMTIwMjQtLjhsMTEuMDM5NzQtMjQuNDE1YTEuNjA0MTEsMS42MDQxMSwwLDAsMC0uNzk5NzItMi4xMjAzNloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNNjY5LjUzNTU4LDUzMC4wODM3YTc4LjAwMzIzLDc4LjAwMzIzLDAsMCwwLTE1LjIxNjI5LTMyLjkzNDMxLDEwMy4xMjk5MywxMDMuMTI5OTMsMCwwLDAtMjcuODEzLTI0LjQ5NjYyLDEyMy4zMzIzOSwxMjMuMzMyMzksMCwwLDAtMzUuNjA2NjUtMTQuNTk5MmMtMTUuNjA5ODctMy43NTAyMS0zMS43MzA3Ny00Ljk3MTktNDcuNzUyLTQuODE3NzItMTYuMTM2NDcuMTU1MjktMzIuMjIxMDYsMS42NjctNDguMjU4MSwzLjM1MTE5cS0zLjA1NzUxLjMyMTA5LTYuMTE0MzIuNjQ4NzZjLTEuODk5ODIuMjAyODMtMS45MjA1NywzLjIwNSwwLDMsMTUuODAwMy0xLjY4Njg0LDMxLjYyNC0zLjM0NSw0Ny41MTQ3OC0zLjg1NTE4LDE1Ljc2MTMxLS41MDYsMzEuNjM5NTMuMTE0MjksNDcuMTUwNTUsMy4xMjE5QTEyNS43OCwxMjUuNzgsMCwwLDEsNjIwLjM3NjQsNDcyLjU2MWExMDQuNDE4MzQsMTA0LjQxODM0LDAsMCwxLDI4LjUxOTU0LDIyLjY4MjI5QTc3LjEyMjY0LDc3LjEyMjY0LDAsMCwxLDY2NS42NjMsNTI2LjQ3MzQ0Yy4zNzM1MywxLjQ1ODcyLjY5NjYyLDIuOTI4OTUuOTc5NzUsNC40MDc3OC4zNjI2NCwxLjg5NDExLDMuMjU0NjIsMS4wOTIxMSwyLjg5Mjg0LS43OTc1MloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODkuMTIwNTQgLTE0OS4xMzM0OSkiIGZpbGw9IiMyZjJlNDEiLz48cGF0aCBkPSJNNDk5LjQ4OTkyLDQzNS43NjczNWwtMjMuOTYyMDcsMjUuNDg3NzRhMS41MTQyOCwxLjUxNDI4LDAsMCwwLC4zMDM1OSwyLjM1NTg3bDIxLjYxOCwxMC4zMzM1NGMxLjczMzM1LjgyODU1LDMuMjU3MTMtMS43NTcyNiwxLjUxNDE1LTIuNTkwNDJsLTIxLjYxOC0xMC4zMzM1My4zMDM1OCwyLjM1NTg2LDIzLjk2MjA3LTI1LjQ4Nzc0YzEuMzIxNzUtMS40MDU5MS0uNzk1NTMtMy41MzE1My0yLjEyMTMyLTIuMTIxMzJaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTg5LjEyMDU0IC0xNDkuMTMzNDkpIiBmaWxsPSIjMmYyZTQxIi8+PHBhdGggZD0iTTEwMDkuNjg4NzcsNzUwLjg2NjUxaC00NTcuMjk0YTEuMTkwNjgsMS4xOTA2OCwwLDEsMSwwLTIuMzgxMzdoNDU3LjI5NGExLjE5MDY4LDEuMTkwNjgsMCwxLDEsMCwyLjM4MTM3WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4OS4xMjA1NCAtMTQ5LjEzMzQ5KSIgZmlsbD0iI2NhY2FjYSIvPjwvc3ZnPg==" alt="HP制作" width="460" height="380">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROBLEM ========== -->
+<section id="problem" class="dot-bg">
+  <div class="container">
+    <div class="text-center">
+      <div class="sec-label center">SECTION 01 — PROBLEM</div>
+      <h2 class="sec-heading">こんな<span class="pink">お悩み</span>ありませんか？</h2>
+      <p class="sec-sub">夜職経営者が抱えるHP・集客の課題を、まるごと解決します。</p>
+    </div>
+    <div class="prob-grid" style="margin-top:60px;">
+      <div class="prob-card">
+        <div class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.06a88.21,88.21,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg></div>
+        <div class="prob-title">HPがなくて新規のお客様に見つけてもらえない</div>
+        <div class="prob-sub">検索しても出てこず、毎日機会損失が続いている</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 256 256" fill="currentColor"><path d="M208,24H72A16,16,0,0,0,56,40V56H40A16,16,0,0,0,24,72V216a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V200h8a16,16,0,0,0,16-16V40A16,16,0,0,0,208,24ZM184,216H40V72H56V184a16,16,0,0,0,16,16H184Zm24-32H72V40H208Z"/></svg></div>
+        <div class="prob-title">古いHPがお店の評判を落としている</div>
+        <div class="prob-sub">デザインが古くてお店の魅力が全く伝わっていない</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 256 256" fill="currentColor"><path d="M216,72H56a8,8,0,0,1,0-16H208a8,8,0,0,1,0-16H56A24,24,0,0,0,32,64V192a24,24,0,0,0,24,24H216a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72Zm0,128H56a8,8,0,0,1-8-8V86.63A23.84,23.84,0,0,0,56,88H216Zm-48-60a12,12,0,1,1-12-12A12,12,0,0,1,168,140Z"/></svg></div>
+        <div class="prob-title">制作費が高くてずっと後回しにしてきた</div>
+        <div class="prob-sub">10万円超の見積もりに何度も諦めてきた</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 256 256" fill="currentColor"><path d="M176,136a40,40,0,1,0-40,40A40,40,0,0,0,176,136Zm-64,0a24,24,0,1,1,24,24A24,24,0,0,1,112,136Zm103.21,49.19A72,72,0,0,0,176.69,32H79.31A72,72,0,0,0,40.79,185.19,100.92,100.92,0,0,0,8,232a8,8,0,0,0,16,0,84,84,0,0,1,168,0,8,8,0,0,0,16,0A100.92,100.92,0,0,0,215.21,185.19Z"/></svg></div>
+        <div class="prob-title">スマホで崩れてお客様に悪印象を与えている</div>
+        <div class="prob-sub">スマホ非対応で来店チャンスを逃し続けている</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg></div>
+        <div class="prob-title">情報が古いまま放置されている</div>
+        <div class="prob-sub">更新が面倒でキャストやメニューが古いまま</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== REASONS ========== -->
+<section id="reasons" style="background:var(--dark);color:#fff;">
+  <div class="deco rea-d1"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="text-center">
+      <div class="sec-label center light">SECTION 02 — WHY US</div>
+      <h2 class="sec-heading" style="color:#fff;">選ばれる<span style="color:#ff6eb4;">6つの理由</span></h2>
+      <p class="sec-sub" style="color:rgba(255,255,255,0.55);">夜職専門だからできる、他社にはないサービスをご提供します。</p>
+    </div>
+    <div class="rea-grid">
+      <div class="rea-card">
+        <div class="rea-num">REASON 01</div>
+        <div class="rea-icon"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm40-68a28,28,0,0,1-28,28,8,8,0,0,1,0-16,12,12,0,0,0,0-24H108a4,4,0,0,0,0,8h12a20,20,0,0,1,0,40H96a8,8,0,0,1,0-16h24a4,4,0,0,0,0-8H108a20,20,0,0,1,0-40h32A28,28,0,0,1,168,148Z"/></svg></div>
+        <div class="rea-title">夜職専門だから業界ルールを熟知</div>
+        <div class="rea-desc">キャバクラ・ガールズバー・ラウンジ等、夜職特有の掲載ルールや表現を熟知。余計な修正なしで一発OKが出るHPを作ります。</div>
+      </div>
+      <div class="rea-card">
+        <div class="rea-num">REASON 02</div>
+        <div class="rea-icon"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v56h48A8,8,0,0,1,192,128Z"/></svg></div>
+        <div class="rea-title">最速3日で公開（他社平均30日超）</div>
+        <div class="rea-desc">一般制作会社の平均は30日以上。夜職専用テンプレートを活用し、最短3日でオープンします。繁忙期でも間に合います。</div>
+      </div>
+      <div class="rea-card">
+        <div class="rea-num">REASON 03</div>
+        <div class="rea-icon"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 256 256" fill="currentColor"><path d="M176,136a40,40,0,1,0-40,40A40,40,0,0,0,176,136Zm-64,0a24,24,0,1,1,24,24A24,24,0,0,1,112,136Zm103.21,49.19A72,72,0,0,0,176.69,32H79.31A72,72,0,0,0,40.79,185.19,100.92,100.92,0,0,0,8,232a8,8,0,0,0,16,0,84,84,0,0,1,168,0,8,8,0,0,0,16,0A100.92,100.92,0,0,0,215.21,185.19Z"/></svg></div>
+        <div class="rea-title">スマホ完全最適化・どの端末でも美しく</div>
+        <div class="rea-desc">お客様の90%以上がスマホで検索します。PC・スマホ・タブレット全端末で崩れず美しく表示されるデザインが標準です。</div>
+      </div>
+      <div class="rea-card">
+        <div class="rea-num">REASON 04</div>
+        <div class="rea-icon"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 256 256" fill="currentColor"><path d="M216,72H56a8,8,0,0,1,0-16H208a8,8,0,0,1,0-16H56A24,24,0,0,0,32,64V192a24,24,0,0,0,24,24H216a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72Zm0,128H56a8,8,0,0,1-8-8V86.63A23.84,23.84,0,0,0,56,88H216Zm-48-60a12,12,0,1,1-12-12A12,12,0,0,1,168,140Z"/></svg></div>
+        <div class="rea-title">料金明瞭・追加費用・更新費ゼロ</div>
+        <div class="rea-desc">「後から追加費用が発生した」というトラブルは当サービスでは起きません。表示価格にすべて含まれています。</div>
+      </div>
+      <div class="rea-card">
+        <div class="rea-num">REASON 05</div>
+        <div class="rea-icon"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></div>
+        <div class="rea-title">修正・変更は何度でも無制限</div>
+        <div class="rea-desc">「やっぱりここを変えたい」「新キャストを追加したい」完成後も無制限で対応します。回数制限なし、追加費用なし。</div>
+      </div>
+      <div class="rea-card">
+        <div class="rea-num">REASON 06</div>
+        <div class="rea-icon"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.06a88.21,88.21,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg></div>
+        <div class="rea-title">SEO対策込みで検索上位を狙う</div>
+        <div class="rea-desc">「地域名×キャバクラ」で検索上位表示されるよう、SEO対策を標準搭載。作って終わりではなく、集客まで考えます。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== RESULTS ========== -->
+<section id="results">
+  <div class="container">
+    <div class="text-center">
+      <div class="sec-label center">SECTION 03 — RESULTS</div>
+      <h2 class="sec-heading">数字で見る<span class="pink">実績</span></h2>
+      <p class="sec-sub">多くの夜職経営者様にご利用いただいています。<br><small style="color:#bbb;font-size:12px;">※数字はAI仮入れです。後で実際の数字に差し替えてください。</small></p>
+    </div>
+    <div class="results-grid">
+      <div class="result-item">
+        <div class="result-num">150<span class="result-unit">+</span></div>
+        <div class="result-lbl">累計制作店舗数</div>
+        <div class="result-note">キャバクラ・ガールズバー・ラウンジなど</div>
+      </div>
+      <div class="result-item">
+        <div class="result-num">98<span class="result-unit">%</span></div>
+        <div class="result-lbl">顧客満足度</div>
+        <div class="result-note">ご利用後のアンケートより</div>
+      </div>
+      <div class="result-item">
+        <div class="result-num">3<span class="result-unit">日</span></div>
+        <div class="result-lbl">最短納品スピード</div>
+        <div class="result-note">業界平均の10分の1のスピード</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:60px;">
+      <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iZTZhNGQyMDEtZDNiNy00YzhhLTg0YzUtOGJmMjk5N2M2YmMzIiBkYXRhLW5hbWU9IkxheWVyIDEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDkzMiA1NjcuNTg2MTEiPjxwYXRoIGlkPSJhMzE0NzVjNC1mMGRmLTQ5MzQtOGRlZS1kYjI0NmQ1NjUwZmEiIGRhdGEtbmFtZT0iUGF0aCA0MzgiIGQ9Ik0xNzMuMzc3LDY4NC40MzM0NGEyNC4yMTQ1OSwyNC4yMTQ1OSwwLDAsMCwyMy4zODI2OS00LjExODc3YzguMTg5NzctNi44NzQ0MSwxMC43NTgtMTguMTk2LDEyLjg0NjctMjguNjgxOTFsNi4xNzk3My0zMS4wMTY1Ny0xMi45Mzc3LDguOTA4MzdjLTkuMzA0NjUsNi40MDY0MS0xOC44MTgyNiwxMy4wMTg2Ni0yNS4yNjAxMSwyMi4yOTc4NXMtOS4yNTIyMywyMS45NDcwNy00LjA3NzkyLDMxLjk4OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iI2U2ZTZlNiIvPjxwYXRoIGlkPSJiYzgwMDM5ZC03NDk5LTQ3ZTMtOGRkNC1iOTE3Nzk0ZGZiYzAiIGRhdGEtbmFtZT0iUGF0aCA0MzkiIGQ9Ik0xNzUuMzc0NjYsNzI0LjE0NGMtMS42MjgzOS0xMS44NjM2OC0zLjMwMzgyLTIzLjg4MDc4LTIuMTU4ODQtMzUuODcxNjcsMS4wMTQ2Ny0xMC42NDkzMiw0LjI2MzczLTIxLjA0ODgxLDEwLjg3ODMxLTI5LjU3OTM4YTQ5LjIwNjEsNDkuMjA2MSwwLDAsMSwxMi42MjQ2Ni0xMS40NDAzOWMxLjI2MjE1LS43OTY0NywyLjQyNDA5LDEuMjAzNTQsMS4xNjczMywxLjk5N2E0Ni43Nzk0OSw0Ni43Nzk0OSwwLDAsMC0xOC41MDQ0NiwyMi4zMjU2MmMtNC4wMjg1NywxMC4yNDYwNy00LjY3NTQ1LDIxLjQxNTgyLTMuOTgxNTQsMzIuMzAwMy40MTk0NCw2LjU4MjE4LDEuMzEwNzQsMTMuMTIxMiwyLjIwNTg4LDE5LjY1MjUxYTEuMTk4MTcsMS4xOTgxNywwLDAsMS0uODA4LDEuNDIyNTEsMS4xNjM0OCwxLjE2MzQ4LDAsMCwxLTEuNDIyNTMtLjgwOFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMzQgLTE2Ni4yMDY5NCkiIGZpbGw9IiNmMmYyZjIiLz48cGF0aCBpZD0iYTI0YzQyZGItNzQ3Mi00NWY0LTkwMGMtNDY2ZGJmM2Y3ZDIyIiBkYXRhLW5hbWU9IlBhdGggNDQyIiBkPSJNMTg3LjA5NTY5LDcwNS4xMDc1NWExNy44MjUxMSwxNy44MjUxMSwwLDAsMCwxNS41MzE0MSw4LjAxODYyYzcuODY0NC0uMzczMTgsMTQuNDE4MDYtNS44NTk3MywyMC4zMTcxMy0xMS4wNzAyN2wxNy40NTItMTUuNDA4OC0xMS41NDk4Ny0uNTUyODFjLTguMzA2MTktLjM5Nzg0LTE2LjgyNjcyLS43NzEtMjQuNzM4MTMsMS43OTMzOXMtMTUuMjA3NTgsOC43MjYzOC0xNi42NTQsMTYuOTE1NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iI2U2ZTZlNiIvPjxwYXRoIGlkPSJhN2QyZmIwYi02MTQ5LTQ5ZjItODhkNi1jYzAzNTcxMzM0YTgiIGRhdGEtbmFtZT0iUGF0aCA0NDMiIGQ9Ik0xNzAuNzcxNjgsNzMwLjk2MzY5YzcuODM5NzItMTMuODcxNDIsMTYuOTMyMzQtMjkuMjg3OTQsMzMuMTgwOC0zNC4yMTU1MmEzNy4wMjYwOSwzNy4wMjYwOSwwLDAsMSwxMy45NTU0NS0xLjQ0MWMxLjQ4MTg5LjEyOCwxLjExMTc5LDIuNDExNzQtLjM2NywyLjI4NDU0YTM0LjM5ODMzLDM0LjM5ODMzLDAsMCwwLTIyLjI3MTY0LDUuODkyMTVjLTYuMjc5OTQsNC4yNzQ1NC0xMS4xNjk3NSwxMC4yMTc1Ni0xNS4zMDc4MSwxNi41MTkwNy0yLjUzNTExLDMuODYwNTEtNC44MDU3Niw3Ljg4NDQ1LTcuMDc2NDIsMTEuOTAzQzE3Mi4xNTk1LDczMy4xOTAzOSwxNzAuMDM3NjcsNzMyLjI2Mjg1LDE3MC43NzE2OCw3MzAuOTYzNjlaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTM0IC0xNjYuMjA2OTQpIiBmaWxsPSIjZjJmMmYyIi8+PHJlY3QgaWQ9ImI4NWFlMWRjLWIxNzAtNGY1NC1hNmRlLTRhNzI0NTE5NTBkNyIgZGF0YS1uYW1lPSJSZWN0YW5nbGUgNjIiIHg9IjE3NS4yNTIzNSIgeT0iMTcuNzc1MzgiIHdpZHRoPSI2NDguMzY1NzYiIGhlaWdodD0iMzA3LjY2MDgiIGZpbGw9IiNlNmU2ZTYiLz48cmVjdCBpZD0iZjAxNWVjM2UtMjBjYy00MGU4LTg0NzMtZDc1M2E5YmRiNjg1IiBkYXRhLW5hbWU9IlJlY3RhbmdsZSA3NSIgeD0iMTkzLjc5MjU4IiB5PSI0NC4xNTc4MyIgd2lkdGg9IjYxMS4yODYyIiBoZWlnaHQ9IjI1Ni42OTEwMyIgZmlsbD0iI2ZmZiIvPjxyZWN0IGlkPSJlZDU4NWQ2ZC00YzYwLTRhYWUtOWRjZC1lMzAxMmE3NTkyODkiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDgwIiB4PSIxNzQuOTc1ODgiIHdpZHRoPSI2NDguMzY1NzYiIGhlaWdodD0iMjcuNTQ0NSIgZmlsbD0iY3VycmVudENvbG9yIi8+PGNpcmNsZSBpZD0iYjQzZmUwZmItNzM5My00YmJlLThkY2QtNDhlZDc1NjA4ODkxIiBkYXRhLW5hbWU9IkVsbGlwc2UgOTAiIGN4PSIxOTUuNDQ0ODciIGN5PSIxMi43NDA2MSIgcj0iNS4xMDUyNyIgZmlsbD0iI2ZmZiIvPjxjaXJjbGUgaWQ9ImFkYTNlMTI3LWMzYTEtNDQ2Zi04NzMwLWJmMzJlZDBmOWIxMSIgZGF0YS1uYW1lPSJFbGxpcHNlIDkxIiBjeD0iMjE0LjgyMjgiIGN5PSIxMi43NDA2MSIgcj0iNS4xMDUyNyIgZmlsbD0iI2ZmZiIvPjxjaXJjbGUgaWQ9ImUzOTI3MjczLWVmYTktNGVmNy04OGNhLWEwMjJhMDdhNmQyMiIgZGF0YS1uYW1lPSJFbGxpcHNlIDkyIiBjeD0iMjM0LjIwMTYzIiBjeT0iMTIuNzQwNjEiIHI9IjUuMTA1MjciIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNNDcyLjE2NzE4LDQwNi45OTY2N0g3ODEuMTE4MTFWMzU0LjA0MzU0YTQxLjkyODY0LDQxLjkyODY0LDAsMCwwLTEyLjg2MDM1LTI5Ljg2NTcybC0uMDg0LS4wODJjLTUuNTE4MDYtNS41MzY2Mi0yMy45NTkyMi0xOS41ODgzOC00My4wMzk1NS0xOC4zOTctMTAuMDc5MS42Mjc0NC0xOC43MDgyNSw1LjQ4NDg2LTI1LjY0NzIxLDE0LjQzNzUtMjEuNTk5MTIsMjcuODc3NDQtNDkuOTcxNjgsMTguNDY3MjgtNjQuOTYxOTIsMTAuMzc2OTUtMTMuMjEwNjktNy4xMzEzNS0yNi43MDIxNS0xMC40Nzg1MS00MC4xMDIyOS05Ljk0NTgtMTguNzY3MDkuNzMzODktNDUuMTgxODksNy42NDc0Ni02NC40NDYwNSwzNi40MTc0OC03LjM1NzY2LDEwLjk3OTQ5LTIzLjM1ODg4LDI1Ljg4MzMtNTcuODA5NTcsMzQuNjQyMDlaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTM0IC0xNjYuMjA2OTQpIiBmaWxsPSIjZTRlNGU0IiBzdHlsZT0iaXNvbGF0aW9uOmlzb2xhdGUiLz48cGF0aCBkPSJNNzk4LjU5ODM5LDQwOC4yMjgxNkg0NzIuNzYxNzdhMS4wMTk3NywxLjAxOTc3LDAsMCwxLTEuMDE5NzItMS4wMTk3MlYyNTEuMDM0OTRhMS4wMTk3MiwxLjAxOTcyLDAsMCwxLDIuMDM5NDQsMFY0MDYuMTg4NzJoMzI0LjgxNjlhMS4wMTk3MiwxLjAxOTcyLDAsMCwxLDAsMi4wMzk0NFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMzQgLTE2Ni4yMDY5NCkiIGZpbGw9IiMzZjNkNTYiLz48cmVjdCB4PSIzOTguNzQxNCIgeT0iMTgxLjk2NDUzIiB3aWR0aD0iMiIgaGVpZ2h0PSI1OC42MjE1OCIgZmlsbD0iIzNmM2Q1NiIvPjxyZWN0IHg9IjQ1OC42MTgxMSIgeT0iMTU0LjU4NjExIiB3aWR0aD0iMiIgaGVpZ2h0PSI4NiIgZmlsbD0iIzNmM2Q1NiIvPjxyZWN0IHg9IjUxOC42MTgxMSIgeT0iMTcyLjU4NjExIiB3aWR0aD0iMiIgaGVpZ2h0PSI2OCIgZmlsbD0iIzNmM2Q1NiIvPjxyZWN0IHg9IjU3OC42MTgxMSIgeT0iMTM5LjU4NjExIiB3aWR0aD0iMiIgaGVpZ2h0PSIxMDEiIGZpbGw9IiMzZjNkNTYiLz48cmVjdCB4PSI2MzguNjE4MTEiIHk9IjE2Mi41ODYxMSIgd2lkdGg9IjIiIGhlaWdodD0iNzgiIGZpbGw9IiMzZjNkNTYiLz48Y2lyY2xlIGN4PSI0NTkuNzQxNDQiIGN5PSIxNTUuOTY0NjIiIHI9IjYuMTE4MzIiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjxjaXJjbGUgY3g9IjU3OS43NDE0NCIgY3k9IjEzOS45NjQ2MiIgcj0iNi4xMTgzMiIgZmlsbD0iY3VycmVudENvbG9yIi8+PGNpcmNsZSBjeD0iNTE5Ljc0MTQ0IiBjeT0iMTcyLjk2NDYyIiByPSI2LjExODMyIiBmaWxsPSJjdXJyZW50Q29sb3IiLz48Y2lyY2xlIGN4PSIzOTkuNzQxNDQiIGN5PSIxODEuOTY0NjIiIHI9IjYuMTE4MzIiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjxjaXJjbGUgY3g9IjYzOS43NDE0NCIgY3k9IjE2MS45NjQ2MiIgcj0iNi4xMTgzMiIgZmlsbD0iY3VycmVudENvbG9yIi8+PHBvbHlnb24gcG9pbnRzPSIxMzYuOTEzIDU1NS40NjkgMTQ5LjE3MyA1NTUuNDY5IDE1NS4wMDUgNTA4LjE4MSAxMzYuOTExIDUwOC4xODIgMTM2LjkxMyA1NTUuNDY5IiBmaWxsPSIjZmZiNmI2Ii8+PHBhdGggZD0iTTI2Ny43ODU0Myw3MTcuNjczN2wyNC4xNDQtLjAwMWguMDAxQTE1LjM4NzMxLDE1LjM4NzMxLDAsMCwxLDMwNy4zMTY5Myw3MzMuMDU5di41bC0zOS41MzA3Ni4wMDE0N1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMzQgLTE2Ni4yMDY5NCkiIGZpbGw9IiMyZjJlNDEiLz48cG9seWdvbiBwb2ludHM9IjE5NC45MTMgNTU1LjQ2OSAyMDcuMTczIDU1NS40NjkgMjEzLjAwNSA1MDguMTgxIDE5NC45MTEgNTA4LjE4MiAxOTQuOTEzIDU1NS40NjkiIGZpbGw9IiNmZmI2YjYiLz48cGF0aCBkPSJNMzI1Ljc4NTQzLDcxNy42NzM3bDI0LjE0NC0uMDAxaC4wMDFBMTUuMzg3MzEsMTUuMzg3MzEsMCwwLDEsMzY1LjMxNjkzLDczMy4wNTl2LjVsLTM5LjUzMDc2LjAwMTQ3WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iIzJmMmU0MSIvPjxwYXRoIGQ9Ik0zNTEuNzkyODYsNTA1LjQ5MTM1YTEwLjc0MjcsMTAuNzQyNywwLDAsMC0yLjUxMjM5LTE2LjI3OTkxbC0xOS45NTEzNy05NS43ODktMjEuNzM1OTIsOC41NjM3MiwyNi40NDYzLDkxLjQ2NDY3YTEwLjgwMDkxLDEwLjgwMDkxLDAsMCwwLDE3Ljc1MzM4LDEyLjA0MDU1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iI2ZmYjZiNiIvPjxwYXRoIGQ9Ik0yNTcuNzY0NDEsNDg3LjA0NWwtOS4wMzY0OCw5LjE3Mjgycy05LjY4ODM5LDM1LjUwMzM2LDguODUwODksNzkuMjg5MjlsMTIuNCwxMjYuOTQ5OTQsMjIuMzEsMS42Nzk5NCw2LjY2MDA1LTE0Ny42OTU1OCwzMC43Mjk5NCw0OS4wMjU2TDMyNC4zMTEyNSw3MDMuNjEybDI0LjY2MTE5LS41NjY5MywxMS4xNDU2Ny0xMDguNzUyTDMyOS42Nzg4MSw0ODAuODA4OFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMzQgLTE2Ni4yMDY5NCkiIGZpbGw9IiMyZjJlNDEiLz48cGF0aCBkPSJNMjg5LjM2MDc5LDQ5OS40MDI0M0EzNDUuOTQ3MjksMzQ1Ljk0NzI5LDAsMCwxLDI0OC42NjIzLDQ5Ni43MTRsLS41NDM0Ni0uMDcyMjYsMTMuNDY2NTYtNTkuMTg1NTUtNC42MzctNzYuMTUwODgsNDMuNzg3Ni0xLjVhMTYuMDg5NTEsMTYuMDg5NTEsMCwwLDEsMTYuNTA1MTMsMTMuNzYzNjdsOC45NjE5MSw2MC43NTUzOCw4LjI5LDUzLjkwMjM0LS4xMTEwOC4xNjIxMUMzMjguNDI0NTEsNDk3LjEyNDExLDMwOC41MDYwNSw0OTkuNDAyNDMsMjg5LjM2MDc5LDQ5OS40MDI0M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMzQgLTE2Ni4yMDY5NCkiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjxwYXRoIGQ9Ik0yOTYuNzUyLDM3Mi40MDAyMmw4Ljg5Njg1LTExLjE1MzIyczE1LjU5Njk0LTEwLjY2NiwyMC41MzMxMiwxMi4xOSwxNC4xMDczOSw1OS45NjAyNSwxNC4xMDczOSw1OS45NjAyNWwtMzAuNDk4LDIuNDY5NzRaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTM0IC0xNjYuMjA2OTQpIiBmaWxsPSJjdXJyZW50Q29sb3IiLz48cGF0aCBkPSJNMjEyLjQ0MzM2LDUwNi40OTEzNWExMC43NDI3LDEwLjc0MjcsMCwwLDEsMi41MTIzOS0xNi4yNzk5MWwxOS45NTEzNy05NS43ODksMjEuNzM1OTIsOC41NjM3Mi0yNi40NDYzLDkxLjQ2NDY3YTEwLjgwMDkxLDEwLjgwMDkxLDAsMCwxLTE3Ljc1MzM4LDEyLjA0MDU1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iI2ZmYjZiNiIvPjxwYXRoIGQ9Ik0yNjcuNDg0MjUsMzczLjQwMDIyLDI1OC41ODc0LDM2Mi4yNDdzLTE1LjU5Njk0LTEwLjY2Ni0yMC41MzMxMiwxMi4xOS0xNC4xMDczOSw1OS45NjAyNS0xNC4xMDczOSw1OS45NjAyNWwzMC40OTgsMi40Njk3NFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMzQgLTE2Ni4yMDY5NCkiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjxwYXRoIGQ9Ik0zMDQuOTc4MywzNDguNjY4MzRoLTU4YTQuNTA1MDgsNC41MDUwOCwwLDAsMS00LjUtNC41di0yNWEzMy41LDMzLjUsMCwxLDEsNjcsMHYyNUE0LjUwNTA4LDQuNTA1MDgsMCwwLDEsMzA0Ljk3ODMsMzQ4LjY2ODM0WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iIzJmMmU0MSIvPjxjaXJjbGUgY3g9IjE0OC4zODE4OSIgY3k9IjE1Ni4zOTQ0NyIgcj0iMjQuNTYxMDMiIGZpbGw9IiNmZmI2YjYiLz48cGF0aCBkPSJNMzE3LjQwMzU5LDMyMS42NjgzNEgyODEuOTM4bC0uMzYzNzctNS4wOTE4LTEuODE4MzYsNS4wOTE4aC01LjQ2MDk0bC0uNzIwNy0xMC4wOTE4LTMuNjA0LDEwLjA5MThIMjU5LjQwMzU5di0uNWEyNi41Mjk3NywyNi41Mjk3NywwLDAsMSwyNi40OTk3Ni0yNi41aDUuMDAwMjRhMjYuNTMsMjYuNTMsMCwwLDEsMjYuNSwyNi41WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iIzJmMmU0MSIvPjxwYXRoIGQ9Ik0yODEuNjQ3NzYsMzUzLjMzNTA5YTQuNTk2Myw0LjU5NjMsMCwwLDEtLjc5NjM5LS4wNzAzMWwtMjUuOTY5NDgtNC41ODJWMzA1Ljc2MjgzaDI4LjU4NzRsLS43MDc3Ni44MjUxOWMtOS44NDcxNywxMS40ODQzOC0yLjQyODQ3LDMwLjEwNjQ1LDIuODcwMTIsNDAuMTg0NTdhNC40MzM0Myw0LjQzMzQzLDAsMCwxLS4zNTIzLDQuNzA3QTQuNDgxOTIsNC40ODE5MiwwLDAsMSwyODEuNjQ3NzYsMzUzLjMzNTA5WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iIzJmMmU0MSIvPjxwb2x5Z29uIHBvaW50cz0iODY0LjMyMyA1NTUuNDY5IDg1Mi4wNjQgNTU1LjQ2OSA4NDYuMjMxIDUwOC4xODEgODY0LjMyNiA1MDguMTgyIDg2NC4zMjMgNTU1LjQ2OSIgZmlsbD0iIzllNjE2YSIvPjxwYXRoIGQ9Ik0xMDAxLjQ1MDA1LDczMy41NjA0MmwtMzkuNTMwNzYtLjAwMTQ3di0uNWExNS4zODczMSwxNS4zODczMSwwLDAsMSwxNS4zODY0OC0xNS4zODYyM2guMDAxbDI0LjE0NC4wMDFaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTM0IC0xNjYuMjA2OTQpIiBmaWxsPSIjMmYyZTQxIi8+PHBvbHlnb24gcG9pbnRzPSI4MjAuMzIzIDU1NS40NjkgODA4LjA2NCA1NTUuNDY5IDgwMi4yMzEgNTA4LjE4MSA4MjAuMzI2IDUwOC4xODIgODIwLjMyMyA1NTUuNDY5IiBmaWxsPSIjOWU2MTZhIi8+PHBhdGggZD0iTTk1Ny40NTAwNSw3MzMuNTYwNDJsLTM5LjUzMDc2LS4wMDE0N3YtLjVhMTUuMzg3MzEsMTUuMzg3MzEsMCwwLDEsMTUuMzg2NDgtMTUuMzg2MjNoLjAwMWwyNC4xNDQuMDAxWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iIzJmMmU0MSIvPjxwYXRoIGQ9Ik04MTEuNTM3OSwzOTAuMzIwMzdhMTEuMzk2MzIsMTEuMzk2MzIsMCwwLDAsMTcuNDM0LDEuMTk0NjJsMjQuMjU4NTIsOS40NzMxLDkuMzUyMjctMTMuMzM3NzctMzQuNDQ1NjEtMTIuODk2N2ExMS40NTgwOSwxMS40NTgwOSwwLDAsMC0xNi41OTkyLDE1LjU2Njc1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iIzllNjE2YSIvPjxwb2x5Z29uIHBvaW50cz0iODIwLjE2OSAzMDQuOTI1IDc4OC4yMjkgMzE1LjM0NCA3OTguODk5IDU0MS41NCA4MjMuNTQ5IDU0Mi4xNSA4MzYuMTY0IDM4Mi42MzMgODM5LjAyOSA1NDEuNTIgODY5LjUwOCA1NDMuMiA4ODAuNzQ0IDMwNC45MjUgODIwLjE2OSAzMDQuOTI1IiBmaWxsPSIjMmYyZTQxIi8+PHBhdGggZD0iTTkzMi42MTgxMSwzMzcuNzkzMDZsODEuOTc0NzYtMTcuODExMDYsOS4xMTU4NCw3MC41ODUtNy41OTA2LDMzLjcyNjA2LDMuMDQwNDMsNTEuMjU0cy02NC44MTg2MywzMi4yNjEzNC05Ni45Mjk1Myw2LjAwMzY3YzAsMCwyNS44MDktNjcuNzg5NzIsMTAuODQ5MDgtOTkuNTIzNjlaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTM0IC0xNjYuMjA2OTQpIiBmaWxsPSIjM2YzZDU2Ii8+PHBhdGggZD0iTTk0Ni44MTUsMzQ3Ljc3N2wtMTQuMTk2ODUtOS45ODM5NHMtLjgzODU4LTEuMTYxNDItMTIuNjY5MjksMTIuNjY5MjktMzUuODMwNzEsMzUuODMwNzEtMzUuODMwNzEsMzUuODMwNzFsLTQwLTE1LTcuMjg3NCwyNi45MjQ5NCw0Ni40ODgxOSwyMS42NjQsNjUuODE2LTQzLjk1NTExWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iIzNmM2Q1NiIvPjxwYXRoIGQ9Ik0xMDE5LjE3MzM4LDUwMi4wMDU3YTExLjM5NjI4LDExLjM5NjI4LDAsMCwwLDQuNDIxNjItMTYuOTA2MjVsMTMuODI2NTUtMjIuMDY5LTExLjM2Mi0xMS42NzMzMy0xOS4wODgsMzEuNDRhMTEuNDU4MDgsMTEuNDU4MDgsMCwwLDAsMTIuMjAxODMsMTkuMjA4NjRaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTM0IC0xNjYuMjA2OTQpIiBmaWxsPSIjOWU2MTZhIi8+PHBhdGggZD0iTTEwMDEuODA3MDksMzMzLjg4N2wxMi43ODU3OC0xMy45MDVzMTQuMjQ2MjYtNC45NjExNCwyNS44ODU3NSwyMC42NzUsMjQuNjM5NDksNzcuNjM2MSwyNC42Mzk0OSw3Ny42MzYxbC0zMC4zOTQ4Nyw1OC41NDcyNC0yMy42MDUxMy0xMC41NDcyNCwyMy42MDUxMy00OC40MTMzOUwxMDA5Ljc0NDA5LDM4Mi4wMjdaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTM0IC0xNjYuMjA2OTQpIiBmaWxsPSIjM2YzZDU2Ii8+PGNpcmNsZSBjeD0iOTY3LjM2MzEyIiBjeT0iMjkwLjg0NDEyIiByPSIyNi42MDkxNyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE1NC45NjAzNiAzMzMuNDM5NSkgcm90YXRlKC0yOC42NjMxNikiIGZpbGw9IiM5ZTYxNmEiLz48cGF0aCBkPSJNOTkyLjM4OTQ0LDI2OS41NzE0NWwxLjI5LTIuNTk2MzctNi40OTA5NS0zLjIyNXMtNy4xNjA1NS0xMS42NTEtMjAuMTE3ODQtOC4zNzY4LTE4Ljc4Nyw1LjIzMzcxLTE4Ljc4Nyw1LjIzMzcxbC02LjQ3NDUzLDMuMjU3NzYsMy4yNDk1MywzLjIzMzE5LTUuODI5NTQsMS45NTk1OSwzLjg5NDU1LDEuOTM1LTQuNTMxNDEsMi42MDQ1NiwyLjQzOTM1LDEzLjM1MTg4czQuMDUxNi0xMC4xMjY4OSwxMS44NDA2OC02LjI1NjkyLDIyLjAzNjUtMi4wMDA1MywyMi4wMzY1LTIuMDAwNTNsMTIuMzc3ODYsMjMuOTU1MDhzMi41NTM1Ni04LjM5NzQ1LDcuMTA2NC02LjE1ODNDOTk0LjM5MzE0LDI5Ni40ODgzMiwxMDA2LjAyNDQ2LDI3Ny45NjQ2MSw5OTIuMzg5NDQsMjY5LjU3MTQ1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iIzJmMmU0MSIvPjxwYXRoIGQ9Ik00MzQsNzMzLjc5MzA2SDEzNWExLDEsMCwwLDEsMC0ySDQzNGExLDEsMCwwLDEsMCwyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNCAtMTY2LjIwNjk0KSIgZmlsbD0iI2NhY2FjYSIvPjxwYXRoIGQ9Ik0xMDY1LDczMy43OTMwNkg4MzZhMSwxLDAsMCwxLDAtMmgyMjlhMSwxLDAsMCwxLDAsMloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMzQgLTE2Ni4yMDY5NCkiIGZpbGw9IiNjYWNhY2EiLz48L3N2Zz4=" alt="実績グラフ" width="320" style="opacity:0.85;">
+    </div>
+  </div>
+</section>
+
+<!-- ========== TESTIMONIALS ========== -->
+<section id="testimonials" style="background:#fff;">
+  <div class="container">
+    <div class="text-center">
+      <div class="sec-label center">SECTION 04 — VOICE</div>
+      <h2 class="sec-heading">お客様の<span class="pink">声</span></h2>
+      <p class="sec-sub">実際にご利用いただいた経営者様からの声をご紹介します。<br><small style="color:#bbb;font-size:12px;">※お客様の声はAI仮入れです。後で実際の声に差し替えてください。</small></p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+        </div>
+        <div class="testi-quote">"</div>
+        <p class="testi-text">30,000円でこのクオリティは正直驚きました。他の業者に断られた内容もすぐ対応していただけて、本当に助かりました。</p>
+        <div class="testi-author">
+          <img src="data:image/jpeg;base64,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" alt="A.T.様" class="testi-avatar">
+          <div><div class="testi-name">A. T. 様</div><div class="testi-role">東京都・キャバクラオーナー</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+        </div>
+        <div class="testi-quote">"</div>
+        <p class="testi-text">3日で公開されてすぐに問い合わせが来ました。今まで費用が怖くてHPを作れてなかったのが悔しいくらいです。</p>
+        <div class="testi-author">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gODAK/9sAQwAGBAUGBQQGBgUGBwcGCAoQCgoJCQoUDg8MEBcUGBgXFBYWGh0lHxobIxwWFiAsICMmJykqKRkfLTAtKDAlKCko/9sAQwEHBwcKCAoTCgoTKBoWGigoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo/8AAEQgAlgCWAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A5WO+ktbTyZo3MROcgZKH0PcVyniKVWUmJgf73OK3NZvSkrCeN1fON4JBxXI6jdrOTzKy9hwf1xXBSjrc+hxVRcvLcxWdwcquDnqDmopXXgBS2RySOTWiIS2D5RPUgE0G2dfvcMewHOK6rnk8jZWIZ03N97hM49fWuo8HamLf7RFNgAfdHfnINcy6kccD2z39qkhwp3KwyR/DUyXMrGlKbpz5kenwakjqiqfnLnt+X6VZvlaWMlCGUrke/OM1wmlzGaSPa/BPP8jXdOTHpwyOQuAP6fyrmceVnrQqc8dTgdSJa8cAYY8k+n+cVjXmEQZyF6ketdZd2JDyAnMnLOwHGfQVzGqxsxfn7p/Pn/8AXXRB3PNrxaTZjSSPK/OQAMAdqWJNpBIB+vSnEBc8ZOehpjEsOcHHtWx5zLQLsMLIioe2aTymUZMu5fUDINVQrEZ79qnjjkI3Lnng85BoAcmFX5n3L2AHIp0O6VyThUHUnpSJbkkHG31Xt+FPlIJCjGwc/WkBLHLFFnyE3uerP/QU8SPOCHJI7VVeUIAFAz1p1wz7VeMnYevsfSmFx5t1j+8Rj35/lRSWxO35j+dFFxWPZ9d0SWSRhHGAewJwK5efw7cIA0iCNOmBgfqPr0r1PUZ38nMJxjnj0ridTlkWc5cgjllIII/WvLp1JbH1tajF+80c+2mR26FmVSexI4+gHc1Qu9LkljZynlp7nB/+vXaWs8EoyRGWQctxnP8AIfzqnqBN3IbfS4vtUn8chP7uP1+taqbuc06MGjzqayKMQBuGOnUiqbQeRKuAwbPUDr7Yr0FdAXzSbqRp5GGQkZIQfgO31qvepBaGQPGMH+6nQ/pW6q30RwzwjWr0MfwqqfbMOm8A7lwOMn1r0R4FMAUMPlHBridNtZ11OKe3RjCAAWAzn16+9dJcw3zQmQFuTyceh7VnU1Z2YZNQ2KuqRqiXDbhgHauPXOa4XUAvXsASfzrspTssJDK7ZU7cKuSeOn59+nSuOvY5biQkoUQngdTjtWtJHFi5X2MQqXJb1pjAj7i59zWt9gY461BPC0I5BHvW55jiZzB15zgmpEmKR5KrkdTilkXLZ7djSINx4xkdR6igkDcOXbhVHTgdaXa23ewJamRKEY7mBYcE+lFxNhABgL7GgCIkjLv1zwKuaaxffG/Kvkc+vrWYXLkZPStCybYo9jmmxLcsxxncR2AxRT43DDLdOwoqSz3yW6McfDlxzgE8gVk6h9nuISCADjGN2c/h2/Cr1rbSXseRGA3tkGs7VrSezXdHCSO5CHmvJja59hJ6GGtpGJwkhxHnJUHitqa4itLSC2tEHmzNgjoMDqx9v61hhXklHDY6kHt9apLfv/a00spby4YzGgPT3A/I1vy8xx+0UPmbmpXMEBSHf5s8oykXJY++BVbw54VvtZ1D5mIQnJANVdFiM2ovLcuAHOXIPzOccL7L7d8Yr6C8DabBFYI8Ue3djrTvyaInSp789kU9A8B2dnYpujLMBk5Oc1cvdDsxCyGBAMdAK7pVCQbcBV6e9c/ri7Y2K/KMUnHS4UMTKcuXoeReLvD1hGjPFCqyetefX2mIjH5TXoniGZ7q5eIMcr61yd2hLEMSWFdNK6Wphi+WT0Ry8lpsGQpqhc26yoVZea6K5jPOQay5wqNg4U+hrW5wSijkTEIriSCQcEZU1QX5LsIe5P5V0erWvmhZY/vpzx3rmSSJSzAg561SOOpHlYEjccDIPSoXiZicZ59asSsgkO5j7ACkL/NhFY+5pkESQY5kIUVZjAbAQYQdycZqEq7Pkhvy6U5uF52sPSgCxK4CjGZPZOgoqssrLGCu1RnoKKQ7noK3l1e3kjNf3Ma7uBEpwP1FdBYXOqrnGoXOwL1cfLj33HFYD2l5HGDb+Zg9FY7QPw7VWj8OapqMmZZgAevzE/5/OuJqL6nvrnT0TbO6uLiO4tvLudXtLZ24ypiKt/UfXP4Vy3iDS5bKBY1dZ5GyTKhzkZGOT1qe08NLAyoIhJt6mTaMH8a6bdBdWcQljTMS+WXXqQOnHr7islLkeh1qk6qanozlfC5zeWzPyQSxBHfoK+oPCcZTTocrtJQHArxj4feF/tmqSy8tbqeCete+WsHkW6JCACAACe1U5czuY1EqVLk6svS7Ei+Z1U+ma5/Wp4ltz+8Un0zWd4wvLLS7KSXU7/yVx95nxXi0/ifw/fXxji1W5Yk8cOB+eMVai5GVOMKVpOWrN3XT5eovNEMqawpRGUeRuCK63w9osesfubO7EjMuV3NnNcz4u0+XRLmW3uRgj8q3i1sRVvrI5HULu4uWMenxcnjzX4AqlDo9vkm9vFnuO6hhgfhWPr17cXheG2d1jXgqnBP4/wBKh07SXlhi8mCSGRW3PKxxx2AHeujk929zypVW6nLymy9kkJYRnjrya4/VogLmeL0IYfjXdzptg5JZgME+tcDrrt/arKpwSgH61Edwrr3Sa2tQ0ZkxyuM/ypkIDyvAWAkHCnpmrNs0kIihGPmBLEjOeTTbmzP20PuwXA+Ud+Ko59TOneaNisgyV6gimrKPvBTW3dW/2iLLqN4Gd3c1mQIke8Lhh6kdKNA1RRllDnIXbRVi/tWhYGMb1bngYooEexrremRxkM0lzIP4I1wD+J/wrT0uG5vE8+4tltIicRwKBk/7Tnr+Aqjo/h3TbSTzork+bnlynA+g713FlaMsalWiZSPlIP5n868ibivhPr6fNvM4DV47uHe/lKYjlRIo6cdCKw/Duv5ufsGo4iIJWN+oJ9D/AI16zI9u9mwZFZCfLKnox/xrxbx9pZsLwzwDbHL8ygdUYf0rSk1P3WTXcqS9pHpue8fCaTy2mU/xGvW4Bvj49K+Z/gv4rSGSGO+lBMjbWY9m7Zr6S0+YFQQcqaLOMmmc+KanGNSHVHKeIvAtvr2opd6kBcwRMGW2ckK2OxPpXlms+CYNJ1Z5dOsYYkDlkDxhmXqAu7PIGTjgHpknFfRUh2oWU5HpWRLBDNLumjQt7itoVJRVkzmjyVZc1WKbWx598G/DE0OrNd3DTmOEblLDAJPal+PunqxhuETBxhiBXsGmyRGEJEFUL2FcP8Y7BrnRJXQfMg3Vd+pMJ+1ruLVrqx8wrbnzNwwce1aEbP5YFQI6pNsYYz3rQiTgcVvfQwdOzKUke2Ni3NcBqds1z4hKJnAC5Ir0TUSsNtJI3RQTXEXCszybOZAd8jgZGfTvwOn606abOfFtRSRPYwK9wz/wgBV44Hb+dVdRXzXlkViPKI5HOKs2jm1hmc4+714znt68/jVC9k+yWMalVMs7AscgkDOa1scVzSglSW23r94ckdvTH+fSs0FEvnIA2uuMt0PWrVlGYjuQrtJI5Xoex+v/ANeqrQvNczLnOw59uT0osFy4bdZC4kOwAgj8v5UVLYzsju8yFjgIVzyCP/1UUuUdz1G3kuJ541kjEUbPgfJ8re4OffrXXWxaN2jMRUwx5DEjn9Pxrh/h7a/2jfR3COWsoVZ2ULyT2APf8PSvQPKP9nXLvyzDkoME9zx9f8mvFqaOx9XTqcy1MG41JXcrhAHBC5Ocis3X9OtdTsP3yhSQVLdic9fY1ma9P9kit7g5YIxJPRWwcdq0tB1NdQskTYh81fmBPG4DP9P0+lVytLmRt7WL9xnkOq2t5od3IkLlVJyCB1/wNfTnwO8Vv4h8Kxi6k33ds3kyE9c44J+o/rXjes2EchkW4AeANgMOCta/wcM3hXxfJZ3cirY6kgWN84BkB+XHvyR+NdEpKUfNHBGi4Tsvhf4H000nyd6zL1ykbMKnt5fMQgn5hwabLGJDtNQmOC5HqR+Epp/Plmnz5LrhfqP8mqvj3UVudKmiVWG0FWVwVOPUZ6it2zRIUEaDgdhWN4wuYxpMytLFGzDjeatOyIXv1+dLU+bdS8oXEiRwjAbh8/0qOCXb97pVvxPeWUV3sSaPfjJ2jqfpWNBdxz7tqvtHG4jAJrpWqMK14y1G6663T2tkGwJpBvPoo5PY1k6msYjSyiQBY3GCzA5GOAAScAnJ6elR3Nw0upzNGpfyk2Ahd2CSM8YPsPxpl1I0MSwRyM966v5gUsQgyTjGOuM9B0rqpq0TxsRPnqEQcyBNvzkg7VweW4GeB0/L9aytThM9+YwWbYv3mzye/X/PFaxxFcSNEPOkGREzKefQ8ngc8cDioo7URXDzPg7QSSxGAeT+uD6mhkIfZuiqoYELJGDwf4sY/PsPxpNLjbzLol9ru2zgc57n+dUbaUtFACzq6kqCOuM9v5fjV3TRvcFxkMZm465z/wDqoAs3cWbZJQqbpGJIJHHJ6Z6UU8Sfv3TcxVPusvOR9Pw9hRRYLntfgPw/Z+G7a6toLiWWR9pcORlCQccDp0rdvYTHYMR950Y7XABzkYOM9cdBXD/DiLW1ttcufENulu92wdSVAZztIxnPQDt7mvR7+EXcMAjAGMbgFBO3jPPp+HOK8CektXc+ljLZpWR5V4wtlm0uNY2XzUGCgGGwACSV+rfhx9K5vwez6agu7k7okkMYUHG4cFj+WB+Jrp/EjSeVNFIVeNJmZdxwox7nnsee2Gbk7RUOl6Qhms9OucqLm23Dd1LEBl5J4yAfywT6dSdoWZHMnUv2HywpcXlxbySBpJFOzafvADPHPv8ArntWfdW7WyCwunzauDLFIf4SGIBHcdsd+M4rQvdHu9MtkgmniX7NmWCYHdLENvdRyRwPzFUNb1OB2R5LQKVdgQ0p2yOVCBhjPy47ZHfHNEY82xcq/Lq2er/D/wAWi4YWGpzKbzA8uTGBMAP/AEL2r0PcGUMgyTXx3f314kqGzHkqh+VQGUg/j9O/PPevTfAHxfFuIrDxSXRh8q3W3OP98f1H/wBem6Uo6oTxFOq+zPcpLdpNztdTR5GNiEAfyz+tcF450jSWtJPtS+ZIejNIxP8AOuxt9QtdStkubG4ingcZV43DKfxFcX45tY2iZ2LZAJqIu7sdNNzim0eRTaLaRzO0YSNM8KvX86zdUkjtbdvLACqM1uzxsSeuO1cL4v1GFGFosmZXO1gvOPrXbHV2PLrz91yZnwySm12on32MhyAS2Rz1U/zrQsolhtTIjAsvL7WJDkbTt4wAME5yfatPR9Dlv4ZY4IXRI4zJNKB8ioATkknaCRuwPXjGeiXqmSSGC0jdnV9iIp3kMSFHP/AeoHpzXYux4mr1MazCxlZJCoVyVAAABPHrx3B79am1uZlCpvyTkEg4Lc/n1HtVe9G28tYlAQRqN3rgHnOM/qehFWdXiRdPhCn5ztbZxwO3Tjp6nrUlIy1XyXO1iChGdoxjPP4f/rp8JJlGduAO/Q88nntzUSHfcXIfO1xs3ZGBwP8ACtmGzUReZIuMI+RkZ474+v5fhQDZWgYvdTSYb5yWIAIwc59feirc0CWtpbSvHv8AMBOVxnsO+f7p5IyfwopiPafDtgPDmkBtZ1KW7nIHmz3EuUQ/3VB4A5+prb06+ZL+e3mcbkVSDuyAv8OenJ4HT+GvnPxb4p1LxhqcccSyCANiC1Tn8T6n+Ve4aPdTxWWkXGp5W5EQjuAOQxxzjH4fia8WpScVeW7PoI1Yz0itESa9p4bVklZ2IkfiR0zhx0GODyAOB2U+prI8YrHFqcSFcxNEYi5ByoPTaB0I3Lx0LMPTnrdTt98Zg3dSrwOExhwRlfqRx69aw/FduU1KB5Y9kMyeXI6qMRtjaOexyztnoMfWlB6oJbHnrarf+F/EAtL+VdUslIaE3AG8j/ZLc4znrwTnHrS+Ib21l0+O8iuLqeWXJ8qU7NqgbvmIHI5HHIHrzWl41sRc2Uc/lFJ1AMgYh2RlAz05YgMgAzjOTz3qaV9h1zTmtr1IUv4ozkSEkTBYgo2jHUFRnHfjiuuMlZS+85JJ3cPuORtFfUYyYEeCLOAIY2YZ6+/TGSB6cDio5LJJNyxiSVm+YNKcEjPUc9+x7/z9B/4Rm70u2uW0PUZVsZ2A8s71VTvIUbs9jj5s8ZPpzxuq6XqTQfbjdQywMw/eLcbhkgMSR1B6Z47VrGopMylTlFalXSr7WNDd7jRr2W25O4RSgqeM8joT7Yq9fePfElyjJdXEc2OcGPa36cVizWt1AziC9W4EYDEJuwM9eGAHp/k1lStJG6ibeoGDjH+fp+VXyxetifa1ILlTaRoXetalfRuXvnRf4lUBT78jr/8AWqloemy6jrtjY2yiS4uJlRM9yTUM+903xlck5xjBru/gDYyah8QYrh8+TZwyTvgkKDjaMnPH3s+vHFOTUY3Rmk6kkpM9Ensl8J+FriQOp1JpxHIv+tywPy8n5YupYg5b5fXFZvg3w0HsbnxDqsCyQxKpWIJseaaSQdNxxn5iM8nB6A812GraTJqkrWzrDKkd20MSbmwqudvC9EGwvhRlskc1L8RNSWysdKtdGlS0+0syxJGgXytrgl12qTn5MfKpHcnnJwVR2t1Zu6STv0R4V4jgL67NPcGIxvcFPOjIMcjhssVJwu0EtjAxjFXNYRpIIXmjPlIuNzJgq3QAZ6+vA71o3dnDJqFrYQyqLG0lZfNRGBkXq74JZ+qdMrgYPOao+JryaS+WNmMbMglIHUKAACcZJJ2nqR1zXRGd9DllC2rOKSQPqE43OC0pxz9fyrfNz/oTxrgqykjAz95e+fcce3NcpbyFtSDgbgSGYf5610Wh6Zdazd29tYxq4YlDIzhUB5PzE98du9aXsjG12d18PfCp8ZXJtopI4VgtzMxk4UEuAOeuSBn3A9qK0byG48H6ObLTbpopZrgSTyzyiDeQhxgkcjD8cn16YorBzm3eOx1KlCOktyLwx4Ys/DduCNs14y/vZyOnPRfQU6HxpZXWuDRYm3u/IcY2+apyEyfUZ/HArivHnjY3JfT9IciIZWSdTgt6hfb371xvhy2u5dUgntZDCYXV/O/ukHPHvXPGi5Lmnudk8QoNQprQ+lo7nzLS1WVi0R2pHI5O9XVjy3pwFGO9UtSuZL/SpYJPmuYxlZF5EgxIAVzzkZJ+lQaVc2euWTyWbxkh1d1D7WhfeCcY5GeT15/Op4czR289xG32e9VBuUncj4fOB249+/tXOlY3buYmtFbi2luXi8q8iUSP82A6fvGyMdW+VOfXFc1qOjXDRSrEpW5j2z27AhX2rlcqcd2LMeR0/CuySIpO2nXDFJ1dfLMbccmPKE/RyOvc+tR26i7lTT5k8u7RmkjJICKxQnHvgykjnvWsZcuxlKPNuec6T4s1Cyu1E12XzgCRxliARz3GflH5LzxTtTLXAF0ZQrICf3Sj93nOBnPY4OOeCfoNzXfCkEktyiRqjBiMAcqm1vKJBPGFXrnB3AcYrzxjNYSMQ0qooxkjOM9B+X+etdcOWWqOKpzx0ZcunkMhZrtpSCPvfwnnI56c8ceoqLzo7kstxJsIGcuOpx7D/ODUltB9pClZVbPO3cM9Og/z2FWpbOLEhDcjnLSLx/Ln19wR3rVoyi7mTcaespJRmI2liUAbHPfniuu+E+tr4U1e7kuVfZIEbzCm4Jt3ZO3u2CQD2yawrX7NCgL26F3AIYcjr6Zxz2z1/Cn6fIYtaHllVjaJ9rIdwG4dO+ByOewqJRUlZlRk4y5kfSOpypdSaNc23lG3aZjEFGSGfedy8ggqygMx5YnA5NVvE+hy6hJbsmBtQspDHITcCvTllwVySQoPOK4/4U6ot3p1nZTCMx2V0rICMg5DKMc7jy7D8c9q9U1icjVQQgkmgjJw+du0L95gcKADzySTwQOK4n7srHor3o37njviWNUvV02yCHTLHEbMiAIckb9wDBBgbRgkkYz3zXn+uxGxju0Vt0+35wsm5VG1SBhQF9vxr0+/toNLsYLy8aS5sjL9oiD4d5AGIA3S7V5+X7q/wng4ry/xiJItOa6uJvPub1VdmIZtrc5wxAHIPQdsV1UTixCOS0qKIzK0rlnz0HQn613+ia7Lot4Do8ZjvGj8tX3lTHleTgfp9BXEaYywxb2BLN93H9a3NJ2xu5d8F9oLJyF5B7A+xwBntXSkmrM422ndHU6zfjU7z7XrbyS3DqqpbxgbIUCjhRgbRz0x+JornJ9TiWZiqqWY7i8iqCeB2yB/WimklohNt6s5/wAO6SNWvWjeTZFGu98dSPQVta7OmlQrBaxKgIwoHQe59aKK5r6nZb3TL8IeJZfD2tLcsrzWz/LPCGx5i/j7819E2sUUlgkEcYxcBpIdzH5PlJGeTzwOfaiiubEKzTOnCttNMzfLGoWVuC2JIG2RyMuT8rR9s/7OP/10ptft1hZ3fyi5tyg3Hoygjg/ii/kKKKyTN2hNZZJrGN7xVkJcWxKqRlGATB555Vjn6e9ef6xpa3E92wI88ZmPG1WDsxIPXnCDn1J9jRRW1NtGNVJnEMm0I6YEcgXC9wSPX8aliuIZPlmjkcDIID4B7+nt+dFFdqZ57LMc9iwWL7MxO0sSx68dM9sjrweeRVXzI3dfIRlwv8TcH6/55ooqTRbHtHwF0IalFe6lJMyRpIECr95zjOSew54A9+a7n4gTvollf6nvd0eAowQgOnB5TIK5PAJIJAHFFFcFT+Kevh0vYfI43VdTiiufD1y8JeRraCGGN8PtaRflLSMCzAMc8AdenHPj/wAQ5JkuFgmkaQLIyqXYuT3JJPTORwPSiiuugtDy8TujmrdiANgGScAntXUaTpKTKjTtuyMcDPr65/un9KKK6onFInNvapiWfzBE2QFi4Oc9Tz7GiiiqEf/Z" alt="K.M.様" class="testi-avatar">
+          <div><div class="testi-name">K. M. 様</div><div class="testi-role">大阪府・ラウンジ経営者</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34l13.49-58.54-45.11-39.42a16,16,0,0,1,9.19-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L191,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"/></svg>
+        </div>
+        <div class="testi-quote">"</div>
+        <p class="testi-text">スタッフ紹介ページが好評で指名数が1.5倍になりました。デザインもおしゃれで、お客様からも褒められます。</p>
+        <div class="testi-author">
+          <img src="data:image/jpeg;base64,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" alt="Y.S.様" class="testi-avatar">
+          <div><div class="testi-name">Y. S. 様</div><div class="testi-role">名古屋市・ガールズバーオーナー</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRICING ========== -->
+<section id="pricing" style="background:var(--pink-pale);">
+  <div class="deco pri-d1"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="text-center">
+      <div class="sec-label center">SECTION 05 — PRICING</div>
+      <h2 class="sec-heading">シンプルな<span class="pink">料金プラン</span></h2>
+      <p class="sec-sub">追加費用・更新費はすべてのプランでゼロです。</p>
+    </div>
+    <div class="pricing-cards">
+      <div class="pri-card">
+        <div class="pri-name">ライトプラン</div>
+        <div class="pri-price">¥50,000</div>
+        <div class="pri-period">税込・買い切り</div>
+        <hr class="pri-divider">
+        <ul class="pri-features">
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>3ページ構成</li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>スマホ対応</li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>修正3回まで</li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>納品7日</li>
+          <li class="pri-feat"><span class="feat-no"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg></span><span style="color:#bbb;">SEO対策</span></li>
+        </ul>
+        <a href="tel:09057350597" class="btn btn-outline pri-cta" style="display:flex;margin-top:28px;width:100%;justify-content:center;">問い合わせる</a>
+      </div>
+      <div class="pri-card featured">
+        <div class="feat-badge">★ 期間限定キャンペーン</div>
+        <div class="pri-name">キャンペーンプラン</div>
+        <div class="pri-old">通常 ¥100,000</div>
+        <div class="pri-price">¥30,000</div>
+        <div class="pri-period">税込・買い切り</div>
+        <hr class="pri-divider">
+        <ul class="pri-features">
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span><strong>5ページ構成</strong></li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span><strong>スマホ完全最適化</strong></li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span><strong>修正無制限</strong></li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span><strong>最短3日納品</strong></li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span><strong>SEO対策込み</strong></li>
+        </ul>
+        <a href="tel:09057350597" class="btn btn-primary pri-cta" style="display:flex;margin-top:28px;width:100%;justify-content:center;">今すぐ申し込む →</a>
+      </div>
+      <div class="pri-card">
+        <div class="pri-name">プレミアムプラン</div>
+        <div class="pri-price">¥80,000</div>
+        <div class="pri-period">税込・買い切り</div>
+        <hr class="pri-divider">
+        <ul class="pri-features">
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>10ページ以上</li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>スマホ完全最適化</li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>修正無制限</li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>納品14日</li>
+          <li class="pri-feat"><span class="feat-ok"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>SEO対策 + 写真撮影込み</li>
+        </ul>
+        <a href="tel:09057350597" class="btn btn-outline pri-cta" style="display:flex;margin-top:28px;width:100%;justify-content:center;">問い合わせる</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section id="faq">
+  <div class="container">
+    <div class="text-center">
+      <div class="sec-label center">SECTION 06 — FAQ</div>
+      <h2 class="sec-heading">よくある<span class="pink">質問</span></h2>
+    </div>
+    <div class="faq-list" style="margin-top:60px;">
+      <div class="faq-item"><div class="faq-q"><span class="faq-qnum">Q1</span>制作期間はどれくらいかかりますか？</div><div class="faq-a">最短3日、通常5〜7日で公開します。急ぎの場合はご相談ください。</div></div>
+      <div class="faq-item"><div class="faq-q"><span class="faq-qnum">Q2</span>写真や素材がなくても大丈夫ですか？</div><div class="faq-a">はい。フリー素材をご提供しますので、写真がなくてもすぐに制作を開始できます。後から実際の写真に差し替えることも可能です。</div></div>
+      <div class="faq-item"><div class="faq-q"><span class="faq-qnum">Q3</span>修正は何回まで対応していただけますか？</div><div class="faq-a">キャンペーンプラン・プレミアムプランは無制限でご対応します。ライトプランは3回までです。</div></div>
+      <div class="faq-item"><div class="faq-q"><span class="faq-qnum">Q4</span>開設後のサポートはありますか？</div><div class="faq-a">はい。運用サポートをご提供しています。キャストの追加・変更、メニュー更新なども対応可能です。</div></div>
+      <div class="faq-item"><div class="faq-q"><span class="faq-qnum">Q5</span>支払い方法を教えてください。</div><div class="faq-a">銀行振込・クレジットカード（VISA/Mastercard）に対応しています。分割払いもご相談ください。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FINAL CTA ========== -->
+<section id="final-cta" style="background:var(--dark);text-align:center;padding:120px 0;">
+  <div class="deco fcta-d1"></div>
+  <div class="deco fcta-d2"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="sec-label center" style="color:#ff6eb4;justify-content:center;">LIMITED OFFER</div>
+    <h2 class="fcta-title">この価格は<span style="color:#ff6eb4;">今だけ</span>です。<br>まずはお気軽にご連絡ください。</h2>
+    <p class="fcta-sub">通常100,000円のHP制作が、今なら30,000円。<br>お問い合わせはお電話でどうぞ。</p>
+    <a href="tel:09057350597" class="fcta-phone">090-5735-0597</a>
+    <div class="fcta-btns">
+      <a href="tel:09057350597" class="btn btn-primary" style="font-size:17px;padding:20px 48px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l-.06-.15L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46Z"/></svg>
+        今すぐ電話で申し込む
+      </a>
+      <a href="#pricing" class="btn btn-white">料金プランを見る →</a>
+    </div>
+    <p class="fcta-note">受付時間: 毎日 18:00〜翌4:00 / 無料相談受付中</p>
+    <div class="fcta-trust">
+      <div class="trust-item"><span class="trust-num">150+</span><span class="trust-lbl">制作実績</span></div>
+      <div class="trust-item"><span class="trust-num">98%</span><span class="trust-lbl">顧客満足度</span></div>
+      <div class="trust-item"><span class="trust-num">3日</span><span class="trust-lbl">最短納品</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="container">
+    <div class="footer-brand">GLAM WEB</div>
+    <p>夜職専門 HP制作サービス</p>
+    <p style="margin-top:16px;">© 2025 GLAM WEB. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

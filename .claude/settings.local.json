@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(node auth-google.mjs)",
+      "Bash(node tools/create-template-sheet.mjs)",
+      "Bash(node tools/init-spreadsheet.mjs --id 1tw4zRe_SwCHHLA0YF5S34l5N-M8Oecjqxv6LGzFONHU)",
+      "PowerShell($s = \\(New-Object -ComObject WScript.Shell\\).CreateShortcut\\(\"C:\\\\Users\\\\rapis\\\\OneDrive\\\\デスクトップ\\\\動画出力.lnk\"\\); $s.TargetPath = \"C:\\\\Users\\\\rapis\\\\Downloads\\\\cc-video-editor-20260424T135451Z-3-001\\\\cc-video-editor\\\\output\"; $s.Save\\(\\); Write-Host \"Done\")",
+      "Bash(python create_resume.py)",
+      "mcp__Claude_in_Chrome__computer",
+      "Read(//c/Users/rapis/Desktop/**)",
+      "Read(//c/Users/rapis/OneDrive/デスクトップ/**)"
+    ]
+  }
+}
