@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  }
+
+  .banner {
+    width: 1080px;
+    height: 1920px;
+    position: relative;
+    background: #0f2417;
+    overflow: hidden;
+  }
+
+  /* 上部：明るいグリーンゾーン */
+  .zone-top {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 960px;
+    background: linear-gradient(160deg, #2d6a4f 0%, #40916c 50%, #52b788 100%);
+  }
+
+  /* 下部：ダーク＋テキストゾーン */
+  .zone-bottom {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 980px;
+    background: linear-gradient(170deg, #0f2417 0%, #1b4332 60%, #2d6a4f 100%);
+  }
+
+  /* 波形区切り */
+  .wave-divider {
+    position: absolute;
+    top: 880px;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    z-index: 2;
+  }
+  .wave-divider svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 大円装飾 */
+  .big-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+  .big-circle.bc1 { width: 800px; height: 800px; top: -200px; right: -200px; }
+  .big-circle.bc2 { width: 500px; height: 500px; bottom: 200px; left: -150px; }
+
+  /* オレンジ丸 */
+  .orange-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f4a261, #e76f51);
+  }
+  .orange-circle.oc1 {
+    width: 360px; height: 360px;
+    top: 260px; left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 20px 60px rgba(231,111,81,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 稲穂アイコン（CSSのみ） */
+  .inaho-icon {
+    font-size: 140px;
+    line-height: 1;
+  }
+
+  /* 葉っぱ装飾 */
+  .deco-leaf {
+    position: absolute;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50% 10% 50% 10%;
+  }
+  .deco-leaf.dl1 { width: 120px; height: 200px; top: 80px; left: 60px; transform: rotate(-40deg); }
+  .deco-leaf.dl2 { width: 80px; height: 130px; top: 120px; right: 80px; transform: rotate(30deg); }
+  .deco-leaf.dl3 { width: 100px; height: 160px; bottom: 300px; right: 50px; transform: rotate(-20deg); opacity: 0.06; }
+
+  /* ドット群 */
+  .dot-grid {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(5, 12px);
+    gap: 10px;
+  }
+  .dot-grid span { width: 12px; height: 12px; background: rgba(255,255,255,0.2); border-radius: 50%; display: block; }
+  .dot-grid.dg1 { top: 60px; right: 60px; }
+  .dot-grid.dg2 { bottom: 120px; left: 60px; grid-template-columns: repeat(3, 12px); }
+
+  /* --- テキストコンテンツ --- */
+
+  /* 上部ラベル */
+  .top-label {
+    position: absolute;
+    top: 72px;
+    left: 72px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .top-label .badge {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 10px 28px;
+    border-radius: 40px;
+  }
+
+  /* メインビジュアルエリア */
+  .visual-area {
+    position: absolute;
+    top: 200px;
+    left: 0; right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+  }
+
+  /* タイトル（大） */
+  .hero-title {
+    color: #fff;
+    font-size: 88px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+  .hero-title .accent { color: #f4a261; }
+
+  /* 中央アイコンエリア */
+  .icon-area {
+    margin: 48px 0;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f4a261, #e76f51);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(231,111,81,0.45), 0 0 0 20px rgba(244,162,97,0.15);
+    font-size: 130px;
+    line-height: 1;
+  }
+
+  /* 下部テキストエリア */
+  .text-area {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    padding: 80px 80px 100px;
+    z-index: 10;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: #f4a261;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 8px 28px;
+    border-radius: 30px;
+    margin-bottom: 36px;
+  }
+
+  .main-message {
+    color: #fff;
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    margin-bottom: 36px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .main-message .green-text { color: #52b788; }
+
+  .desc-text {
+    color: rgba(255,255,255,0.75);
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+    margin-bottom: 60px;
+    border-left: 4px solid #52b788;
+    padding-left: 28px;
+  }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cta-btn {
+    background: linear-gradient(135deg, #f4a261, #e76f51);
+    color: #fff;
+    font-size: 32px;
+    font-weight: 700;
+    padding: 24px 64px;
+    border-radius: 60px;
+    letter-spacing: 0.1em;
+    box-shadow: 0 10px 30px rgba(231,111,81,0.45);
+  }
+
+  .hashtags {
+    text-align: right;
+    color: rgba(255,255,255,0.45);
+    font-size: 24px;
+    letter-spacing: 0.06em;
+    line-height: 2;
+  }
+
+  /* 横ライン装飾 */
+  .h-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  }
+  .h-line.hl1 { width: 600px; top: 680px; left: 50%; transform: translateX(-50%); }
+
+</style>
+</head>
+<body>
+<div class="banner">
+
+  <!-- ゾーン -->
+  <div class="zone-top"></div>
+  <div class="zone-bottom"></div>
+
+  <!-- 波形区切り -->
+  <div class="wave-divider">
+    <svg viewBox="0 0 1080 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C180,120 360,160 540,100 C720,40 900,120 1080,60 L1080,160 L0,160 Z"
+            fill="#1b4332"/>
+    </svg>
+  </div>
+
+  <!-- 装飾 -->
+  <div class="big-circle bc1"></div>
+  <div class="big-circle bc2"></div>
+  <div class="deco-leaf dl1"></div>
+  <div class="deco-leaf dl2"></div>
+  <div class="deco-leaf dl3"></div>
+  <div class="h-line hl1"></div>
+
+  <div class="dot-grid dg1">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="dot-grid dg2">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- 上部ラベル -->
+  <div class="top-label">
+    <div class="badge">AGRICULTURE PROJECT</div>
+  </div>
+
+  <!-- ビジュアルエリア -->
+  <div class="visual-area">
+    <div class="hero-title">農業で<br><span class="accent">地域</span>を<br>元気に。</div>
+    <div class="icon-area">🌾</div>
+  </div>
+
+  <!-- 下部テキスト -->
+  <div class="text-area">
+    <div class="section-label">農業活性化プロジェクト</div>
+    <div class="main-message">
+      魅力的なバナーで<br>
+      <span class="green-text">地域を盛り上げよう！</span>
+    </div>
+    <div class="desc-text">
+      地元の農家・生産者を応援し、<br>
+      食と地域の未来をつくる。<br>
+      あなたの一歩が、地域を変える。
+    </div>
+    <div class="cta-row">
+      <div class="cta-btn">プロフィールへ →</div>
+      <div class="hashtags">
+        #農業活性化<br>
+        #地域振興<br>
+        #ローカル農業
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
