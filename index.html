@@ -749,6 +749,47 @@
 
     .contact-email:hover { border-color: var(--white); }
 
+    .contact-platforms {
+      margin-top: 3.5rem;
+    }
+
+    .contact-platforms-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 1.4rem;
+    }
+
+    .platform-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .platform-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.75rem 1.2rem;
+      border: 1px solid #2a2a2a;
+      text-decoration: none;
+      color: var(--white);
+      font-size: 0.88rem;
+      letter-spacing: 0.03em;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .platform-item:hover {
+      border-color: var(--white);
+      background: #111;
+    }
+
+    .platform-icon { font-size: 1.1rem; }
+
     /* ── FOOTER ── */
     footer {
       background: var(--black);
@@ -1200,6 +1241,27 @@
           <span class="btn-face-bottom">CLICK</span>
         </span>
       </a>
+
+      <div class="contact-platforms">
+        <div class="contact-platforms-label">Find me on</div>
+        <div class="platform-list">
+          <a href="https://twitter.com/rapisrazly1" target="_blank" rel="noopener" class="platform-item">
+            <span class="platform-icon">𝕏</span>X（Twitter）
+          </a>
+          <a href="https://www.lancers.jp/profile/rapisrazly" target="_blank" rel="noopener" class="platform-item">
+            <span class="platform-icon">🔧</span>ランサーズ
+          </a>
+          <a href="https://crowdworks.jp/public/employees/1534542" target="_blank" rel="noopener" class="platform-item">
+            <span class="platform-icon">💼</span>クラウドワークス
+          </a>
+          <a href="https://coconala.com/users/4386204/reviews" target="_blank" rel="noopener" class="platform-item">
+            <span class="platform-icon">🌸</span>ココナラ
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100085601329473" target="_blank" rel="noopener" class="platform-item">
+            <span class="platform-icon">📘</span>Facebook
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
