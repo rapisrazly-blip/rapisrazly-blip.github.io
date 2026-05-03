@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Works — RAPIS</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0a0a'/><text x='16' y='23' font-family='Helvetica Neue,sans-serif' font-size='20' font-weight='900' fill='white' text-anchor='middle'>R</text></svg>">
+  <style>
+    :root{ --black:#0a0a0a; --white:#fff; --gray:#f5f5f5; --mid:#888; }
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    body{ font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',sans-serif; background:var(--white); color:var(--black); }
+
+    nav{ position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.2rem 4rem; background:rgba(255,255,255,0.92); backdrop-filter:blur(8px); border-bottom:1px solid #eee; }
+    .nav-logo{ font-size:1.1rem; font-weight:900; letter-spacing:.15em; text-transform:uppercase; opacity:.6; transition:opacity .2s; text-decoration:none; color:var(--black); }
+    .nav-logo:hover{ opacity:1; }
+    .nav-links{ display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a{ text-decoration:none; color:var(--black); font-size:.82rem; letter-spacing:.1em; text-transform:uppercase; opacity:.6; transition:opacity .2s; }
+    .nav-links a:hover, .nav-links a.active{ opacity:1; font-weight:700; }
+
+    .page-hero{ padding:10rem 4rem 5rem; border-bottom:1px solid #eee; }
+    .page-label{ font-size:.72rem; letter-spacing:.3em; text-transform:uppercase; color:var(--mid); margin-bottom:1rem; }
+    .page-title{ font-size:clamp(3rem,6vw,6rem); font-weight:900; line-height:1.05; letter-spacing:-.02em; }
+
+    /* Portfolio */
+    .portfolio-section{ padding:6rem 4rem; }
+    .portfolio-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:4rem; }
+    .portfolio-card{ border:1px solid #e8e8e8; border-radius:.75rem; overflow:hidden; transition:transform .2s,box-shadow .2s; }
+    .portfolio-card:hover{ transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,.1); }
+    .portfolio-thumb{ background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 60%,#16213e 100%); height:180px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+    .portfolio-thumb-label{ position:absolute; top:1rem; left:1rem; font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.4); font-family:monospace; }
+    .portfolio-thumb-icon{ font-size:3rem; }
+    .portfolio-body{ padding:1.5rem; }
+    .portfolio-type{ font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--mid); margin-bottom:.5rem; }
+    .portfolio-title{ font-size:1.05rem; font-weight:800; margin-bottom:.6rem; line-height:1.3; }
+    .portfolio-desc{ font-size:.82rem; color:#888; line-height:1.7; margin-bottom:1.2rem; }
+    .portfolio-actions{ display:flex; gap:.6rem; }
+    .p-btn{ display:inline-block; padding:.5rem 1.1rem; font-size:.75rem; font-weight:700; letter-spacing:.08em; text-decoration:none; border-radius:.3rem; transition:all .2s; }
+    .p-btn-primary{ background:var(--black); color:var(--white); }
+    .p-btn-primary:hover{ background:#333; }
+    .p-btn-secondary{ background:transparent; color:var(--black); border:1px solid #ddd; }
+    .p-btn-secondary:hover{ background:var(--gray); }
+    .video-card .portfolio-thumb{ height:auto; }
+    .video-card video{ width:100%; display:block; background:#000; }
+
+    /* Works grid */
+    .works-section{ background:var(--gray); padding:6rem 4rem; }
+    .works-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-top:4rem; }
+    .work-card{ background:var(--white); padding:2rem; border:1px solid #e8e8e8; transition:transform .2s,box-shadow .2s; }
+    .work-card:hover{ transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,.08); }
+    .work-icon{ font-size:1.8rem; margin-bottom:1rem; }
+    .work-title{ font-size:.95rem; font-weight:800; margin-bottom:.4rem; }
+    .work-desc{ font-size:.78rem; color:#888; }
+    .work-tag{ display:inline-block; margin-top:.8rem; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mid); border:1px solid #ddd; padding:.2rem .6rem; }
+
+    footer{ background:var(--black); border-top:1px solid #1a1a1a; padding:2rem 4rem; display:flex; justify-content:space-between; align-items:center; color:#444; font-size:.78rem; letter-spacing:.08em; }
+
+    .reveal{ opacity:0; transform:translateY(32px); transition:opacity .7s,transform .7s; }
+    .reveal.visible{ opacity:1; transform:translateY(0); }
+
+    @media(max-width:900px){
+      nav{ padding:1rem 2rem; }
+      .nav-links{ gap:1.5rem; }
+      .page-hero{ padding:8rem 2rem 3rem; }
+      .portfolio-section,.works-section{ padding:4rem 2rem; }
+      .portfolio-grid{ grid-template-columns:1fr 1fr; }
+      .works-grid{ grid-template-columns:repeat(2,1fr); }
+    }
+    @media(max-width:600px){
+      nav{ padding:1rem 1.5rem; }
+      .nav-links{ display:none; }
+      .portfolio-grid{ grid-template-columns:1fr; }
+      .works-grid{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo">RAPIS</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="works.html" class="active">Works</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero reveal">
+    <div class="page-label">Works & Portfolio</div>
+    <h1 class="page-title">制作物と<br>自作ツール</h1>
+  </div>
+
+  <!-- Portfolio -->
+  <div class="portfolio-section">
+    <div class="reveal"><div class="page-label">Portfolio</div><h2 style="font-size:clamp(1.8rem,3vw,2.8rem);font-weight:900;margin-top:.5rem;">制作物一覧</h2></div>
+    <div class="portfolio-grid reveal">
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb"><span class="portfolio-thumb-label">PPTX / 提案書</span><div class="portfolio-thumb-icon">📊</div></div>
+        <div class="portfolio-body">
+          <div class="portfolio-type">提案書</div>
+          <div class="portfolio-title">マーケティングAIツール<br>ポートフォリオ</div>
+          <div class="portfolio-desc">LP制作・動画・LINE Bot・SEO記事など自作AIツールをまとめた提案書。</div>
+          <div class="portfolio-actions"><a href="../works/portfolio.pptx" download class="p-btn p-btn-primary">ダウンロード</a></div>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%)"><span class="portfolio-thumb-label">HTML / LP</span><div class="portfolio-thumb-icon">📄</div></div>
+        <div class="portfolio-body">
+          <div class="portfolio-type">LPページ</div>
+          <div class="portfolio-title">AI制作 LPページ<br>（cc-lp-v2）</div>
+          <div class="portfolio-desc">業務自動化サービスの訴求を想定したHTML LP。</div>
+          <div class="portfolio-actions">
+            <a href="../works/lp_cc-lp-v2.html" target="_blank" class="p-btn p-btn-primary">プレビュー</a>
+            <a href="../works/lp_cc-lp-v2.html" download class="p-btn p-btn-secondary">DL</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:linear-gradient(135deg,#1c1c1c 0%,#3a3a3a 100%)"><span class="portfolio-thumb-label">HTML / LP</span><div class="portfolio-thumb-icon">🏠</div></div>
+        <div class="portfolio-body">
+          <div class="portfolio-type">LPページ</div>
+          <div class="portfolio-title">空き家売却<br>価格査定LP</div>
+          <div class="portfolio-desc">空き家・実家じまいをターゲットにした売却査定LP。</div>
+          <div class="portfolio-actions">
+            <a href="../works/lp_satei.html" target="_blank" class="p-btn p-btn-primary">プレビュー</a>
+            <a href="../works/lp_satei.html" download class="p-btn p-btn-secondary">DL</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 100%)"><span class="portfolio-thumb-label">HTML / バナー</span><div class="portfolio-thumb-icon">🎨</div></div>
+        <div class="portfolio-body">
+          <div class="portfolio-type">SNSバナー</div>
+          <div class="portfolio-title">SNSバナー<br>スクエア・ストーリー</div>
+          <div class="portfolio-desc">1:1と9:16の2パターン。HTML/CSS製SNSバナー。</div>
+          <div class="portfolio-actions">
+            <a href="../works/banner_square.html" target="_blank" class="p-btn p-btn-primary">スクエア</a>
+            <a href="../works/banner_story.html" target="_blank" class="p-btn p-btn-secondary">ストーリー</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-card video-card">
+        <video controls style="width:100%;display:block;background:#000;"><source src="../works/avatar_video.mp4" type="video/mp4"></video>
+        <div class="portfolio-body">
+          <div class="portfolio-type">アバター動画</div>
+          <div class="portfolio-title">アバター動画</div>
+          <div class="portfolio-desc">AIアバター動画。BytePlus Seedance使用。</div>
+          <div class="portfolio-actions"><a href="../works/avatar_video.mp4" download class="p-btn p-btn-primary">DL</a></div>
+        </div>
+      </div>
+
+      <div class="portfolio-card video-card">
+        <video controls style="width:100%;display:block;background:#000;"><source src="../works/food_diet_video.mp4" type="video/mp4"></video>
+        <div class="portfolio-body">
+          <div class="portfolio-type">YouTube動画</div>
+          <div class="portfolio-title">テスト動画作成</div>
+          <div class="portfolio-desc">cc-slides＋VOICEVOX東北ずん子＋ffmpegで合成。</div>
+          <div class="portfolio-actions"><a href="../works/food_diet_video.mp4" download class="p-btn p-btn-primary">DL</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Works -->
+  <div class="works-section">
+    <div class="reveal"><div class="page-label">Tools</div><h2 style="font-size:clamp(1.8rem,3vw,2.8rem);font-weight:900;margin-top:.5rem;">自作AIツール 16本</h2></div>
+    <div class="works-grid reveal">
+      <div class="work-card"><div class="work-icon">🐦</div><div class="work-title">X自動投稿</div><div class="work-desc">x-auto-post</div><span class="work-tag">稼働中</span></div>
+      <div class="work-card"><div class="work-icon">🖼️</div><div class="work-title">AIスライド生成</div><div class="work-desc">cc-slides</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">🔍</div><div class="work-title">Web情報収集</div><div class="work-desc">scraping-agent</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">💼</div><div class="work-title">案件自動取得</div><div class="work-desc">job-scout</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">💬</div><div class="work-title">LINE回答効率化</div><div class="work-desc">oc-responder</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">🎬</div><div class="work-title">動画字幕付与</div><div class="work-desc">cc-video-editor</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">📄</div><div class="work-title">LP制作自動化</div><div class="work-desc">cc-lp-v2</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">📋</div><div class="work-title">業務洗い出し</div><div class="work-desc">work-lister</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">👥</div><div class="work-title">LINEグループBot</div><div class="work-desc">line-group-bot</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">⚙️</div><div class="work-title">システム開発支援</div><div class="work-desc">cc-project-builder</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">🤖</div><div class="work-title">FAQ自動生成</div><div class="work-desc">oc-responder-v2</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">📈</div><div class="work-title">SEO記事自動生成</div><div class="work-desc">seo-article-agent</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">📑</div><div class="work-title">URLをPDF変換</div><div class="work-desc">doc-to-pdf</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">✍️</div><div class="work-title">AI記事リライト</div><div class="work-desc">article-humanizer</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">📊</div><div class="work-title">PPTXスライド生成</div><div class="work-desc">pptx-agent</div><span class="work-tag">Active</span></div>
+      <div class="work-card"><div class="work-icon">🎭</div><div class="work-title">AIアバター動画生成</div><div class="work-desc">avatar-video-maker</div><span class="work-tag">Active</span></div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 RAPIS. All rights reserved.</span>
+    <span>Built with Claude Code</span>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('visible'); obs.unobserve(x.target); } }), {threshold:.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

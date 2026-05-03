@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — RAPIS</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0a0a'/><text x='16' y='23' font-family='Helvetica Neue,sans-serif' font-size='20' font-weight='900' fill='white' text-anchor='middle'>R</text></svg>">
+  <style>
+    :root{ --black:#0a0a0a; --white:#fff; --gray:#f5f5f5; --mid:#888; }
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    body{ font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',sans-serif; background:var(--white); color:var(--black); }
+
+    nav{ position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.2rem 4rem; background:rgba(255,255,255,0.92); backdrop-filter:blur(8px); border-bottom:1px solid #eee; }
+    .nav-logo{ font-size:1.1rem; font-weight:900; letter-spacing:.15em; text-transform:uppercase; opacity:.6; transition:opacity .2s; text-decoration:none; color:var(--black); }
+    .nav-logo:hover{ opacity:1; }
+    .nav-links{ display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a{ text-decoration:none; color:var(--black); font-size:.82rem; letter-spacing:.1em; text-transform:uppercase; opacity:.6; transition:opacity .2s; }
+    .nav-links a:hover, .nav-links a.active{ opacity:1; font-weight:700; }
+
+    .page-hero{ padding:10rem 4rem 5rem; border-bottom:1px solid #eee; }
+    .page-label{ font-size:.72rem; letter-spacing:.3em; text-transform:uppercase; color:var(--mid); margin-bottom:1rem; }
+    .page-title{ font-size:clamp(3rem,6vw,6rem); font-weight:900; line-height:1.05; letter-spacing:-.02em; }
+    .page-sub{ margin-top:1.5rem; font-size:1.1rem; color:var(--mid); max-width:36rem; line-height:1.7; }
+
+    .services-section{ padding:6rem 4rem; }
+    .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid #eee; margin-top:4rem; }
+    .service-item{ padding:3rem 2.5rem; border-right:1px solid #eee; border-bottom:1px solid #eee; transition:background .2s; }
+    .service-item:hover{ background:var(--gray); }
+    .service-num{ font-size:.72rem; letter-spacing:.2em; color:var(--mid); margin-bottom:1.5rem; }
+    .service-icon{ font-size:2.5rem; margin-bottom:1.2rem; }
+    .service-title{ font-size:1.3rem; font-weight:800; margin-bottom:1rem; line-height:1.3; }
+    .service-desc{ font-size:.88rem; color:#666; line-height:1.8; margin-bottom:1.5rem; }
+    .service-tags{ display:flex; flex-wrap:wrap; gap:.4rem; }
+    .service-tag{ font-size:.68rem; letter-spacing:.08em; border:1px solid #ddd; padding:.2rem .6rem; color:var(--mid); }
+
+    .price-section{ background:var(--gray); padding:6rem 4rem; }
+    .price-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:4rem; }
+    .price-card{ background:var(--white); padding:2.5rem; border:1px solid #e8e8e8; }
+    .price-card.featured{ background:var(--black); color:var(--white); border-color:var(--black); }
+    .price-label{ font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--mid); margin-bottom:1rem; }
+    .price-card.featured .price-label{ color:#888; }
+    .price-name{ font-size:1.3rem; font-weight:800; margin-bottom:.5rem; }
+    .price-amount{ font-size:2.5rem; font-weight:900; letter-spacing:-.03em; margin-bottom:1.5rem; }
+    .price-amount span{ font-size:1rem; font-weight:400; }
+    .price-list{ list-style:none; display:flex; flex-direction:column; gap:.8rem; font-size:.88rem; color:#555; }
+    .price-card.featured .price-list{ color:#ccc; }
+    .price-list li::before{ content:'✓ '; color:#4ade80; font-weight:700; }
+
+    .cta-section{ background:var(--black); color:var(--white); padding:6rem 4rem; text-align:center; }
+    .cta-title{ font-size:clamp(2rem,4vw,4rem); font-weight:900; margin-bottom:1.5rem; }
+    .cta-sub{ font-size:1rem; color:#888; margin-bottom:3rem; }
+    .btn{ display:inline-block; padding:.9rem 2.2rem; font-size:.85rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; transition:all .2s; border:1.5px solid var(--white); }
+    .btn-white{ background:var(--white); color:var(--black); }
+    .btn-white:hover{ background:transparent; color:var(--white); }
+
+    footer{ background:var(--black); border-top:1px solid #1a1a1a; padding:2rem 4rem; display:flex; justify-content:space-between; align-items:center; color:#444; font-size:.78rem; letter-spacing:.08em; }
+
+    .reveal{ opacity:0; transform:translateY(32px); transition:opacity .7s,transform .7s; }
+    .reveal.visible{ opacity:1; transform:translateY(0); }
+
+    @media(max-width:900px){
+      nav{ padding:1rem 2rem; }
+      .nav-links{ gap:1.5rem; }
+      .page-hero,.services-section,.price-section,.cta-section{ padding:8rem 2rem 4rem; }
+      .services-grid,.price-grid{ grid-template-columns:1fr; }
+      .service-item{ border-right:none; }
+    }
+    @media(max-width:600px){
+      nav{ padding:1rem 1.5rem; }
+      .nav-links{ display:none; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo">RAPIS</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="works.html">Works</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero reveal">
+    <div class="page-label">Services</div>
+    <h1 class="page-title">できること</h1>
+    <p class="page-sub">AIを武器に、あなたの「面倒な作業」を仕組みに変えます。</p>
+  </div>
+
+  <div class="services-section">
+    <div class="reveal"><div class="page-label">What I Do</div></div>
+    <div class="services-grid reveal">
+      <div class="service-item">
+        <div class="service-num">01</div>
+        <div class="service-icon">⚙️</div>
+        <h3 class="service-title">業務自動化<br>ツール開発</h3>
+        <p class="service-desc">繰り返し作業をAIで自動化。X投稿・スクレイピング・データ整理など、あなたの「面倒な作業」を仕組みに変えます。</p>
+        <div class="service-tags">
+          <span class="service-tag">Python</span>
+          <span class="service-tag">Claude Code</span>
+          <span class="service-tag">Railway</span>
+          <span class="service-tag">API連携</span>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">02</div>
+        <div class="service-icon">🎬</div>
+        <h3 class="service-title">コンテンツ<br>生成システム</h3>
+        <p class="service-desc">SNS投稿・LP・スライド・動画など、コンテンツ制作をAIで高速化。アイデアをすぐ形にするフローを構築します。</p>
+        <div class="service-tags">
+          <span class="service-tag">LP制作</span>
+          <span class="service-tag">動画制作</span>
+          <span class="service-tag">VOICEVOX</span>
+          <span class="service-tag">SNSバナー</span>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">03</div>
+        <div class="service-icon">🤖</div>
+        <h3 class="service-title">AIツール<br>導入支援</h3>
+        <p class="service-desc">ChatGPT・Claude・その他AIツールの選定から導入・運用まで。「何から始めれば？」という方の最初の一歩を一緒に踏み出します。</p>
+        <div class="service-tags">
+          <span class="service-tag">ChatGPT</span>
+          <span class="service-tag">Claude</span>
+          <span class="service-tag">コンサル</span>
+          <span class="service-tag">運用サポート</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="price-section">
+    <div class="reveal"><div class="page-label">Pricing</div><h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:900;margin-top:.5rem;">料金の目安</h2></div>
+    <div class="price-grid reveal">
+      <div class="price-card">
+        <div class="price-label">Light</div>
+        <div class="price-name">スポット対応</div>
+        <div class="price-amount">¥30,000<span>〜</span></div>
+        <ul class="price-list">
+          <li>LP・バナー1点制作</li>
+          <li>SNS投稿文作成（10本）</li>
+          <li>簡単な自動化ツール</li>
+          <li>納期3〜5日</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-label">Standard</div>
+        <div class="price-name">フル制作</div>
+        <div class="price-amount">¥50,000<span>〜</span></div>
+        <ul class="price-list">
+          <li>LP＋動画セット制作</li>
+          <li>業務自動化ツール開発</li>
+          <li>AIアバター動画制作</li>
+          <li>納期7〜10日</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="price-label">Premium</div>
+        <div class="price-name">継続サポート</div>
+        <div class="price-amount">¥100,000<span>〜/月</span></div>
+        <ul class="price-list">
+          <li>月次コンテンツ制作</li>
+          <li>自動化システム保守</li>
+          <li>SNS運用代行</li>
+          <li>優先対応・無制限相談</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section reveal">
+    <h2 class="cta-title">まずは気軽に<br>相談してください。</h2>
+    <p class="cta-sub">どんな小さな「自動化したい」「作りたい」でも歓迎です。</p>
+    <a href="contact.html" class="btn btn-white">お問い合わせ</a>
+  </div>
+
+  <footer>
+    <span>© 2026 RAPIS. All rights reserved.</span>
+    <span>Built with Claude Code</span>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('visible'); obs.unobserve(x.target); } }), {threshold:.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

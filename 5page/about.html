@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — RAPIS</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0a0a'/><text x='16' y='23' font-family='Helvetica Neue,sans-serif' font-size='20' font-weight='900' fill='white' text-anchor='middle'>R</text></svg>">
+  <style>
+    :root{ --black:#0a0a0a; --white:#fff; --gray:#f5f5f5; --mid:#888; }
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    body{ font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',sans-serif; background:var(--white); color:var(--black); }
+
+    nav{ position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.2rem 4rem; background:rgba(255,255,255,0.92); backdrop-filter:blur(8px); border-bottom:1px solid #eee; }
+    .nav-logo{ font-size:1.1rem; font-weight:900; letter-spacing:.15em; text-transform:uppercase; opacity:.6; transition:opacity .2s; text-decoration:none; color:var(--black); }
+    .nav-logo:hover{ opacity:1; }
+    .nav-links{ display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a{ text-decoration:none; color:var(--black); font-size:.82rem; letter-spacing:.1em; text-transform:uppercase; opacity:.6; transition:opacity .2s; }
+    .nav-links a:hover, .nav-links a.active{ opacity:1; font-weight:700; }
+
+    .page-hero{ padding:10rem 4rem 5rem; border-bottom:1px solid #eee; }
+    .page-label{ font-size:.72rem; letter-spacing:.3em; text-transform:uppercase; color:var(--mid); margin-bottom:1rem; }
+    .page-title{ font-size:clamp(3rem,6vw,6rem); font-weight:900; line-height:1.05; letter-spacing:-.02em; }
+
+    .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:6rem; padding:6rem 4rem; align-items:start; }
+    .about-left .lead{ font-size:1.4rem; font-weight:800; line-height:1.5; margin-bottom:2rem; }
+    .about-left p{ font-size:1rem; color:#555; line-height:1.9; margin-bottom:1.5rem; }
+    .about-left p strong{ color:var(--black); }
+
+    .about-stats{ display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem; }
+    .stat-item{ border-top:2px solid var(--black); padding-top:1rem; }
+    .stat-number{ font-size:3rem; font-weight:900; letter-spacing:-.03em; }
+    .stat-label{ font-size:.78rem; color:var(--mid); margin-top:.3rem; letter-spacing:.05em; }
+
+    .about-right{ position:sticky; top:6rem; }
+    .profile-card{ background:var(--black); color:var(--white); padding:3rem; border-radius:1rem; }
+    .profile-name{ font-size:2rem; font-weight:900; letter-spacing:-.02em; margin-bottom:.3rem; }
+    .profile-role{ font-size:.85rem; color:#888; letter-spacing:.1em; text-transform:uppercase; margin-bottom:2rem; }
+    .profile-list{ list-style:none; display:flex; flex-direction:column; gap:1rem; }
+    .profile-list li{ display:flex; align-items:flex-start; gap:.8rem; font-size:.9rem; color:#ccc; line-height:1.6; }
+    .profile-list li::before{ content:'→'; color:#f97316; flex-shrink:0; font-weight:700; }
+    .profile-tag-row{ margin-top:2rem; display:flex; flex-wrap:wrap; gap:.5rem; }
+    .profile-tag{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); padding:.3rem .8rem; border-radius:2rem; font-size:.72rem; color:#aaa; letter-spacing:.05em; }
+
+    .philosophy{ background:var(--black); color:var(--white); padding:6rem 4rem; text-align:center; }
+    .philosophy-quote{ font-size:clamp(1.5rem,3vw,2.8rem); font-weight:900; line-height:1.5; max-width:44rem; margin:0 auto; }
+    .philosophy-quote em{ font-style:normal; border-bottom:3px solid #f97316; }
+    .philosophy-sub{ margin-top:1.5rem; font-size:1rem; color:#666; }
+
+    footer{ background:var(--black); border-top:1px solid #1a1a1a; padding:2rem 4rem; display:flex; justify-content:space-between; align-items:center; color:#444; font-size:.78rem; letter-spacing:.08em; }
+
+    .reveal{ opacity:0; transform:translateY(32px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible{ opacity:1; transform:translateY(0); }
+
+    @media(max-width:900px){
+      nav{ padding:1rem 2rem; }
+      .nav-links{ gap:1.5rem; }
+      .page-hero{ padding:8rem 2rem 3rem; }
+      .about-grid{ grid-template-columns:1fr; gap:3rem; padding:4rem 2rem; }
+      .about-right{ position:static; }
+      .philosophy{ padding:4rem 2rem; }
+    }
+    @media(max-width:600px){
+      nav{ padding:1rem 1.5rem; }
+      .nav-links{ display:none; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo">RAPIS</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="works.html">Works</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero reveal">
+    <div class="page-label">About</div>
+    <h1 class="page-title">考える前に<br>動いて、作る。</h1>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <p class="lead">テレビやゲームに使っていた時間を、<br>AI活用に全振りした。</p>
+      <p>技術を完全に理解していなくても、<strong>「動くものを手にする」</strong>ことができる。それが自分の強みだと気づいた。</p>
+      <p>「話す力」と「動きながら考える行動力」を武器に、<strong>業務自動化・コンテンツ生成</strong>の領域でフリーランスとして動き始めている。</p>
+      <p>Claude Codeをはじめとするツールを使いこなし、今この瞬間も<strong>自分自身に革命を起こし続けている。</strong></p>
+
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-number">16</div>
+          <div class="stat-label">自作AIツール稼働中</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">24h</div>
+          <div class="stat-label">X自動投稿稼働中</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">3</div>
+          <div class="stat-label">フリーランス媒体登録</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">革命への意欲</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-right reveal">
+      <div class="profile-card">
+        <div class="profile-name">RAPIS</div>
+        <div class="profile-role">AI Creator / Freelancer</div>
+        <ul class="profile-list">
+          <li>Claude Codeで業務自動化ツールを16本自作・稼働中</li>
+          <li>X自動投稿をRailwayで24時間運用中（17回/日）</li>
+          <li>クラウドワークス・ランサーズ・ココナラでフリーランス活動中</li>
+          <li>「話す力」×「行動力」×「AI活用」で差別化</li>
+          <li>動きながら考えるタイプ。先に作って、改善する。</li>
+        </ul>
+        <div class="profile-tag-row">
+          <span class="profile-tag">Claude Code</span>
+          <span class="profile-tag">業務自動化</span>
+          <span class="profile-tag">動画制作</span>
+          <span class="profile-tag">LP制作</span>
+          <span class="profile-tag">SNS運用</span>
+          <span class="profile-tag">Python</span>
+          <span class="profile-tag">ffmpeg</span>
+          <span class="profile-tag">VOICEVOX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="philosophy reveal">
+    <p class="philosophy-quote">「何が起きてるかわからないけど、<br><em>動くものが手にある</em>。」</p>
+    <p class="philosophy-sub">— それが、私の出発点。</p>
+  </div>
+
+  <footer>
+    <span>© 2026 RAPIS. All rights reserved.</span>
+    <span>Built with Claude Code</span>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('visible'); obs.unobserve(x.target); } }), {threshold:.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
