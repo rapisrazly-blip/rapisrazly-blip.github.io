@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pet's Best Friend — 名刺デザインギャラリー</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Georgia', 'Hiragino Mincho ProN', serif;
+    background: #f9f6f0;
+    color: #3a2e1e;
+  }
+
+  /* ヘッダー */
+  header {
+    background: linear-gradient(135deg, #4a7c59 0%, #2e5c3a 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 20px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '🐾';
+    position: absolute;
+    font-size: 200px;
+    opacity: 0.06;
+    top: -30px;
+    left: -30px;
+  }
+  header::after {
+    content: '🐾';
+    position: absolute;
+    font-size: 200px;
+    opacity: 0.06;
+    bottom: -30px;
+    right: -30px;
+  }
+  header h1 {
+    font-size: 2.6rem;
+    font-style: italic;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  header p {
+    font-size: 1rem;
+    opacity: 0.85;
+    letter-spacing: 1px;
+  }
+  .badge-count {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding: 6px 18px;
+    margin-top: 16px;
+    font-size: 0.9rem;
+  }
+
+  /* 保存ボタン */
+  .save-btn {
+    display: block;
+    margin: 30px auto 10px;
+    background: #8b6914;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 40px;
+    font-size: 1rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(139,105,20,0.3);
+  }
+  .save-btn:hover { background: #6e530f; transform: translateY(-2px); }
+
+  /* メインコンテンツ */
+  main { max-width: 1400px; margin: 0 auto; padding: 20px 20px 60px; }
+
+  /* セクション */
+  .section {
+    margin-bottom: 60px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #4a7c59;
+  }
+  .section-num {
+    background: #4a7c59;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2e5c3a;
+  }
+  .section-desc {
+    font-size: 0.85rem;
+    color: #7a6a4a;
+    margin-left: auto;
+  }
+
+  /* カードグリッド */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .card-item {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+  }
+  .card-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+  .card-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+  .card-label {
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    color: #7a6a4a;
+    background: #fdfaf5;
+    border-top: 1px solid #ece8df;
+  }
+
+  /* フッター */
+  footer {
+    text-align: center;
+    padding: 40px;
+    color: #9a8a6a;
+    font-size: 0.85rem;
+    border-top: 1px solid #e0d8c8;
+  }
+
+  @media (max-width: 768px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    header h1 { font-size: 1.8rem; }
+  }
+  @media (max-width: 480px) {
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Pet's Best Friend</h1>
+  <p>オリジナル名刺デザインギャラリー</p>
+  <div class="badge-count">10スタイル × 3パターン = 全30デザイン</div>
+</header>
+
+<main id="gallery">
+
+  <button class="save-btn" onclick="saveImage()">📥 ギャラリーをPNG保存</button>
+
+  <!-- ① 柴犬ナチュラル -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">①</div>
+      <div class="section-title">柴犬ナチュラル</div>
+      <div class="section-desc">緑×茶 / ナチュラルキャラクター</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="shiba-card-retry-1.png" alt="柴犬ナチュラル-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="shiba-card-retry-2.png" alt="柴犬ナチュラル-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="shiba-card-3.png" alt="柴犬ナチュラル-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+  <!-- ② 猫モノクロ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">②</div>
+      <div class="section-title">猫モノクロ高級感</div>
+      <div class="section-desc">モノクロ / エレガント</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="cat-card-1.png" alt="猫モノクロ-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="cat-card-2.png" alt="猫モノクロ-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="cat-card-3.png" alt="猫モノクロ-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+  <!-- ③ 犬猫ペア -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">③</div>
+      <div class="section-title">犬猫ペアキャラクター</div>
+      <div class="section-desc">緑×クリーム / ポップ・フレンドリー</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="pair-card-1.png" alt="ペア-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="pair-card-2.png" alt="ペア-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="pair-card-3.png" alt="ペア-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+  <!-- ④ ヴィンテージスタンプ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">④</div>
+      <div class="section-title">ヴィンテージスタンプ</div>
+      <div class="section-desc">茶系 / レトロ・クラシック</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="vintage-card-1.png" alt="ヴィンテージ-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="vintage-card-2.png" alt="ヴィンテージ-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="vintage-card-3.png" alt="ヴィンテージ-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+  <!-- ⑤ 筆描きミニマル -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">⑤</div>
+      <div class="section-title">筆描きミニマル</div>
+      <div class="section-desc">モノクロ / 和風・シック</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="brush-card-1.png" alt="筆描き-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="brush-card-2.png" alt="筆描き-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="brush-card-3.png" alt="筆描き-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+  <!-- ⑥ 水彩ボタニカル -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">⑥</div>
+      <div class="section-title">水彩ボタニカル</div>
+      <div class="section-desc">緑×ベージュ / ナチュラル・アーティザン</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="watercolor-card-1.png" alt="水彩-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="watercolor-card-2.png" alt="水彩-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="watercolor-card-3.png" alt="水彩-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+  <!-- ⑦ ウッドフレーム -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">⑦</div>
+      <div class="section-title">ウッドフレーム</div>
+      <div class="section-desc">茶系 / 温かみ・コテージ風</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="rustic-card-1.png" alt="ウッド-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="rustic-card-2.png" alt="ウッド-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="rustic-card-3.png" alt="ウッド-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+  <!-- ⑧ 幾何学スタイリッシュ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">⑧</div>
+      <div class="section-title">幾何学スタイリッシュ</div>
+      <div class="section-desc">モノクロ / モダン・コンテンポラリー</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="geometric-card-1.png" alt="幾何学-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="geometric-card-2.png" alt="幾何学-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="geometric-card-3.png" alt="幾何学-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+  <!-- ⑨ バッジポップ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">⑨</div>
+      <div class="section-title">バッジポップ</div>
+      <div class="section-desc">緑×茶 / 元気・ファミリー向け</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="badge-card-1.png" alt="バッジ-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="badge-card-2.png" alt="バッジ-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="badge-card-3.png" alt="バッジ-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+  <!-- ⑩ アンティーク額縁 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">⑩</div>
+      <div class="section-title">アンティーク額縁</div>
+      <div class="section-desc">茶×ゴールド / ヴィクトリアン・プレミアム</div>
+    </div>
+    <div class="card-grid">
+      <div class="card-item"><img src="antique-card-1.png" alt="アンティーク-1"><div class="card-label">パターン A</div></div>
+      <div class="card-item"><img src="antique-card-2.png" alt="アンティーク-2"><div class="card-label">パターン B</div></div>
+      <div class="card-item"><img src="antique-card-3.png" alt="アンティーク-3"><div class="card-label">パターン C</div></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Pet's Best Friend — Business Card Design Gallery &nbsp;|&nbsp; 10 Styles × 3 Patterns = 30 Designs &nbsp;|&nbsp; Generated with AI
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+function saveImage() {
+  const btn = document.querySelector('.save-btn');
+  btn.textContent = '⏳ 生成中...';
+  btn.disabled = true;
+
+  html2canvas(document.getElementById('gallery'), {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#f9f6f0'
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'pets_best_friend_gallery.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.textContent = '📥 ギャラリーをPNG保存';
+    btn.disabled = false;
+  });
+}
+</script>
+
+</body>
+</html>
