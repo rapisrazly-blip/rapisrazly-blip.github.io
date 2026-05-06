@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ココナラ出品スライド | AI業務自動化</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:#222;
+    font-family:'Noto Sans JP',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:24px 0;
+    gap:16px;
+  }
+  .toolbar{display:flex;gap:12px;}
+  .toolbar button{
+    background:#00d4ff;color:#0d1117;border:none;
+    padding:10px 22px;font-weight:700;font-size:14px;
+    border-radius:8px;cursor:pointer;letter-spacing:.05em;
+    transition:.2s;
+  }
+  .toolbar button:hover{background:#ffd700;transform:translateY(-1px);}
+  .slide{
+    width:1280px;height:960px;
+    background:linear-gradient(160deg,#0d1117 0%,#141a2e 50%,#1a1f35 100%);
+    position:relative;overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.6);
+    color:#fff;
+  }
+  /* 装飾：背景の光のオーラ */
+  .slide::before{
+    content:"";position:absolute;top:-200px;right:-200px;
+    width:600px;height:600px;border-radius:50%;
+    background:radial-gradient(circle,rgba(0,212,255,.18) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .slide::after{
+    content:"";position:absolute;bottom:-180px;left:-180px;
+    width:500px;height:500px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,215,0,.12) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  /* グリッド線 */
+  .grid-bg{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(0,212,255,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(0,212,255,.04) 1px,transparent 1px);
+    background-size:40px 40px;
+    pointer-events:none;
+  }
+
+  /* ヘッダー帯 */
+  .header{
+    position:relative;
+    height:140px;
+    padding:0 56px;
+    display:flex;flex-direction:column;justify-content:center;
+    background:
+      linear-gradient(90deg,rgba(0,212,255,.18) 0%,rgba(255,215,0,.10) 50%,rgba(0,212,255,.18) 100%);
+    border-bottom:1px solid rgba(0,212,255,.4);
+  }
+  .header::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+    background:linear-gradient(90deg,transparent,#00d4ff 30%,#ffd700 50%,#00d4ff 70%,transparent);
+    box-shadow:0 0 20px rgba(0,212,255,.6);
+  }
+  .header h1{
+    font-size:42px;font-weight:900;letter-spacing:.02em;
+    color:#00d4ff;
+    text-shadow:0 0 20px rgba(0,212,255,.4),0 2px 4px rgba(0,0,0,.6);
+    line-height:1.1;
+  }
+  .header .sub{
+    margin-top:10px;
+    font-size:18px;font-weight:400;color:#e8eef7;letter-spacing:.05em;
+  }
+  .header .sub b{color:#ffd700;font-weight:700;font-size:22px;margin:0 4px;}
+
+  .badge{
+    position:absolute;top:24px;right:32px;
+    background:rgba(255,215,0,.95);color:#0d1117;
+    padding:6px 14px;border-radius:20px;
+    font-size:12px;font-weight:700;letter-spacing:.1em;
+    box-shadow:0 4px 12px rgba(255,215,0,.4);
+  }
+
+  /* グリッド本体 */
+  .grid{
+    position:relative;
+    padding:24px 40px 12px 40px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 16px;
+  }
+  .card{
+    background:linear-gradient(135deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.02) 100%);
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:10px;
+    padding:10px 14px;
+    display:flex;align-items:center;gap:12px;
+    backdrop-filter:blur(8px);
+    box-shadow:0 4px 12px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08);
+    transition:.2s;
+  }
+  .card .num{
+    flex:0 0 38px;
+    font-family:'Orbitron',sans-serif;
+    font-size:18px;font-weight:900;
+    color:#00d4ff;
+    text-shadow:0 0 8px rgba(0,212,255,.5);
+    letter-spacing:.02em;
+  }
+  .card .info{flex:1;min-width:0;}
+  .card .name{
+    font-size:13px;font-weight:700;color:#fff;
+    font-family:'Orbitron','Noto Sans JP',sans-serif;
+    letter-spacing:.02em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .card .desc{
+    font-size:11.5px;color:#a8b8d8;margin-top:2px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .card.gold .num{color:#ffd700;text-shadow:0 0 8px rgba(255,215,0,.5);}
+  .card.gold{border-color:rgba(255,215,0,.25);}
+
+  /* フッター帯 */
+  .footer{
+    position:absolute;left:0;right:0;bottom:0;
+    height:80px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(90deg,rgba(255,215,0,.12) 0%,rgba(255,215,0,.20) 50%,rgba(255,215,0,.12) 100%);
+    border-top:1px solid rgba(255,215,0,.5);
+  }
+  .footer::before{
+    content:"";position:absolute;left:0;right:0;top:0;height:2px;
+    background:linear-gradient(90deg,transparent,#ffd700 30%,#00d4ff 50%,#ffd700 70%,transparent);
+    box-shadow:0 0 16px rgba(255,215,0,.6);
+  }
+  .footer span{
+    font-size:24px;font-weight:900;
+    color:#ffd700;
+    text-shadow:0 0 18px rgba(255,215,0,.5),0 2px 4px rgba(0,0,0,.6);
+    letter-spacing:.08em;
+  }
+  .footer span::before{content:"▶ ";color:#00d4ff;font-size:18px;}
+  .footer span::after{content:" ◀";color:#00d4ff;font-size:18px;}
+
+  /* コーナーアクセント */
+  .corner{position:absolute;width:36px;height:36px;border:2px solid #00d4ff;}
+  .corner.tl{top:14px;left:14px;border-right:none;border-bottom:none;}
+  .corner.tr{top:14px;right:14px;border-left:none;border-bottom:none;border-color:#ffd700;}
+  .corner.bl{bottom:14px;left:14px;border-right:none;border-top:none;border-color:#ffd700;}
+  .corner.br{bottom:14px;right:14px;border-left:none;border-top:none;}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="savePng()">📥 PNG保存（1280×960）</button>
+</div>
+
+<div class="slide" id="slide">
+  <div class="grid-bg"></div>
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <div class="header">
+    <div class="badge">COCONALA SERVICE</div>
+    <h1>🤖 AIで業務を丸ごと自動化します</h1>
+    <div class="sub"><b>19種</b>のAIツールを開発・実運用中 / フリーランス・副業・スタートアップの強い味方</div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="num">01</div><div class="info"><div class="name">x-auto-post</div><div class="desc">X（旧Twitter）自動投稿</div></div></div>
+    <div class="card"><div class="num">02</div><div class="info"><div class="name">cc-slides</div><div class="desc">AIスライド画像生成</div></div></div>
+    <div class="card"><div class="num">03</div><div class="info"><div class="name">scraping-agent</div><div class="desc">Web情報自動収集</div></div></div>
+    <div class="card"><div class="num">04</div><div class="info"><div class="name">job-scout</div><div class="desc">案件情報の自動取得</div></div></div>
+    <div class="card"><div class="num">05</div><div class="info"><div class="name">oc-responder</div><div class="desc">LINE回答効率化</div></div></div>
+    <div class="card"><div class="num">06</div><div class="info"><div class="name">cc-video-editor</div><div class="desc">動画字幕の自動付与</div></div></div>
+    <div class="card"><div class="num">07</div><div class="info"><div class="name">cc-lp-v2</div><div class="desc">LP制作の自動化</div></div></div>
+    <div class="card"><div class="num">08</div><div class="info"><div class="name">work-lister</div><div class="desc">業務洗い出しの自動化</div></div></div>
+    <div class="card"><div class="num">09</div><div class="info"><div class="name">line-group-bot</div><div class="desc">LINEグループBot</div></div></div>
+    <div class="card"><div class="num">10</div><div class="info"><div class="name">cc-project-builder</div><div class="desc">システム開発支援</div></div></div>
+    <div class="card"><div class="num">11</div><div class="info"><div class="name">oc-responder-v2</div><div class="desc">FAQ自動生成 + UTAGE連携</div></div></div>
+    <div class="card"><div class="num">12</div><div class="info"><div class="name">seo-article-agent</div><div class="desc">SEO記事の自動生成</div></div></div>
+    <div class="card"><div class="num">13</div><div class="info"><div class="name">doc-to-pdf</div><div class="desc">URLをPDFに変換</div></div></div>
+    <div class="card"><div class="num">14</div><div class="info"><div class="name">article-humanizer</div><div class="desc">AI記事の自然なリライト</div></div></div>
+    <div class="card"><div class="num">15</div><div class="info"><div class="name">pptx-agent</div><div class="desc">PPTXスライドの自動生成</div></div></div>
+    <div class="card"><div class="num">16</div><div class="info"><div class="name">avatar-video-maker</div><div class="desc">AIアバター動画の生成</div></div></div>
+    <div class="card gold"><div class="num">17</div><div class="info"><div class="name">ceo-agent</div><div class="desc">CEO統括エージェント</div></div></div>
+    <div class="card gold"><div class="num">18</div><div class="info"><div class="name">video-pipeline</div><div class="desc">動画制作パイプライン</div></div></div>
+    <div class="card gold"><div class="num">19</div><div class="info"><div class="name">make-post</div><div class="desc">X投稿動画ワンコマンド作成</div></div></div>
+    <div class="card" style="background:linear-gradient(135deg,rgba(0,212,255,.18) 0%,rgba(255,215,0,.10) 100%);border-color:rgba(0,212,255,.4);">
+      <div class="num" style="color:#fff;font-size:14px;text-shadow:none;font-family:'Noto Sans JP';">+α</div>
+      <div class="info"><div class="name" style="color:#00d4ff;">あなた専用ツール</div><div class="desc">ご相談ベースで新規開発も対応</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>あなたの仕事、AIに任せてみませんか？</span>
+  </div>
+</div>
+
+<script>
+function savePng(){
+  const slide=document.getElementById('slide');
+  html2canvas(slide,{
+    width:1280,height:960,
+    scale:2,
+    backgroundColor:null,
+    useCORS:true,
+  }).then(canvas=>{
+    const link=document.createElement('a');
+    link.download='coconala_service_1280x960.png';
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+  });
+}
+</script>
+
+</body>
+</html>
