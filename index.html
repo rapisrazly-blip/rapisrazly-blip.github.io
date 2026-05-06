@@ -503,6 +503,8 @@
       border-radius: 0.75rem;
       overflow: hidden;
       transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
     }
 
     .portfolio-card:hover {
@@ -513,11 +515,14 @@
     .portfolio-thumb {
       background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 60%, #16213e 100%);
       height: 180px;
+      min-height: 180px;
+      max-height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
+      flex-shrink: 0;
     }
 
     .portfolio-thumb::before {
@@ -546,6 +551,9 @@
 
     .portfolio-body {
       padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
 
     .portfolio-type {
@@ -568,6 +576,7 @@
       color: #888;
       line-height: 1.7;
       margin-bottom: 1.2rem;
+      flex: 1;
     }
 
     .portfolio-actions {
@@ -1075,9 +1084,11 @@
 
       <!-- 5: アバター動画 -->
       <div class="portfolio-card">
-        <video controls style="width:100%;display:block;background:#000;">
-          <source src="works/avatar_video.mp4" type="video/mp4">
-        </video>
+        <div style="height:180px;overflow:hidden;flex-shrink:0;background:#000;">
+          <video controls style="width:100%;height:180px;display:block;object-fit:cover;">
+            <source src="works/avatar_video.mp4" type="video/mp4">
+          </video>
+        </div>
         <div class="portfolio-body">
           <div class="portfolio-type">アバター動画</div>
           <div class="portfolio-title">アバター動画</div>
@@ -1137,8 +1148,8 @@
 
       <!-- 6: YouTube動画 -->
       <div class="portfolio-card">
-        <div class="portfolio-thumb" style="background:#000;padding:0;height:auto;">
-          <video controls style="width:100%;display:block;">
+        <div class="portfolio-thumb" style="background:#000;padding:0;height:180px;min-height:180px;max-height:180px;overflow:hidden;">
+          <video controls style="width:100%;height:180px;display:block;object-fit:cover;">
             <source src="works/food_diet_video.mp4" type="video/mp4">
           </video>
         </div>
