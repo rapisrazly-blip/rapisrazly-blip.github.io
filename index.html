@@ -646,13 +646,31 @@
       background: var(--white);
       padding: 2rem;
       border: 1px solid #e8e8e8;
-      transition: transform 0.2s, box-shadow 0.2s;
+      border-radius: 12px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
       cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ff6b35, #f7931e, #ffcd3c);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
     }
 
     .work-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    .work-card:hover::before {
+      transform: scaleX(1);
     }
 
     .work-icon {
@@ -1129,7 +1147,7 @@
     <div class="works-header reveal">
       <div>
         <div class="section-label">Works</div>
-        <h2 class="section-title">自作AIツール 16本</h2>
+        <h2 class="section-title">自作AIツール 19本</h2>
       </div>
     </div>
     <div class="works-grid reveal">
@@ -1212,6 +1230,21 @@
         <div class="work-icon">🎭</div>
         <div class="work-title">AIアバター動画生成</div>
         <div class="work-desc">avatar-video-maker</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">🧠</div>
+        <div class="work-title">CEOエージェント</div>
+        <div class="work-desc">ceo-agent</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">🎥</div>
+        <div class="work-title">動画制作パイプライン</div>
+        <div class="work-desc">video-pipeline</div>
+      </div>
+      <div class="work-card">
+        <div class="work-icon">📝</div>
+        <div class="work-title">X投稿動画ワンコマンド作成</div>
+        <div class="work-desc">make-post</div>
       </div>
     </div>
   </section>
