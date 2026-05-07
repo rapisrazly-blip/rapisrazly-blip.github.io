@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLUB DiA ロゴ提案集</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f0f0f; color: #e0e0e0; font-family: 'Helvetica Neue', Arial, sans-serif; }
+
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 60px 40px;
+    text-align: center;
+    border-bottom: 2px solid #c9a84c;
+  }
+  .hero h1 { font-size: 42px; color: #c9a84c; letter-spacing: 8px; margin-bottom: 10px; }
+  .hero p  { font-size: 16px; color: #888; letter-spacing: 3px; }
+
+  .section { padding: 50px 40px 30px; }
+  .section-title {
+    font-size: 13px;
+    letter-spacing: 5px;
+    color: #c9a84c;
+    text-transform: uppercase;
+    border-left: 3px solid #c9a84c;
+    padding-left: 14px;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 30px;
+    padding-left: 17px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s;
+    cursor: pointer;
+  }
+  .card:hover { transform: translateY(-4px); border-color: #c9a84c; }
+
+  .card-img {
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    padding: 20px;
+  }
+  .card-img img { max-width: 100%; max-height: 160px; object-fit: contain; }
+
+  .card-info { padding: 14px 16px; }
+  .card-num  { font-size: 11px; color: #c9a84c; letter-spacing: 2px; margin-bottom: 4px; }
+  .card-name { font-size: 14px; color: #e0e0e0; font-weight: bold; }
+
+  /* モーダル */
+  .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.88); z-index:1000; align-items:center; justify-content:center; }
+  .modal.active { display:flex; }
+  .modal-inner { background:#1a1a1a; border:1px solid #c9a84c; border-radius:16px; max-width:700px; width:90%; padding:30px; text-align:center; position:relative; }
+  .modal-inner img { max-width:100%; max-height:500px; background:#fff; border-radius:8px; padding:20px; }
+  .modal-name { margin-top:16px; font-size:18px; color:#c9a84c; font-weight:bold; }
+  .modal-close { position:absolute; top:14px; right:18px; font-size:22px; color:#888; cursor:pointer; }
+  .modal-close:hover { color:#fff; }
+
+  footer { text-align:center; padding:40px; color:#444; font-size:12px; border-top:1px solid #1e1e1e; margin-top:40px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>CLUB DiA</h1>
+  <p>LOGO PROPOSAL — 30 DESIGNS</p>
+</div>
+
+<!-- ピクチャーロゴ -->
+<div class="section">
+  <div class="section-title">Picture Logo</div>
+  <div class="section-sub">ピクチャーロゴ — 10案</div>
+  <div class="grid" id="pic"></div>
+</div>
+
+<!-- 抽象ロゴ -->
+<div class="section">
+  <div class="section-title">Abstract Logo</div>
+  <div class="section-sub">抽象ロゴ — 10案</div>
+  <div class="grid" id="abs"></div>
+</div>
+
+<!-- エンブレムロゴ -->
+<div class="section">
+  <div class="section-title">Emblem Logo</div>
+  <div class="section-sub">エンブレムロゴ — 10案</div>
+  <div class="grid" id="emb"></div>
+</div>
+
+<!-- モーダル -->
+<div class="modal" id="modal">
+  <div class="modal-inner">
+    <span class="modal-close" onclick="closeModal()">✕</span>
+    <img id="modal-img" src="" alt="">
+    <div class="modal-name" id="modal-name"></div>
+  </div>
+</div>
+
+<footer>CLUB DiA Logo Proposals — rapisrazly</footer>
+
+<script>
+const logos = {
+  pic: [
+    ["pic-01_クラシックライン.png",       "01 クラシックライン"],
+    ["pic-02_黒シルエット.png",           "02 黒シルエット"],
+    ["pic-03_ヴィンテージ銅版画.png",     "03 ヴィンテージ銅版画"],
+    ["pic-04_アールデコ.png",             "04 アールデコ"],
+    ["pic-05_ジオメトリック.png",         "05 ジオメトリック"],
+    ["pic-06_手描きスケッチ.png",         "06 手描きスケッチ"],
+    ["pic-07_ミニマルアイコン.png",       "07 ミニマルアイコン"],
+    ["pic-08_蜂が抱くダイヤ.png",        "08 蜂が抱くダイヤ"],
+    ["pic-09_王冠スタイル蜂.png",        "09 王冠スタイル蜂"],
+    ["pic-10_ダイヤ単体（蜂なし）.png",  "10 ダイヤ単体（蜂なし）"],
+  ],
+  abs: [
+    ["abs-01_極細アウトライン.png",       "01 極細アウトライン"],
+    ["abs-02_二重ダイヤ.png",             "02 二重ダイヤ"],
+    ["abs-03_4分割ダイヤ.png",           "03 4分割ダイヤ"],
+    ["abs-04_ファセットカット.png",       "04 ファセットカット"],
+    ["abs-05_Dとダイヤの融合.png",       "05 Dとダイヤの融合"],
+    ["abs-06_ネガティブスペース.png",     "06 ネガティブスペース"],
+    ["abs-07_蜂の軌跡螺旋.png",          "07 蜂の軌跡螺旋"],
+    ["abs-08_9分割ハニカムグリッド.png", "08 9分割ハニカムグリッド"],
+    ["abs-09_分解ダイヤ.png",            "09 分解ダイヤ"],
+    ["abs-10_シングルポイント.png",       "10 シングルポイント"],
+  ],
+  emb: [
+    ["emb-01_クラシックサークルバッジ.png", "01 クラシックサークルバッジ"],
+    ["emb-02_六角形ハニカム.png",           "02 六角形ハニカム"],
+    ["emb-03_盾型シールド.png",             "03 盾型シールド"],
+    ["emb-04_ダブルライン円.png",           "04 ダブルライン円"],
+    ["emb-05_アールデコ装飾枠.png",         "05 アールデコ装飾枠"],
+    ["emb-06_角丸スクエア.png",             "06 角丸スクエア"],
+    ["emb-07_月桂樹リース.png",             "07 月桂樹リース"],
+    ["emb-08_縦長カルトゥーシュ.png",       "08 縦長カルトゥーシュ"],
+    ["emb-09_王室紋章型.png",               "09 王室紋章型"],
+    ["emb-10_モノラインジオフレーム.png",   "10 モノラインジオフレーム"],
+  ]
+};
+
+Object.entries(logos).forEach(([section, items]) => {
+  const grid = document.getElementById(section);
+  items.forEach(([file, name]) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-img"><img src="${file}" alt="${name}" loading="lazy"></div>
+      <div class="card-info">
+        <div class="card-num">${section.toUpperCase()} — ${name.split(' ')[0]}</div>
+        <div class="card-name">${name.split(' ').slice(1).join(' ')}</div>
+      </div>`;
+    card.onclick = () => openModal(file, name);
+    grid.appendChild(card);
+  });
+});
+
+function openModal(src, name) {
+  document.getElementById('modal-img').src = src;
+  document.getElementById('modal-name').textContent = name;
+  document.getElementById('modal').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+document.getElementById('modal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+</script>
+</body>
+</html>
