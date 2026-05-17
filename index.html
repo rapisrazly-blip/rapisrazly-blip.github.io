@@ -928,21 +928,233 @@
 
     <!-- RIGHT VISUAL CARD -->
     <div class="hero-visual">
-      <video
-        autoplay loop muted playsinline
-        style="
-          width: 100%;
-          max-width: 480px;
-          height: auto;
-          border-radius: 1.2rem;
-          box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-          display: block;
-          margin: 0 auto;
-        "
-      >
-        <source src="works/claude_ceo.mp4" type="video/mp4">
-      </video>
+      <div id="prompt-animation" style="
+        width: 100%;
+        max-width: 480px;
+        height: 300px;
+        border-radius: 1.2rem;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+        background: #0a0a0a;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.06);
+      ">
+        <!-- 対話メッセージ表示エリア -->
+        <div id="pa-chat" style="
+          position: absolute; inset: 0;
+          display: flex; flex-direction: column;
+          justify-content: center; padding: 2rem;
+          gap: 0.75rem;
+        "></div>
+
+        <!-- Phase2: 暗転オーバーレイ -->
+        <div id="pa-overlay" style="
+          position: absolute; inset: 0;
+          background: #0a0a0a;
+          opacity: 0; pointer-events: none;
+          transition: opacity 0.6s ease;
+        "></div>
+
+        <!-- Phase3: パーティクル + 最終メッセージ -->
+        <canvas id="pa-canvas" style="
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          opacity: 0; transition: opacity 0.4s ease;
+        "></canvas>
+        <div id="pa-final" style="
+          position: absolute; inset: 0;
+          display: flex; align-items: center; justify-content: center;
+          opacity: 0; transition: opacity 0.5s ease;
+          pointer-events: none;
+        ">
+          <span style="
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-weight: 900;
+            color: #ffd700;
+            text-align: center;
+            letter-spacing: 0.05em;
+            text-shadow:
+              0 0 20px rgba(255,215,0,0.8),
+              0 0 40px rgba(255,215,0,0.4),
+              0 0 80px rgba(255,215,0,0.2);
+            line-height: 1.4;
+            padding: 0 1.5rem;
+          " id="pa-final-text">プロンプトは、対話プロセス</span>
+        </div>
+      </div>
     </div>
+
+    <script>
+    (function() {
+      const messages = [
+        { text: "エラーが出る",         side: "right" },
+        { text: "Refererがない？",       side: "left"  },
+        { text: "追加した、まだ出る",    side: "right" },
+        { text: "じゃあ何が...",         side: "left"  },
+        { text: "ブログ検索",            side: "right" },
+        { text: "あ、Originだった",      side: "left"  },
+        { text: "ヘッダー直す",          side: "right" },
+        { text: "通った！",              side: "left"  },
+      ];
+
+      const durations = [800, 750, 720, 680, 640, 600, 560, 520];
+      const chat    = document.getElementById('pa-chat');
+      const overlay = document.getElementById('pa-overlay');
+      const canvas  = document.getElementById('pa-canvas');
+      const final   = document.getElementById('pa-final');
+      const finalTxt= document.getElementById('pa-final-text');
+      const ctx     = canvas.getContext('2d');
+
+      let particles = [];
+      let rafId = null;
+      let phase = 0; // 0=chat, 1=silence, 2=crystal, 3=hold
+
+      // ── バブル生成 ──
+      function makeBubble(msg, side) {
+        const el = document.createElement('div');
+        el.textContent = msg;
+        el.style.cssText = `
+          display: inline-block;
+          max-width: 60%;
+          align-self: ${side === 'right' ? 'flex-end' : 'flex-start'};
+          background: ${side === 'right' ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.04)'};
+          color: #cccccc;
+          font-family: monospace;
+          font-size: 0.85rem;
+          padding: 0.45rem 0.9rem;
+          border-radius: ${side === 'right' ? '1rem 1rem 0.2rem 1rem' : '1rem 1rem 1rem 0.2rem'};
+          border: 1px solid rgba(255,255,255,0.08);
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        `;
+        return el;
+      }
+
+      // ── パーティクル初期化 ──
+      function initParticles() {
+        const w = canvas.width;
+        const h = canvas.height;
+        particles = Array.from({ length: 60 }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          tx: w / 2 + (Math.random() - 0.5) * 40,
+          ty: h / 2 + (Math.random() - 0.5) * 20,
+          vx: 0, vy: 0,
+          size: Math.random() * 2.5 + 0.5,
+          alpha: Math.random() * 0.6 + 0.2,
+          color: Math.random() > 0.5 ? '#ffd700' : '#ffffff',
+        }));
+      }
+
+      function animParticles(progress) {
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        const ease = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        particles.forEach(p => {
+          const cx = p.x + (p.tx - p.x) * ease;
+          const cy = p.y + (p.ty - p.y) * ease;
+          ctx.beginPath();
+          ctx.arc(cx, cy, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.alpha * (0.3 + 0.7 * ease);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      // ── フェーズ制御 ──
+      async function runPhase1() {
+        phase = 0;
+        chat.style.opacity = '1';
+        overlay.style.opacity = '0';
+        canvas.style.opacity = '0';
+        final.style.opacity = '0';
+        chat.innerHTML = '';
+
+        for (let i = 0; i < messages.length; i++) {
+          if (phase !== 0) return;
+          const { text, side } = messages[i];
+          const bubble = makeBubble(text, side);
+          chat.appendChild(bubble);
+          await sleep(20);
+          bubble.style.opacity = '1';
+          await sleep(durations[i] - 20);
+          bubble.style.opacity = '0';
+          await sleep(220);
+          chat.removeChild(bubble);
+        }
+        if (phase === 0) runPhase2();
+      }
+
+      async function runPhase2() {
+        phase = 1;
+        // 暗転
+        overlay.style.opacity = '1';
+        await sleep(800);
+        if (phase !== 1) return;
+
+        // パーティクル開始
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        initParticles();
+        canvas.style.opacity = '1';
+
+        const start = performance.now();
+        const dur = 1500;
+        function tick() {
+          if (phase !== 1) return;
+          const elapsed = performance.now() - start;
+          const prog = Math.min(elapsed / dur, 1);
+          animParticles(prog);
+          if (prog < 1) { rafId = requestAnimationFrame(tick); }
+          else runPhase3();
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+
+      async function runPhase3() {
+        phase = 2;
+        final.style.opacity = '1';
+
+        // パルスアニメ
+        let pulse = 0;
+        function doPulse() {
+          if (phase !== 2) return;
+          pulse += 0.05;
+          const s = 1 + Math.sin(pulse) * 0.025;
+          finalTxt.style.transform = `scale(${s})`;
+          rafId = requestAnimationFrame(doPulse);
+        }
+        rafId = requestAnimationFrame(doPulse);
+
+        await sleep(2500);
+        if (phase === 2) runPhaseEnd();
+      }
+
+      async function runPhaseEnd() {
+        phase = 3;
+        cancelAnimationFrame(rafId);
+
+        // フェードアウトして最初に戻る
+        overlay.style.opacity = '0';
+        canvas.style.opacity  = '0';
+        final.style.opacity   = '0';
+        await sleep(800);
+        runPhase1();
+      }
+
+      function sleep(ms) {
+        return new Promise(r => setTimeout(r, ms));
+      }
+
+      // 起動
+      runPhase1();
+    })();
+    </script>
   </section>
 
   <!-- ABOUT -->
