@@ -185,8 +185,9 @@
       pointer-events: none;
       z-index: 0;
       background:
-        linear-gradient(to top, rgba(1,8,40,0.92) 0%, rgba(1,8,40,0.45) 45%, rgba(1,8,40,0.1) 100%),
-        radial-gradient(ellipse at 15% 90%, rgba(111,255,0,0.06) 0%, transparent 55%);
+        linear-gradient(to top, rgba(1,8,40,0.92) 0%, rgba(1,8,40,0.45) 45%, rgba(1,8,40,0.08) 100%),
+        radial-gradient(ellipse at 72% 48%, rgba(20,35,90,0.55) 0%, transparent 50%),
+        radial-gradient(ellipse at 15% 90%, rgba(111,255,0,0.05) 0%, transparent 50%);
     }
 
     #hero::after {
@@ -210,15 +211,67 @@
 
     .hero-left { display: flex; flex-direction: column; }
 
-    /* ── HERO VISUAL CARD ── */
+    /* ── HERO MONITOR MOCKUP ── */
     .hero-visual {
       position: absolute;
-      bottom: 4rem;
-      right: 4rem;
-      width: 300px;
-      z-index: 2;
+      top: 50%;
+      right: 5%;
+      transform: translateY(-52%);
+      width: clamp(280px, 38vw, 540px);
+      z-index: 1;
       opacity: 0;
-      animation: fadeUp 1s 1.2s forwards;
+      animation: fadeUp 1.1s 1.1s forwards;
+    }
+
+    .monitor-outer {
+      background: linear-gradient(155deg, #2e2e3a 0%, #1c1c26 100%);
+      border-radius: 10px 10px 0 0;
+      padding: 6px 6px 20px;
+      position: relative;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.12),
+        0 50px 100px rgba(0,0,0,0.85),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+
+    .monitor-outer::before {
+      content: '';
+      position: absolute;
+      top: 9px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #3a3a48;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07);
+    }
+
+    .monitor-screen-inner {
+      width: 100%;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      border-radius: 3px;
+      background: var(--c-bg);
+      position: relative;
+      box-shadow:
+        inset 0 0 40px rgba(111,255,0,0.04),
+        0 0 60px rgba(111,255,0,0.06);
+    }
+
+    .monitor-neck {
+      width: 48px;
+      height: 34px;
+      background: linear-gradient(180deg, #22222e, #2a2a38);
+      margin: 0 auto;
+    }
+
+    .monitor-base {
+      width: 145px;
+      height: 10px;
+      background: linear-gradient(180deg, #2a2a38, #1e1e28);
+      border-radius: 0 0 6px 6px;
+      margin: 0 auto;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.7);
     }
 
     .hero-card {
@@ -463,7 +516,7 @@
     .btn-fill span { position: relative; z-index: 1; }
 
 
-    .hero-left { position: relative; z-index: 1; max-width: 72vw; }
+    .hero-left { position: relative; z-index: 3; max-width: 72vw; }
 
     .hero-scroll {
       position: absolute;
@@ -1131,20 +1184,17 @@
     </div>
     <div class="hero-scroll">Scroll</div>
 
-    <!-- RIGHT VISUAL CARD -->
+    <!-- RIGHT MONITOR MOCKUP -->
     <div class="hero-visual">
-      <div id="prompt-animation" style="
-        width: 100%;
-        max-width: 300px;
-        height: 210px;
-        border-radius: 1rem;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(111,255,0,0.08);
-        background: #0a0c14;
-        margin: 0;
-        position: relative;
-        overflow: hidden;
-        border: 1px solid rgba(255,255,255,0.1);
-      ">
+      <div class="monitor-outer">
+        <div class="monitor-screen-inner">
+          <div id="prompt-animation" style="
+            width: 100%;
+            height: 100%;
+            background: #010828;
+            position: relative;
+            overflow: hidden;
+          ">
         <!-- 対話メッセージ表示エリア -->
         <div id="pa-chat" style="
           position: absolute; inset: 0;
@@ -1188,7 +1238,11 @@
           " id="pa-final-text">プロンプトは、対話プロセス</span>
         </div>
       </div>
-    </div>
+        </div><!-- /monitor-screen-inner -->
+      </div><!-- /monitor-outer -->
+      <div class="monitor-neck"></div>
+      <div class="monitor-base"></div>
+    </div><!-- /hero-visual -->
 
     <script>
     (function() {
