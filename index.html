@@ -7,7 +7,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0a0a'/><text x='16' y='23' font-family='Helvetica Neue,sans-serif' font-size='20' font-weight='900' fill='white' text-anchor='middle'>R</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Condiment&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Condiment&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8854MYBDV3"></script>
   <script>
@@ -19,10 +19,37 @@
   <script>window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));</script>
   <style>
     :root {
-      --black: #0a0a0a;
-      --white: #ffffff;
-      --gray: #f5f5f5;
-      --mid: #888;
+      /* ── Core dark palette (6 tokens) ── */
+      --c-bg:      #010828;
+      --c-surface: #0a0c14;
+      --c-fg:      #EFF4FF;
+      --c-muted:   rgba(239,244,255,0.45);
+      --c-border:  rgba(239,244,255,0.08);
+      --c-accent:  #6FFF00;
+
+      /* ── Light section palette ── */
+      --c-white:   #ffffff;
+      --c-offwhite:#f7f7f5;
+      --c-text:    #0a0a0a;
+      --c-subtle:  #888888;
+      --c-line:    #e8e8e8;
+
+      /* ── Border radius scale ── */
+      --r-sm:   0.5rem;
+      --r-md:   0.875rem;
+      --r-lg:   1.25rem;
+      --r-pill: 9999px;
+
+      /* ── Font families ── */
+      --f-display: 'Syne', 'Hiragino Kaku Gothic ProN', sans-serif;
+      --f-mono:    'JetBrains Mono', monospace;
+      --f-body:    'Helvetica Neue', 'Hiragino Kaku Gothic ProN', sans-serif;
+
+      /* ── Legacy aliases (互換性維持) ── */
+      --black:  #0a0a0a;
+      --white:  #ffffff;
+      --gray:   #f7f7f5;
+      --mid:    #888888;
       --accent: #1a1a1a;
     }
 
@@ -32,10 +59,13 @@
     #portfolio { scroll-margin-top: 70px; }
 
     body {
-      font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', sans-serif;
-      background: var(--white);
-      color: var(--black);
+      font-family: var(--f-body);
+      background: var(--c-white);
+      color: var(--c-text);
       overflow-x: hidden;
+      font-feature-settings: "kern" 1, "liga" 1;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     /* ── NAV ── */
@@ -87,10 +117,12 @@
     }
 
     .nav-links a {
+      font-family: var(--f-display);
       text-decoration: none;
       color: rgba(255,255,255,0.65);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 0.45rem 1.1rem;
       border-radius: 9999px;
@@ -109,9 +141,10 @@
       gap: 0.5rem;
       background: #111;
       color: #fff;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      font-family: var(--f-display);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
       padding: 0.5rem 1.2rem;
       border-radius: 9999px;
       text-decoration: none;
@@ -144,6 +177,17 @@
       position: relative;
       overflow: hidden;
       background: #010828;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
     }
 
     #hero-glow {
@@ -285,6 +329,7 @@
     }
 
     .hero-label {
+      font-family: var(--f-mono);
       font-size: 0.75rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
@@ -339,12 +384,13 @@
     .btn {
       display: inline-block;
       padding: 0.9rem 2.2rem;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
+      font-family: var(--f-display);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.25s;
       cursor: pointer;
       border: none;
     }
@@ -367,52 +413,39 @@
 
     .btn-secondary:hover { background: rgba(239,244,255,0.1); border-color: rgba(239,244,255,0.7); }
 
-    .btn-3d-wrap {
-      display: inline-block;
-      perspective: 500px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
+    .btn-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2.8rem;
+      font-family: var(--f-display);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;
-      overflow: hidden;
-    }
-
-    .btn-3d-inner {
-      display: block;
-      transform-style: preserve-3d;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
+      overflow: hidden;
+      background: var(--c-white);
+      color: var(--c-bg);
+      border: none;
+      transition: color 0.35s;
     }
 
-    .btn-3d-wrap:hover .btn-3d-inner { transform: rotateX(90deg); }
-    .btn-3d-wrap:hover .btn-face-front { background: transparent; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0s; }
-
-    .btn-face-front,
-    .btn-face-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.9rem 2.2rem;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-
-    .btn-face-front {
-      background: var(--black);
-      color: var(--white);
-      transform: translateZ(23px);
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0s 0.5s;
-    }
-
-    .btn-face-bottom {
+    .btn-fill::before {
+      content: '';
       position: absolute;
-      inset: -2px;
-      background: white;
-      color: var(--black);
-      transform: rotateX(-90deg) translateZ(23px);
+      inset: 0;
+      background: var(--c-accent);
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
+    .btn-fill:hover { color: var(--c-bg); }
+    .btn-fill:hover::before { transform: translateY(0); }
+
+    .btn-fill span { position: relative; z-index: 1; }
 
 
     .hero-left { position: relative; z-index: 1; }
@@ -450,6 +483,7 @@
     section { padding: 7rem 4rem; }
 
     .section-label {
+      font-family: var(--f-mono);
       font-size: 0.72rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
@@ -503,7 +537,8 @@
     }
 
     .stat-label {
-      font-size: 0.78rem;
+      font-family: var(--f-mono);
+      font-size: 0.8rem;
       color: #666;
       margin-top: 0.3rem;
       letter-spacing: 0.05em;
@@ -530,6 +565,7 @@
     .service-item:hover { background: var(--gray); }
 
     .service-num {
+      font-family: var(--f-mono);
       font-size: 0.72rem;
       letter-spacing: 0.2em;
       color: var(--mid);
@@ -544,9 +580,9 @@
     }
 
     .service-desc {
-      font-size: 0.88rem;
+      font-size: 1rem;
       color: #666;
-      line-height: 1.8;
+      line-height: 1.85;
     }
 
     /* ── PORTFOLIO ── */
@@ -560,17 +596,18 @@
     }
 
     .portfolio-card {
-      border: 1px solid #e8e8e8;
-      border-radius: 0.75rem;
+      border: 1px solid var(--c-line);
+      border-radius: var(--r-md);
       overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
       display: flex;
       flex-direction: column;
     }
 
     .portfolio-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 44px rgba(0,0,0,0.09);
+      border-color: rgba(111,255,0,0.25);
     }
 
     .portfolio-thumb {
@@ -618,6 +655,7 @@
     }
 
     .portfolio-type {
+      font-family: var(--f-mono);
       font-size: 0.68rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -633,9 +671,9 @@
     }
 
     .portfolio-desc {
-      font-size: 0.82rem;
-      color: #888;
-      line-height: 1.7;
+      font-size: 0.9rem;
+      color: #777;
+      line-height: 1.8;
       margin-bottom: 1.2rem;
       flex: 1;
     }
@@ -648,11 +686,12 @@
     .portfolio-btn {
       display: inline-block;
       padding: 0.5rem 1.1rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      font-family: var(--f-display);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
       text-decoration: none;
-      border-radius: 0.3rem;
+      border-radius: var(--r-sm);
       transition: all 0.2s;
     }
 
@@ -708,16 +747,16 @@
 
     .works-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
 
     .work-card {
-      background: var(--white);
+      background: var(--c-white);
       padding: 2rem;
-      border: 1px solid #e8e8e8;
-      border-radius: 12px;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+      border: 1px solid var(--c-line);
+      border-radius: var(--r-md);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
       cursor: default;
       position: relative;
       overflow: hidden;
@@ -735,8 +774,9 @@
     }
 
     .work-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.1);
+      border-color: rgba(111,255,0,0.35);
     }
 
     .work-card:hover::before {
@@ -751,24 +791,28 @@
     .work-title {
       font-size: 0.95rem;
       font-weight: 800;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
     }
 
     .work-desc {
-      font-size: 0.78rem;
-      color: #888;
-      line-height: 1.7;
+      font-family: var(--f-mono);
+      font-size: 0.75rem;
+      color: var(--c-subtle);
+      line-height: 1.6;
+      letter-spacing: 0.03em;
     }
 
     .work-tag {
       display: inline-block;
       margin-top: 0.8rem;
-      font-size: 0.68rem;
+      font-family: var(--f-mono);
+      font-size: 0.65rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--mid);
-      border: 1px solid #ddd;
+      border: 1px solid var(--c-line);
       padding: 0.2rem 0.6rem;
+      border-radius: var(--r-sm);
     }
 
     /* ── PHILOSOPHY ── */
@@ -902,6 +946,79 @@
       letter-spacing: 0.08em;
     }
 
+    /* ── HAMBURGER NAV ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      padding: 0.4rem;
+      background: none;
+      border: none;
+      z-index: 101;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: rgba(239,244,255,0.8);
+      transition: background 0.3s, transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+
+    nav.scrolled .nav-hamburger span { background: var(--c-text); }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav-mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(1,8,40,0.97);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .nav-mobile-overlay.open { display: flex; }
+
+    .nav-mobile-overlay a {
+      font-family: var(--f-display);
+      font-size: clamp(1.8rem, 8vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      text-decoration: none;
+      padding: 1rem 2rem;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: none;
+      transition: color 0.2s;
+    }
+
+    .nav-mobile-overlay.open a {
+      animation: fadeUp 0.45s forwards;
+    }
+
+    .nav-mobile-overlay.open a:nth-child(1) { animation-delay: 0.05s; }
+    .nav-mobile-overlay.open a:nth-child(2) { animation-delay: 0.12s; }
+    .nav-mobile-overlay.open a:nth-child(3) { animation-delay: 0.19s; }
+    .nav-mobile-overlay.open a:nth-child(4) { animation-delay: 0.26s; }
+
+    .nav-mobile-overlay a:hover { color: var(--c-accent); }
+
+    @media (max-width: 768px) {
+      .nav-hamburger { display: flex; }
+      .nav-pill, .nav-cta { display: none; }
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -962,7 +1079,18 @@
     <a href="#contact" class="nav-cta">
       <span class="nav-cta-dot"></span>相談する
     </a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MOBILE OVERLAY -->
+  <div class="nav-mobile-overlay" id="nav-mobile-overlay">
+    <a href="#about" class="nav-mobile-link">About</a>
+    <a href="#services" class="nav-mobile-link">Services</a>
+    <a href="#works" class="nav-mobile-link">Works</a>
+    <a href="#contact" class="nav-mobile-link">Contact</a>
+  </div>
 
   <!-- HERO -->
   <section id="hero">
@@ -1664,11 +1792,8 @@
       <p class="contact-sub">AI活用・業務自動化・コンテンツ生成について<br>まずは気軽にご相談ください。</p>
       <a href="mailto:rapisrazly@gmail.com" class="contact-email">rapisrazly@gmail.com</a>
       <br>
-      <a href="mailto:rapisrazly@gmail.com" class="btn-3d-wrap">
-        <span class="btn-3d-inner">
-          <span class="btn-face-front">メールで相談する</span>
-          <span class="btn-face-bottom">CLICK</span>
-        </span>
+      <a href="mailto:rapisrazly@gmail.com" class="btn-fill">
+        <span>メールで相談する</span>
       </a>
 
     </div>
@@ -1770,6 +1895,24 @@
     }
     window.addEventListener('scroll', updateNav, { passive: true });
     updateNav();
+
+    // ── ハンバーガーメニュー ──
+    const hamburger = document.getElementById('nav-hamburger');
+    const mobileOverlay = document.getElementById('nav-mobile-overlay');
+
+    hamburger?.addEventListener('click', () => {
+      const isOpen = mobileOverlay.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    mobileOverlay?.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileOverlay.classList.remove('open');
+        hamburger.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
   </script>
 </body>
 </html>
