@@ -1265,274 +1265,135 @@
   </div>
 
   <!-- HERO -->
+  <!-- HERO (3D Spline 版) -->
   <section id="hero">
     <div id="hero-glow"></div>
 
-    <!-- MONITOR (全コンテンツを内包) -->
-    <div class="monitor-wrap">
-      <div class="monitor-outer">
-        <div class="monitor-screen-inner">
-          <div class="monitor-site">
+    <!-- Spotlight（HERO 全体に左上から斜めに差す白い光） -->
+    <svg class="hero-spotlight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3787 2842" fill="none">
+      <g filter="url(#heroSpotFilter)">
+        <ellipse cx="1924.71" cy="273.501" rx="1924.71" ry="273.501"
+          transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
+          fill="white" fill-opacity="0.5"></ellipse>
+      </g>
+      <defs>
+        <filter id="heroSpotFilter" x="0.860352" y="0.838989" width="3785.16" height="2840.26"
+          filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+          <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_1065_8"></feGaussianBlur>
+        </filter>
+      </defs>
+    </svg>
 
-            <!-- スクリーン内ミニナビ -->
-            <div class="monitor-inner-nav">
-              <span class="monitor-inner-logo">RAPIS</span>
-              <div class="monitor-inner-links">
-                <span>About</span>
-                <span>Services</span>
-                <span>Works</span>
-                <span>Contact</span>
-              </div>
-              <span class="monitor-inner-cta">相談する</span>
-            </div>
+    <!-- Spline 3D ビューアーの読み込み（React 不要の Web Component） -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.35/build/spline-viewer.js"></script>
 
-            <!-- ヒーローテキスト（スクリーン内） -->
-            <div class="hero-left">
-              <div class="hero-label">AI Creator × Freelancer</div>
-              <h1 class="hero-heading">
-                今の自分に、<br>
-                <span class="highlight">革命を。</span>
-              </h1>
-              <p class="hero-sub">
-                Claude Codeを武器に、業務自動化からコンテンツ生成まで。<br>
-                「動きながら考える」AIクリエイターが、あなたの仕事を変えます。
-              </p>
-              <div class="hero-cta">
-                <a href="#works" class="btn btn-primary">実績を見る</a>
-                <a href="#contact" class="btn btn-secondary">相談する</a>
-              </div>
-            </div>
-
-            <!-- アニメーションカード（スクリーン内・右下） -->
-            <div class="hero-visual">
-              <div id="prompt-animation" style="
-                width: 100%;
-                height: 100%;
-                background: #010828;
-                position: relative;
-                overflow: hidden;
-              ">
-                <!-- 対話メッセージ表示エリア -->
-                <div id="pa-chat" style="
-                  position: absolute; inset: 0;
-                  display: flex; flex-direction: column;
-                  justify-content: center; padding: 1.2rem;
-                  gap: 0.5rem;
-                "></div>
-
-                <!-- Phase2: 暗転オーバーレイ -->
-                <div id="pa-overlay" style="
-                  position: absolute; inset: 0;
-                  background: #0a0a0a;
-                  opacity: 0; pointer-events: none;
-                  transition: opacity 0.6s ease;
-                "></div>
-
-                <!-- Phase3: パーティクル + 最終メッセージ -->
-                <canvas id="pa-canvas" style="
-                  position: absolute; inset: 0;
-                  width: 100%; height: 100%;
-                  opacity: 0; transition: opacity 0.4s ease;
-                "></canvas>
-                <div id="pa-final" style="
-                  position: absolute; inset: 0;
-                  display: flex; align-items: center; justify-content: center;
-                  opacity: 0; transition: opacity 0.5s ease;
-                  pointer-events: none;
-                ">
-                  <span style="
-                    font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-                    font-weight: 900;
-                    color: #ffd700;
-                    text-align: center;
-                    letter-spacing: 0.05em;
-                    text-shadow:
-                      0 0 20px rgba(255,215,0,0.8),
-                      0 0 40px rgba(255,215,0,0.4);
-                    line-height: 1.4;
-                    padding: 0 1rem;
-                  " id="pa-final-text">プロンプトは、対話プロセス</span>
-                </div>
-              </div>
-            </div><!-- /hero-visual -->
-
-          </div><!-- /monitor-site -->
-        </div><!-- /monitor-screen-inner -->
-      </div><!-- /monitor-outer -->
-      <div class="monitor-neck"></div>
-      <div class="monitor-base"></div>
-    </div><!-- /monitor-wrap -->
-
-    <script>
-    (function() {
-      const messages = [
-        { text: "エラーが出る",         side: "right" },
-        { text: "Refererがない？",       side: "left"  },
-        { text: "追加した、まだ出る",    side: "right" },
-        { text: "じゃあ何が...",         side: "left"  },
-        { text: "ブログ検索",            side: "right" },
-        { text: "あ、Originだった",      side: "left"  },
-        { text: "ヘッダー直す",          side: "right" },
-        { text: "通った！",              side: "left"  },
-      ];
-
-      const durations = [800, 750, 720, 680, 640, 600, 560, 520];
-      const chat    = document.getElementById('pa-chat');
-      const overlay = document.getElementById('pa-overlay');
-      const canvas  = document.getElementById('pa-canvas');
-      const final   = document.getElementById('pa-final');
-      const finalTxt= document.getElementById('pa-final-text');
-      const ctx     = canvas.getContext('2d');
-
-      let particles = [];
-      let rafId = null;
-      let phase = 0; // 0=chat, 1=silence, 2=crystal, 3=hold
-
-      // ── バブル生成 ──
-      function makeBubble(msg, side) {
-        const el = document.createElement('div');
-        el.textContent = msg;
-        el.style.cssText = `
-          display: inline-block;
-          max-width: 60%;
-          align-self: ${side === 'right' ? 'flex-end' : 'flex-start'};
-          background: ${side === 'right' ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.04)'};
-          color: #cccccc;
-          font-family: monospace;
-          font-size: 0.82rem;
-          padding: 0.45rem 0.9rem;
-          border-radius: ${side === 'right' ? '1rem 1rem 0.2rem 1rem' : '1rem 1rem 1rem 0.2rem'};
-          border: 1px solid rgba(255,255,255,0.08);
-          opacity: 0;
-          transition: opacity 0.2s ease;
-        `;
-        return el;
+    <style>
+      .hero3d {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 1200px;
+        height: 72vh;
+        display: flex;
+        align-items: center;
       }
-
-      // ── パーティクル初期化 ──
-      function initParticles() {
-        const w = canvas.width;
-        const h = canvas.height;
-        particles = Array.from({ length: 60 }, () => ({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          tx: w / 2 + (Math.random() - 0.5) * 40,
-          ty: h / 2 + (Math.random() - 0.5) * 20,
-          vx: 0, vy: 0,
-          size: Math.random() * 2.5 + 0.5,
-          alpha: Math.random() * 0.6 + 0.2,
-          color: Math.random() > 0.5 ? '#ffd700' : '#ffffff',
-        }));
+      .hero3d-copy {
+        flex: 1;
+        position: relative;
+        z-index: 3;
+        padding: 0 1rem;
       }
-
-      function animParticles(progress) {
-        const w = canvas.width;
-        const h = canvas.height;
-        ctx.clearRect(0, 0, w, h);
-        const ease = progress < 0.5
-          ? 2 * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-        particles.forEach(p => {
-          const cx = p.x + (p.tx - p.x) * ease;
-          const cy = p.y + (p.ty - p.y) * ease;
-          ctx.beginPath();
-          ctx.arc(cx, cy, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.globalAlpha = p.alpha * (0.3 + 0.7 * ease);
-          ctx.fill();
-        });
-        ctx.globalAlpha = 1;
+      .hero3d-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.3em;
+        font-weight: 600;
+        color: #8a93b2;
+        margin-bottom: 1rem;
       }
-
-      // ── フェーズ制御 ──
-      async function runPhase1() {
-        phase = 0;
-        chat.style.opacity = '1';
-        overlay.style.opacity = '0';
-        canvas.style.opacity = '0';
-        final.style.opacity = '0';
-        chat.innerHTML = '';
-
-        for (let i = 0; i < messages.length; i++) {
-          if (phase !== 0) return;
-          const { text, side } = messages[i];
-          const bubble = makeBubble(text, side);
-          chat.appendChild(bubble);
-          await sleep(20);
-          bubble.style.opacity = '1';
-          await sleep(durations[i] - 20);
-          bubble.style.opacity = '0';
-          await sleep(220);
-          chat.removeChild(bubble);
-        }
-        if (phase === 0) runPhase2();
+      .hero3d-heading {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 900;
+        line-height: 1.15;
+        color: var(--c-white);
+        margin: 0;
       }
-
-      async function runPhase2() {
-        phase = 1;
-        // 暗転
-        overlay.style.opacity = '1';
-        await sleep(800);
-        if (phase !== 1) return;
-
-        // パーティクル開始
-        canvas.width  = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        initParticles();
-        canvas.style.opacity = '1';
-
-        const start = performance.now();
-        const dur = 1500;
-        function tick() {
-          if (phase !== 1) return;
-          const elapsed = performance.now() - start;
-          const prog = Math.min(elapsed / dur, 1);
-          animParticles(prog);
-          if (prog < 1) { rafId = requestAnimationFrame(tick); }
-          else runPhase3();
-        }
-        rafId = requestAnimationFrame(tick);
+      .hero3d-heading .hl {
+        color: var(--c-accent);
+        text-shadow: 0 0 28px rgba(111, 255, 0, 0.55);
       }
-
-      async function runPhase3() {
-        phase = 2;
-        final.style.opacity = '1';
-
-        // パルスアニメ
-        let pulse = 0;
-        function doPulse() {
-          if (phase !== 2) return;
-          pulse += 0.05;
-          const s = 1 + Math.sin(pulse) * 0.025;
-          finalTxt.style.transform = `scale(${s})`;
-          rafId = requestAnimationFrame(doPulse);
-        }
-        rafId = requestAnimationFrame(doPulse);
-
-        await sleep(2500);
-        if (phase === 2) runPhaseEnd();
+      .hero3d-sub {
+        margin-top: 1.4rem;
+        color: #c5cce0;
+        font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+        line-height: 1.8;
+        max-width: 32em;
       }
-
-      async function runPhaseEnd() {
-        phase = 3;
-        cancelAnimationFrame(rafId);
-
-        // フェードアウトして最初に戻る
-        overlay.style.opacity = '0';
-        canvas.style.opacity  = '0';
-        final.style.opacity   = '0';
-        await sleep(800);
-        runPhase1();
+      .hero3d-copy .hero-cta {
+        margin-top: 1.8rem;
       }
-
-      function sleep(ms) {
-        return new Promise(r => setTimeout(r, ms));
+      .hero3d-visual {
+        flex: 1;
+        position: relative;
+        height: 100%;
+        /* 縁を背景に溶け込ませて「貼り付けた四角」感を消す */
+        -webkit-mask-image: radial-gradient(ellipse 70% 80% at 58% 46%, #000 50%, transparent 100%);
+        mask-image: radial-gradient(ellipse 70% 80% at 58% 46%, #000 50%, transparent 100%);
       }
+      .hero3d-visual spline-viewer {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      /* Spotlight（aceternity 由来の SVG を HERO 全体に斜めに差す） */
+      .hero-spotlight {
+        position: absolute;
+        top: -25%;
+        left: -10%;
+        height: 160%;
+        width: 90%;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0;
+        animation: heroSpotlight 2.2s ease 0.4s 1 forwards;
+      }
+      @keyframes heroSpotlight {
+        0%   { opacity: 0; transform: translate(-68%, -60%) scale(0.5); }
+        100% { opacity: 1; transform: translate(-42%, -32%) scale(1); }
+      }
+      @media (max-width: 900px) {
+        .hero3d { flex-direction: column; height: auto; text-align: center; gap: 1rem; padding-top: 2rem; }
+        .hero3d-copy { padding: 0; }
+        .hero3d-copy .hero-cta { justify-content: center; }
+        .hero3d-visual { width: 100%; height: 300px; }
+        .hero-spotlight { left: -25%; width: 130%; }
+      }
+    </style>
 
-      // 起動
-      runPhase1();
-    })();
-    </script>
+    <div class="hero3d">
+      <!-- 左：コピー -->
+      <div class="hero3d-copy">
+        <p class="hero3d-label">AI CREATOR &times; FREELANCER</p>
+        <h1 class="hero3d-heading">
+          今の自分に、<br>
+          <span class="hl">革命を。</span>
+        </h1>
+        <p class="hero3d-sub">
+          Claude Codeを武器に、業務自動化からコンテンツ生成まで。<br>
+          「動きながら考える」AIクリエイターが、あなたの仕事を変えます。
+        </p>
+        <div class="hero-cta">
+          <a href="#works" class="btn btn-primary">実績を見る</a>
+          <a href="#contact" class="btn btn-secondary">相談する</a>
+        </div>
+      </div>
+
+      <!-- 右：3D ロボット -->
+      <div class="hero3d-visual">
+        <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+      </div>
+    </div>
   </section>
 
   <!-- ABOUT -->

@@ -2,3 +2,10 @@
 .claude/
 resell-radar/
 resell-radar-avatar*
+.env
+.env.local
+
+# 3D HERO お試し関連（commit不要）
+spline-sandbox/
+index.html.bak
+_newhero.html
