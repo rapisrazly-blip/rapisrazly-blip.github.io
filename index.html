@@ -1003,19 +1003,49 @@
       letter-spacing: 0.03em;
     }
 
-    .contact-email {
-      display: inline-block;
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      color: var(--white);
-      text-decoration: none;
-      border-bottom: 1px solid #444;
-      padding-bottom: 0.3rem;
-      margin-bottom: 3rem;
-      letter-spacing: 0.05em;
-      transition: border-color 0.2s;
+    /* 追加メッセージ（雑談からどうぞ） */
+    .contact-pitch {
+      font-size: 1.05rem;
+      line-height: 1.95;
+      color: rgba(255,255,255,0.82);
+      max-width: 600px;
+      margin: 0 auto 2.8rem;
+      letter-spacing: 0.02em;
     }
 
-    .contact-email:hover { border-color: var(--white); }
+    /* メインCTA：アクセントカラー（ネオングリーン）の大きなボタン */
+    .contact-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: var(--c-accent);
+      color: #010828;
+      font-family: var(--f-mono);
+      font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      padding: 1.25rem 3.2rem;
+      border-radius: var(--r-pill);
+      margin-bottom: 1rem;
+      box-shadow: 0 8px 30px rgba(111,255,0,0.25);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .contact-cta:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(111,255,0,0.45);
+    }
+
+    @media (max-width: 480px) {
+      .contact-cta {
+        font-size: 0.95rem;
+        padding: 1.1rem 2rem;
+        max-width: 100%;
+        word-break: break-all;
+      }
+    }
 
     .contact-platforms {
       margin-top: 3.5rem;
@@ -1950,11 +1980,10 @@
     <div class="reveal">
       <div class="section-label">Contact</div>
       <h2 class="section-title">一緒に<br>革命を。</h2>
+      <p class="contact-pitch">「こんなことAIでできる？」という雑談からで構いません。<br>あなたの業務課題をお聞かせいただければ、その場で動くプロトタイプをご提案します。</p>
       <p class="contact-sub">AI活用・業務自動化・コンテンツ生成について<br>まずは気軽にご相談ください。</p>
-      <a href="mailto:rapisrazly@gmail.com" class="contact-email">rapisrazly@gmail.com</a>
-      <br>
-      <a href="mailto:rapisrazly@gmail.com" class="btn-fill">
-        <span>メールで相談する</span>
+      <a href="mailto:rapisrazly@gmail.com" class="contact-cta">
+        <span>rapisrazly@gmail.com</span>
       </a>
 
     </div>
