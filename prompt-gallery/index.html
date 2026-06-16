@@ -71,8 +71,14 @@
   .hero h1 {
     font-family: var(--f-display); font-weight: 800;
     font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.1; letter-spacing: -0.01em;
+    display: flex; align-items: baseline; justify-content: center; gap: 0.14em;
   }
-  .hero h1 em { font-style: normal; color: var(--c-accent); }
+  .hero h1 em {
+    font-style: normal; color: var(--c-accent);
+    font-size: 0.94em; letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 24px rgba(111,255,0,0.35);
+  }
   .hero p { color: var(--c-muted); margin-top: 1rem; font-size: 0.95rem; }
 
   /* ── Controls ── */
