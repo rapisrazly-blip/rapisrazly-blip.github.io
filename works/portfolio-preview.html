@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マーケティングAIツール ポートフォリオ | RAPIS</title>
+  <style>
+    :root { --ink:#101218; --paper:#f5f2ec; --panel:#fffdfa; --line:#d8d1c7; --accent:#e1523d; --blue:#2467c4; --muted:#676158; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:"Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif; line-height:1.75; }
+    a { color:inherit; }
+    .top { background:var(--ink); color:white; padding:22px max(24px, calc((100% - 1080px) / 2)); display:flex; justify-content:space-between; align-items:center; gap:18px; }
+    .brand { font-weight:800; letter-spacing:.08em; text-decoration:none; }
+    .back { color:#fff; font-size:.9rem; text-underline-offset:4px; }
+    main { width:min(100% - 36px, 1000px); margin:0 auto; padding:64px 0 96px; }
+    .intro { padding:0 0 38px; border-bottom:2px solid var(--ink); }
+    .eyebrow { margin:0 0 10px; color:var(--accent); font-size:.82rem; font-weight:800; letter-spacing:.12em; }
+    h1 { max-width:760px; margin:0; font-size:clamp(2rem, 5vw, 4.2rem); line-height:1.15; letter-spacing:-.04em; }
+    .intro p { max-width:680px; margin:20px 0 0; color:var(--muted); }
+    .jump { display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 44px; }
+    .jump a { border:1px solid var(--line); background:var(--panel); padding:6px 12px; border-radius:999px; font-size:.85rem; text-decoration:none; }
+    .deck { display:grid; gap:28px; }
+    .slide { position:relative; overflow:hidden; min-height:370px; padding:clamp(28px, 5vw, 58px); background:var(--panel); border:1px solid var(--line); box-shadow:8px 8px 0 rgba(16,18,24,.08); }
+    .slide-no { display:block; margin-bottom:22px; color:var(--accent); font-size:.8rem; font-weight:800; letter-spacing:.14em; }
+    h2 { max-width:720px; margin:0; font-size:clamp(1.65rem, 3.5vw, 2.7rem); line-height:1.25; letter-spacing:-.03em; }
+    h3 { margin:26px 0 8px; font-size:1.05rem; }
+    p { margin:0; }
+    .lead { max-width:760px; margin-top:22px; font-size:1.06rem; }
+    .tags, .tool-list, .two-col, .three-col { display:grid; gap:12px; margin-top:28px; }
+    .tags { grid-template-columns:repeat(auto-fit, minmax(145px, 1fr)); }
+    .tag { padding:12px 14px; background:#ebe5db; font-weight:700; font-size:.92rem; }
+    .tool-list { grid-template-columns:repeat(2, minmax(0, 1fr)); counter-reset:tools; list-style:none; padding:0; }
+    .tool-list li { border-top:1px solid var(--line); padding:10px 4px; font-size:.94rem; }
+    .tool-list strong { display:block; }
+    .two-col { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+    .box { padding:18px; border-left:4px solid var(--blue); background:#f0f4fa; }
+    .box h3 { margin:0 0 8px; }
+    .points { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; margin-top:30px; }
+    .point { padding-top:12px; border-top:3px solid var(--accent); }
+    .point b { display:block; margin-bottom:5px; font-size:.86rem; }
+    .meta { display:grid; grid-template-columns:160px 1fr; gap:0; margin-top:22px; border-top:1px solid var(--line); }
+    .meta div { padding:10px 0; border-bottom:1px solid var(--line); }
+    .meta div:nth-child(odd) { font-weight:700; }
+    .flow { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:34px 0 20px; font-size:clamp(1.05rem,2vw,1.35rem); font-weight:800; }
+    .flow span { padding:8px 14px; background:#e9e3d8; }
+    .flow b { color:var(--accent); }
+    .contact { margin-top:24px; padding:18px; background:var(--ink); color:#fff; font-weight:700; }
+    footer { width:min(100% - 36px, 1000px); margin:0 auto; padding:0 0 34px; color:var(--muted); font-size:.82rem; }
+    @media (max-width:680px) { main { padding-top:42px; } .slide { min-height:0; } .tool-list, .two-col, .three-col, .points { grid-template-columns:1fr; } .meta { grid-template-columns:110px 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="top"><a class="brand" href="../index.html">RAPIS</a><a class="back" href="../index.html#portfolio">ポートフォリオへ戻る</a></header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">MARKETING AI TOOLS / PORTFOLIO</p>
+      <h1>マーケティングAIツール<br>ポートフォリオ</h1>
+      <p>LP制作、セールスコンテンツ、LINE連携を中心にまとめた提案書です。全9ページをブラウザ上で読めます。</p>
+    </section>
+    <nav class="jump" aria-label="提案書の目次"><a href="#slide-1">表紙</a><a href="#slide-2">プロフィール</a><a href="#slide-3">開発ツール</a><a href="#slide-4">LP制作</a><a href="#slide-5">スライド生成</a><a href="#slide-6">LINE自動化</a><a href="#slide-7">その他</a><a href="#slide-8">対応業務</a><a href="#slide-9">連絡先</a></nav>
+    <div class="deck">
+      <article class="slide" id="slide-1"><span class="slide-no">01 / 09</span><h2>マーケティングAIツール<br>開発ポートフォリオ</h2><div class="tags"><div class="tag">LP自動生成</div><div class="tag">セールスコンテンツ自動化</div><div class="tag">LINE連携</div></div></article>
+      <article class="slide" id="slide-2"><span class="slide-no">02 / 09</span><h2>プロフィール</h2><div class="two-col"><div class="box"><h3>専門</h3><p>Claude・ChatGPT APIを活用したAIツール開発。リード獲得からLP、LINE、販売までの流れを設計・実装します。</p></div><div class="box"><h3>対応範囲</h3><p>高単価講座・コンサル業界向けのマーケティング自動化を中心に、ノーコードからフルコードまで対応します。</p></div></div><h3>使用技術・スキル</h3><div class="tags"><div class="tag">Python</div><div class="tag">Claude API</div><div class="tag">ChatGPT API</div><div class="tag">LINE Messaging API</div><div class="tag">UTAGE</div><div class="tag">Zapier / ノーコード</div></div></article>
+      <article class="slide" id="slide-3"><span class="slide-no">03 / 09</span><h2>作った仕組み一覧</h2><p class="lead">何をするものかが伝わる名前にしています。</p><ul class="tool-list"><li><strong>01　SNS予約投稿</strong>SNSへの投稿を予約して自動で公開する仕組み</li><li><strong>02　営業スライド作成</strong>商品情報から営業用スライドを作る仕組み</li><li><strong>03　Web情報収集</strong>Web上の情報を集めて整理する仕組み</li><li><strong>04　案件情報お知らせ</strong>条件に合う案件を集めて知らせる仕組み</li><li><strong>05　LINE返信サポート</strong>問い合わせへの返信案を作る仕組み</li><li><strong>06　動画字幕作成</strong>動画に字幕を付ける仕組み</li><li><strong>07　LP文章作成</strong>LPの構成と文章を作る仕組み</li><li><strong>08　業務の見える化</strong>日々の業務を洗い出して整理する仕組み</li><li><strong>09　LINEグループ対応</strong>グループ内の質問に対応する仕組み</li><li><strong>10　システム開発の補助</strong>開発作業を整理して進める仕組み</li><li><strong>11　よくある質問の作成・LINE連携</strong>FAQを整理し、LINE対応につなげる仕組み</li><li><strong>12　SEO記事の下書き</strong>キーワードから記事の下書きを作る仕組み</li></ul></article>
+      <article class="slide" id="slide-4"><span class="slide-no">04 / 09</span><h2>LP文章作成</h2><p class="lead">ターゲット・商品情報を入力し、LP構成、キャッチコピー、本文までを自動生成する仕組みです。HTMLとテキストの両方で出力します。</p><div class="points"><div class="point"><b>POINT 1</b>高単価講座向けのLP構成パターンを内蔵</div><div class="point"><b>POINT 2</b>ファーストビューからCTAまでの流れを自動出力</div><div class="point"><b>POINT 3</b>Claude API・Python・HTML出力で構成</div></div></article>
+      <article class="slide" id="slide-5"><span class="slide-no">05 / 09</span><h2>営業スライド作成</h2><p class="lead">商品・サービス情報を入力し、営業用スライドを作る仕組みです。メルマガ、LINE配信、広告コピーへの転用も想定しています。</p><div class="points"><div class="point"><b>POINT 1</b>AIDA・PASONAなどのフレームワークを適用</div><div class="point"><b>POINT 2</b>複数チャネル用のコピーへ転用</div><div class="point"><b>POINT 3</b>修正指示を受けて内容を反映</div></div></article>
+      <article class="slide" id="slide-6"><span class="slide-no">06 / 09</span><h2>LINE対応を助ける仕組み</h2><div class="three-col"><div class="box"><h3>LINE返信サポート</h3><p>問い合わせを解析し、回答案を生成する支援ツール。</p></div><div class="box"><h3>LINEグループ対応</h3><p>グループ内の質問・発言への応答とエスカレーションを想定。</p></div><div class="box"><h3>よくある質問の作成・LINE連携</h3><p>FAQ整理・FAQページ生成とUTAGE連携を想定。</p></div></div><p class="lead">LINE Messaging API、Claude API、UTAGEを使い、配信・返信・FAQ対応を一つの流れとして扱います。</p></article>
+      <article class="slide" id="slide-7"><span class="slide-no">07 / 09</span><h2>その他の仕組み</h2><div class="two-col"><div class="box"><h3>SNS予約投稿</h3><p>SNSコンテンツのスケジュール投稿を自動化する、運用補助ツール。</p></div><div class="box"><h3>SEO記事の下書き</h3><p>ターゲットキーワードからSEO記事の下書きを生成するツール。</p></div><div class="box"><h3>Web情報収集</h3><p>競合・市場情報を収集し、レポート化するためのエージェント。</p></div><div class="box"><h3>案件情報お知らせ</h3><p>案件情報の収集、フィルタリング、通知を行うツール。</p></div></div></article>
+      <article class="slide" id="slide-8"><span class="slide-no">08 / 09</span><h2>対応可能な業務・稼働条件</h2><div class="two-col"><div><h3>対応業務</h3><p>LP・セールスページの自動生成ツール開発、セールスコンテンツの自動化、LINE Bot構築・UTAGE連携、広告運用補助、SNS自動投稿・コンテンツ量産。</p></div><div><h3>稼働条件</h3><div class="meta"><div>稼働日数</div><div>週2〜3日</div><div>稼働時間</div><div>1日3〜5時間</div><div>勤務形態</div><div>フルリモート</div><div>対応言語</div><div>日本語</div><div>契約形態</div><div>業務委託</div></div></div></div></article>
+      <article class="slide" id="slide-9"><span class="slide-no">09 / 09</span><h2>「売れる仕組み」を<br>AIで一緒に作ります</h2><div class="flow"><span>リード獲得</span><b>→</b><span>教育</span><b>→</b><span>販売</span><b>→</b><span>リピート</span></div><p class="lead">全フローをAIで自動化・最適化するための仕組みづくりをお手伝いします。</p><p class="contact">Contact: <a href="mailto:rapisrazly@gmail.com">rapisrazly@gmail.com</a></p></article>
+    </div>
+  </main>
+  <footer>RAPIS / Marketing AI Tools Portfolio</footer>
+</body>
+</html>

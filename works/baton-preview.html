@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Baton — 6タブ紹介</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0f1115; color: #f4f4f2; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { max-width: 1040px; margin: 0 auto; padding: 48px 24px 64px; }
+    .eyebrow { color: #9ca3af; font-size: 12px; letter-spacing: .16em; }
+    h1 { margin: 10px 0; font-size: clamp(32px, 7vw, 62px); line-height: 1.05; }
+    .lead { max-width: 680px; color: #c8cbd2; line-height: 1.8; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 14px; }
+    .card { text-align: left; background: #181b22; border: 1px solid #30333a; border-radius: 14px; padding: 20px; color: inherit; font: inherit; cursor: pointer; }
+    .card:hover, .card:focus-visible, .card.active { border-color: #b9ff5a; outline: none; }
+    .card span { color: #b9ff5a; font-size: 12px; }
+    h2 { margin: 9px 0; font-size: 20px; }
+    p { margin: 0; color: #c8cbd2; line-height: 1.7; font-size: 14px; }
+    .detail { margin-top: 28px; padding: 24px; border: 1px solid #3c404a; border-radius: 14px; background: #171a1f; }
+    .detail h2 { color: #b9ff5a; }
+    .detail h3 { margin: 20px 0 6px; font-size: 14px; color: #f4f4f2; }
+    .detail ul { margin: 12px 0 0; padding-left: 20px; color: #c8cbd2; line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">LOCAL TOOL / PUBLIC OVERVIEW</div>
+    <h1>Baton</h1>
+    <p class="lead">複数のAIに散らばる会話と作業の流れを、次の作業へつなぐためのローカルツールです。</p>
+    <section class="grid">
+      <button class="card active" data-tab="search"><span>01</span><h2>履歴・検索</h2><p>過去の会話を、言葉・AI・期間で探し、必要な経緯へ戻ります。</p></button>
+      <button class="card" data-tab="now"><span>02</span><h2>今</h2><p>最近の作業と、次に確認したいことを一画面で見ます。</p></button>
+      <button class="card" data-tab="timeline"><span>03</span><h2>流れ</h2><p>会話や作業がどの順番で進んだかを追い、途中で止まった場所を見つけます。</p></button>
+      <button class="card" data-tab="cards"><span>04</span><h2>カード検索</h2><p>会話を1枚ずつのカードとして絞り込み、必要な記録だけを確認します。</p></button>
+      <button class="card" data-tab="overview"><span>05</span><h2>全体</h2><p>プロジェクトごとの最近の動きと、確認できる状態を一覧します。</p></button>
+      <button class="card" data-tab="synthesis"><span>06</span><h2>Synthesis</h2><p>会話・資料・制作物を材料にして、次に試す案と最初の一歩を整理します。</p></button>
+    </section>
+    <section class="detail" aria-live="polite">
+      <div class="eyebrow">選択中のタブ</div>
+      <h2 id="detail-title">履歴・検索</h2>
+      <h3>何ができるか</h3>
+      <p id="detail-lead"></p>
+      <h3>使う場面</h3>
+      <p id="detail-use"></p>
+      <h3>画面で確認すること</h3>
+      <ul id="detail-list"></ul>
+    </section>
+  </main>
+  <script>
+    const details = {
+      search: { title: '履歴・検索', lead: '過去の相談や作業の経緯を、必要になったときに探し直す入口です。', use: '「前に何を決めたか」「どのAIとどこまで進めたか」を確認して、同じ説明や調査を繰り返さないために使います。', items: ['言葉・AI・期間で絞り込みます', '話題がどこまで進んだかを確認します', '次のAIや次の作業へ渡す前に、前提をそろえます'] },
+      now: { title: '今', lead: '直近の作業を見て、次に確認することを絞る画面です。', use: '作業を再開するときや、複数の案件の優先順位を決めたいときに使います。', items: ['最近動いたプロジェクトを確認します', '止まっている作業を見つけます', '次の一歩を決める材料にします'] },
+      timeline: { title: '流れ', lead: '会話と作業の順番を追い、途中の判断や止まった地点を見つけます。', use: '途中から作業を引き継ぐときや、判断の理由を後から確認したいときに使います。', items: ['いつ何を扱ったかを時系列で見ます', '前後の作業をつなげて確認します', 'やり直しや重複を減らします'] },
+      cards: { title: 'カード検索', lead: '会話を1枚ずつのカードとして扱い、必要な記録だけを絞り込みます。', use: '広い検索結果から、関連する会話だけを読み比べたいときに使います。', items: ['題名や条件からカードを探します', '必要な範囲だけを開いて確認します', '話題ごとの記録を見比べます'] },
+      overview: { title: '全体', lead: '複数プロジェクトの最近の動きと、確認できる状態を一覧します。', use: 'プロジェクトが増えたときに、次に確認するものを見失わないために使います。', items: ['プロジェクトごとの状態を比較します', '最近の更新を確認します', '確認できないものを推測で完了扱いしません'] },
+      synthesis: { title: 'Synthesis', lead: '会話・資料・制作物を材料にして、次に試す案を整理する画面です。', use: '手元にある記録を使い、次の企画や改善案を具体的な行動へ落としたいときに使います。', items: ['材料を集めて案の種をつくります', '案ごとの最初の一歩を決めます', '試した結果を次の判断に活かします'] }
+    };
+    function selectTab(key) {
+      const detail = details[key];
+      document.querySelectorAll('[data-tab]').forEach(el => el.classList.toggle('active', el.dataset.tab === key));
+      document.getElementById('detail-title').textContent = detail.title;
+      document.getElementById('detail-lead').textContent = detail.lead;
+      document.getElementById('detail-use').textContent = detail.use;
+      document.getElementById('detail-list').replaceChildren(...detail.items.map(item => { const li = document.createElement('li'); li.textContent = item; return li; }));
+    }
+    document.querySelectorAll('[data-tab]').forEach(el => el.addEventListener('click', () => selectTab(el.dataset.tab)));
+    selectTab('search');
+  </script>
+</body>
+</html>
