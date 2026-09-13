@@ -1244,7 +1244,7 @@
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
-        <li><a href="#works">Works</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
@@ -1260,7 +1260,7 @@
   <div class="nav-mobile-overlay" id="nav-mobile-overlay">
     <a href="#about" class="nav-mobile-link">About</a>
     <a href="#services" class="nav-mobile-link">Services</a>
-    <a href="#works" class="nav-mobile-link">Works</a>
+    <a href="#portfolio" class="nav-mobile-link">Portfolio</a>
     <a href="#contact" class="nav-mobile-link">Contact</a>
   </div>
 
@@ -1285,9 +1285,6 @@
         </filter>
       </defs>
     </svg>
-
-    <!-- Spline 3D ビューアーの読み込み（React 不要の Web Component） -->
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.35/build/spline-viewer.js"></script>
 
     <style>
       .hero3d {
@@ -1337,14 +1334,28 @@
         flex: 1;
         position: relative;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         /* 縁を背景に溶け込ませて「貼り付けた四角」感を消す */
         -webkit-mask-image: radial-gradient(ellipse 70% 80% at 58% 46%, #000 50%, transparent 100%);
         mask-image: radial-gradient(ellipse 70% 80% at 58% 46%, #000 50%, transparent 100%);
       }
-      .hero3d-visual spline-viewer {
+      .hero-note-model {
         width: 100%;
         height: 100%;
         display: block;
+        object-fit: contain;
+        object-position: center;
+        filter: saturate(0.9) contrast(1.04);
+        animation: noteFloat 6s ease-in-out infinite;
+      }
+      @keyframes noteFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-14px); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero-note-model { animation: none; }
       }
       /* Spotlight（aceternity 由来の SVG を HERO 全体に斜めに差す） */
       .hero-spotlight {
@@ -1384,14 +1395,14 @@
           まず試せる小さな形にしてから、使いやすく整えます。
         </p>
         <div class="hero-cta">
-          <a href="#works" class="btn btn-primary">実績を見る</a>
+          <a href="#portfolio" class="btn btn-primary">実績を見る</a>
           <a href="#contact" class="btn btn-secondary">相談する</a>
         </div>
       </div>
 
-      <!-- 右：3D ロボット -->
+      <!-- 右：NOTEモデル -->
       <div class="hero3d-visual">
-        <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+        <img class="hero-note-model" src="works/note-model.jpg" alt="ノートPCを持ったキャラクター">
       </div>
     </div>
   </section>
@@ -1426,7 +1437,7 @@
   <section id="services">
     <div class="reveal">
       <div class="section-label">Services</div>
-      <h2 class="section-title">手伝えること</h2>
+      <h2 class="section-title">お任せいただける範囲</h2>
     </div>
     <div class="services-grid reveal">
       <div class="service-item">
@@ -1759,113 +1770,6 @@
     </div>
   </section>
   </template>
-
-  <!-- WORKS -->
-  <section id="works">
-    <div class="works-header reveal">
-      <div>
-        <div class="section-label">Works</div>
-        <h2 class="section-title">自作ツール・制作物 19件</h2>
-      </div>
-    </div>
-    <div class="works-grid reveal">
-      <div class="work-card">
-        <div class="work-icon">🐦</div>
-        <div class="work-title">X自動投稿</div>
-        <div class="work-desc">x-auto-post</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">🖼️</div>
-        <div class="work-title">AIスライド生成</div>
-        <div class="work-desc">cc-slides</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">🔍</div>
-        <div class="work-title">Web情報収集</div>
-        <div class="work-desc">scraping-agent</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">💼</div>
-        <div class="work-title">案件自動取得</div>
-        <div class="work-desc">job-scout</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">💬</div>
-        <div class="work-title">LINE回答効率化</div>
-        <div class="work-desc">oc-responder</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">🎬</div>
-        <div class="work-title">動画字幕付与</div>
-        <div class="work-desc">cc-video-editor</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">📄</div>
-        <div class="work-title">LP制作自動化</div>
-        <div class="work-desc">cc-lp-v2</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">📋</div>
-        <div class="work-title">業務洗い出し自動化</div>
-        <div class="work-desc">work-lister</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">👥</div>
-        <div class="work-title">LINEグループBot</div>
-        <div class="work-desc">line-group-bot</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">⚙️</div>
-        <div class="work-title">システム開発支援</div>
-        <div class="work-desc">cc-project-builder</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">🤖</div>
-        <div class="work-title">FAQ自動生成＋UTAGE連携</div>
-        <div class="work-desc">oc-responder-v2</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">📈</div>
-        <div class="work-title">SEO記事自動生成</div>
-        <div class="work-desc">seo-article-agent</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">📑</div>
-        <div class="work-title">URLをPDF変換</div>
-        <div class="work-desc">doc-to-pdf</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">✍️</div>
-        <div class="work-title">AI記事リライト</div>
-        <div class="work-desc">article-humanizer</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">📊</div>
-        <div class="work-title">PPTXスライド自動生成</div>
-        <div class="work-desc">pptx-agent</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">🎭</div>
-        <div class="work-title">AIアバター動画生成</div>
-        <div class="work-desc">avatar-video-maker</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">🧠</div>
-        <div class="work-title">CEOエージェント</div>
-        <div class="work-desc">ceo-agent</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">🎥</div>
-        <div class="work-title">動画制作パイプライン</div>
-        <div class="work-desc">video-pipeline</div>
-      </div>
-      <div class="work-card">
-        <div class="work-icon">📝</div>
-        <div class="work-title">X投稿動画ワンコマンド作成</div>
-        <div class="work-desc">make-post</div>
-      </div>
-    </div>
-  </section>
 
   <!-- SNS LINKS -->
   <section id="x-timeline" style="background:#fff; padding: 4rem 4rem;">
