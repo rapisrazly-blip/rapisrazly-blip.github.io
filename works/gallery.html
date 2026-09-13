@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ギャラリー（黒歴史） | RAPIS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#0a0a0a; --paper:#fff; --line:#e8e8e8; --muted:#777; --display:'Syne','Hiragino Kaku Gothic ProN',sans-serif; --mono:'JetBrains Mono',monospace; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',sans-serif; }
+    .bar { display:flex; justify-content:space-between; align-items:center; width:min(100% - 48px, 1640px); margin:0 auto; padding:26px 0; border-bottom:1px solid var(--line); }
+    .brand { color:var(--ink); font-family:var(--display); font-size:1rem; font-weight:900; letter-spacing:.15em; text-decoration:none; }
+    .back { color:var(--ink); font-size:.88rem; text-underline-offset:4px; }
+    main { width:min(100% - 48px, 1640px); margin:0 auto; padding:74px 0 100px; }
+    .label { margin:0 0 16px; color:#888; font:500 .7rem var(--mono); letter-spacing:.22em; }
+    h1 { max-width:540px; margin:0; font-family:var(--display); font-size:clamp(2.6rem,6vw,5.2rem); line-height:1.04; letter-spacing:-.06em; }
+    .intro { margin:18px 0 0; color:#555; font-size:1rem; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:32px; margin-top:64px; }
+    .card { display:flex; flex-direction:column; overflow:hidden; border:1px solid var(--line); border-radius:14px; background:#fff; }
+    .thumb { position:relative; display:flex; align-items:center; justify-content:center; height:180px; overflow:hidden; flex-shrink:0; }
+    .thumb::before { content:''; position:absolute; top:-40px; right:-40px; width:140px; height:140px; background:radial-gradient(circle,rgba(249,115,22,.2) 0%,transparent 70%); }
+    .thumb-label { position:absolute; top:16px; left:16px; color:rgba(255,255,255,.45); font:400 .63rem var(--mono); letter-spacing:.13em; }
+    .icon { position:relative; z-index:1; font-size:3rem; }
+    .body { display:flex; flex:1; flex-direction:column; padding:24px; }
+    .type { margin-bottom:8px; color:#888; font:400 .68rem var(--mono); letter-spacing:.13em; }
+    h2 { margin:0 0 10px; font-size:1.05rem; line-height:1.35; }
+    .desc { flex:1; margin:0 0 20px; color:var(--muted); font-size:.9rem; line-height:1.8; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; }
+    .btn { display:inline-block; padding:8px 17px; border-radius:8px; color:#fff; background:var(--ink); font:800 .72rem var(--display); letter-spacing:.08em; text-decoration:none; }
+    .btn.secondary { border:1px solid #ddd; color:var(--ink); background:#fff; }
+    .note { display:inline-block; padding:8px 17px; border:1px solid #ddd; border-radius:8px; color:#999; font:800 .72rem var(--display); letter-spacing:.08em; }
+    .video { width:100%; height:180px; display:block; object-fit:cover; background:#000; }
+    footer { width:min(100% - 48px,1640px); margin:0 auto; padding:0 0 30px; color:#888; font:400 .7rem var(--mono); letter-spacing:.08em; }
+    @media (max-width:900px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:600px) { .bar,main,footer { width:min(100% - 32px,1640px); } .bar { padding:18px 0; } main { padding:48px 0 70px; } .grid { grid-template-columns:1fr; margin-top:42px; gap:22px; } }
+  </style>
+</head>
+<body>
+  <header class="bar"><a class="brand" href="../index.html">RAPIS</a><a class="back" href="../index.html#portfolio">ポートフォリオへ戻る</a></header>
+  <main>
+    <p class="label">GALLERY</p>
+    <h1>ギャラリー<br>（黒歴史）</h1>
+    <p class="intro">試作・練習・過去の制作物。完成形だけではない、手を動かしてきた記録です。</p>
+    <section class="grid" aria-label="制作物一覧">
+      <article class="card"><div class="thumb" style="background:linear-gradient(135deg,#0a0a0a,#2a2a2a)"><span class="thumb-label">HTML / 5ページサイト</span><span class="icon">🌐</span></div><div class="body"><p class="type">Webサイト</p><h2>5ページ構成<br>ホームページ</h2><p class="desc">HOME / ABOUT / SERVICES / WORKS / CONTACTで構成した、料金表・お問い合わせ・FAQ付きのサイト制作サンプルです。</p><div class="actions"><a class="btn" href="../5page/index.html" target="_blank" rel="noopener">プレビュー</a></div></div></article>
+      <article class="card"><div class="thumb" style="background:linear-gradient(135deg,#1a1a2e,#0f3460)"><span class="thumb-label">HTML / LP</span><span class="icon">📄</span></div><div class="body"><p class="type">LPページ</p><h2>業務自動化サービスを題材にした<br>LP制作サンプル</h2><p class="desc">想定した読み手と目的に合わせ、構成・コピー・HTMLを組み立てたランディングページです。</p><div class="actions"><a class="btn" href="lp_cc-lp-v2.html" target="_blank" rel="noopener">プレビュー</a><a class="btn secondary" href="lp_cc-lp-v2.html" download>DL</a></div></div></article>
+      <article class="card"><div class="thumb" style="background:linear-gradient(135deg,#1c1c1c,#3a3a3a)"><span class="thumb-label">HTML / LP</span><span class="icon">🏠</span></div><div class="body"><p class="type">LPページ</p><h2>空き家売却<br>価格査定LP</h2><p class="desc">空き家・実家じまいの相談を想定し、入力フォームまで含めて制作したLPサンプルです。</p><div class="actions"><a class="btn" href="lp_satei.html" target="_blank" rel="noopener">プレビュー</a><a class="btn secondary" href="lp_satei.html" download>DL</a></div></div></article>
+      <article class="card"><div class="thumb" style="background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#f97316)"><span class="thumb-label">HTML / バナー</span><span class="icon">🎨</span></div><div class="body"><p class="type">SNSバナー</p><h2>SNSバナー<br>スクエア・ストーリー</h2><p class="desc">スクエア（1:1）とストーリー（9:16）の2パターン。HTML/CSSで制作したSNS用バナー素材。</p><div class="actions"><a class="btn" href="banner_square.html" target="_blank" rel="noopener">スクエア</a><a class="btn secondary" href="banner_story.html" target="_blank" rel="noopener">ストーリー</a></div></div></article>
+      <article class="card"><video class="video" controls><source src="cafe_chibi_animation.mp4" type="video/mp4"></video><div class="body"><p class="type">AI動画生成</p><h2>カフェちびキャラ × Claude Code 動画</h2><p class="desc">AIで生成したちびキャラとカフェ背景を使った、スライド生成を題材にしたストーリー動画です。</p><div class="actions"><a class="btn" href="cafe_chibi_animation.mp4" download>DL</a></div></div></article>
+      <article class="card"><div class="thumb" style="background:linear-gradient(135deg,#0f2027,#2c5364)"><span class="thumb-label">HTML / LP</span><span class="icon">💆</span></div><div class="body"><p class="type">HTML LP</p><h2>プライベートストレッチサロン LP</h2><p class="desc">AIアバター動画を複数箇所に埋め込んだ縦長LP。カウントダウンとレスポンシブ表示も実装しています。</p><div class="actions"><a class="btn" href="lp-stretch/index.html" target="_blank" rel="noopener">プレビュー</a></div></div></article>
+      <article class="card"><div class="thumb" style="background:linear-gradient(135deg,#0d1117,#1a1f35)"><span class="thumb-label">SLIDES / AI自動化</span><span class="icon">🤖</span></div><div class="body"><p class="type">サービス紹介</p><h2>自作ツールと制作フロー<br>サービス紹介スライド</h2><p class="desc">X投稿、LP制作、動画生成、業務整理など、試作してきたツールと制作フローをまとめた紹介資料です。</p><div class="actions"><a class="btn" href="../coconala_service.html" target="_blank" rel="noopener">スライドを見る</a></div></div></article>
+      <article class="card"><div class="thumb" style="background:#0f0f0f"><span class="thumb-label" style="color:#c9a84c">LOGO / AI生成</span><span class="icon" style="font-family:serif;font-size:2rem;color:#c9a84c;letter-spacing:.18em">CLUB DiA</span></div><div class="body"><p class="type">ロゴデザイン</p><h2>CLUB DiA<br>ロゴ提案ギャラリー</h2><p class="desc">飲食店向けロゴの30案。ピクチャー・抽象・エンブレムの3パターンで、ダイアモンドと蜂をモチーフにしました。</p><div class="actions"><a class="btn" href="../club-dia/gallery.html" target="_blank" rel="noopener">ギャラリーを見る</a></div></div></article>
+      <article class="card"><div class="thumb" style="padding:0;background:#f9f6f0"><img src="../pet-card/shiba-card-retry-1.png" alt="ペット名刺デザイン" style="width:100%;height:180px;object-fit:contain"></div><div class="body"><p class="type">名刺デザイン / AI生成</p><h2>Pet's Best Friend<br>名刺デザインギャラリー</h2><p class="desc">AIで生成したペット名刺デザイン30パターン。10スタイル×3バリエーションをまとめています。</p><div class="actions"><a class="btn" href="../pet-card/gallery.html" target="_blank" rel="noopener">ギャラリーを見る</a></div></div></article>
+      <article class="card"><div class="thumb" style="background:linear-gradient(135deg,#1a3a6b,#60a5fa)"><span class="thumb-label">HTML / LP</span><span class="icon">📋</span></div><div class="body"><p class="type">LPページ</p><h2>J-CAT ES診断<br>ランディングページ</h2><p class="desc">就活生向けESの偏差値診断サービスを題材に、スコアカードと3ステップ診断フローを実装したLPです。</p><div class="actions"><a class="btn" href="lp_jcat.html" target="_blank" rel="noopener">プレビュー</a><a class="btn secondary" href="lp_jcat.html" download>DL</a></div></div></article>
+      <article class="card"><video class="video" controls><source src="food_diet_video.mp4" type="video/mp4"></video><div class="body"><p class="type">YouTube動画</p><h2>AIナレーション動画</h2><p class="desc">スライド生成、音声合成、動画編集を組み合わせて制作した動画です。</p><div class="actions"><a class="btn" href="food_diet_video.mp4" download>DL</a></div></div></article>
+      <article class="card"><div class="thumb" style="background:linear-gradient(135deg,#0a1a0a,#1a3d1a)"><span class="thumb-label" style="color:#4ade80">SAAS / リサーチ</span><span class="icon">📦</span></div><div class="body"><p class="type">Webアプリ</p><h2>せどり番長<br>逆輸出せどりリサーチツール</h2><p class="desc">仕入れ価格と売値を比較し、利益額と分析スコアを表示するリサーチツールです。</p><div class="actions"><a class="btn" href="https://resell-radar-v4o6.vercel.app/" target="_blank" rel="noopener">サービスを見る</a></div></div></article>
+      <article class="card"><div class="thumb" style="background:#000"><span class="thumb-label">PERSONAL AI</span><span class="icon" style="font-family:serif;font-size:3rem;color:#fff">アル</span></div><div class="body"><p class="type">個人プロジェクト</p><h2>アル<br>自分専用の伴走AI</h2><p class="desc">複数端末で会話と記録をつなぐために作った、個人利用のプロジェクトです。</p><div class="actions"><span class="note">非公開</span></div></div></article>
+    </section>
+  </main>
+  <footer>RAPIS / GALLERY</footer>
+</body>
+</html>
