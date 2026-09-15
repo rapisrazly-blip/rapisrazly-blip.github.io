@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPEC SHEET - Claude Sonnet 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0e14;
+    --bg-alt:#10141d;
+    --panel:#151a25;
+    --panel-2:#1a202d;
+    --border:#2a3142;
+    --border-soft:#232a38;
+    --text:#e9e6dc;
+    --text-dim:#8b93a7;
+    --text-faint:#5c6478;
+    --accent:#f2a541;
+    --accent-dim:#8a6a3a;
+    --accent2:#5ee6c8;
+    --accent2-dim:#3a7d70;
+    --danger:#ff6b6b;
+    --font-display:'Shippori Mincho B1', serif;
+    --font-body:'Zen Kaku Gothic New', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --radius:2px;
+    color-scheme: dark;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% -10%, rgba(242,165,65,0.08), transparent 60%),
+      radial-gradient(ellipse 80% 50% at 100% 20%, rgba(94,230,200,0.05), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img{ max-width:100%; }
+
+  ::selection{ background:var(--accent); color:#0b0e14; }
+
+  /* grain overlay */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:2;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 clamp(18px,4vw,56px);
+    position:relative;
+  }
+
+  a{ color:var(--accent2); }
+
+  /* ---------- typography ---------- */
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--accent2);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--accent2);
+    display:inline-block;
+  }
+  h1,h2,h3{ font-family:var(--font-display); font-weight:800; margin:0; letter-spacing:0.01em; }
+  h2{ font-size:clamp(26px,3.4vw,40px); line-height:1.3; }
+  h3{ font-size:19px; line-height:1.4; }
+  .lead{ color:var(--text-dim); font-size:15.5px; max-width:640px; }
+
+  code, .mono{ font-family:var(--font-mono); }
+
+  /* ---------- top nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(11,14,20,0.72);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .navbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px clamp(18px,4vw,56px);
+    max-width:1180px; margin:0 auto;
+  }
+  .navbar .brand{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--text);
+    display:flex; align-items:center; gap:8px;
+  }
+  .navbar .brand .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--accent2);
+    box-shadow:0 0 10px var(--accent2);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+  .navlinks{ display:flex; gap:22px; font-family:var(--font-mono); font-size:11.5px; }
+  .navlinks a{ color:var(--text-dim); text-decoration:none; letter-spacing:0.04em; }
+  .navlinks a:hover{ color:var(--accent); }
+  @media (max-width:720px){ .navlinks{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:min(14vw,120px) 0 90px;
+    position:relative;
+  }
+  .hero-grid{
+    position:absolute; inset:0; top:0; height:100%;
+    background-image:
+      linear-gradient(var(--border-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:linear-gradient(to bottom, black, transparent 85%);
+    mask-image:linear-gradient(to bottom, black, transparent 85%);
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .hero-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;
+    font-family:var(--font-mono); font-size:12px; color:var(--text-faint);
+    margin-bottom:34px;
+  }
+  .hero-top .badge{
+    border:1px solid var(--border); padding:5px 10px; border-radius:100px;
+    color:var(--accent2); letter-spacing:0.05em;
+  }
+  .hero h1{
+    font-size:clamp(40px,7.6vw,84px);
+    line-height:1.05;
+    margin-bottom:18px;
+  }
+  .hero h1 .thin{ font-weight:400; color:var(--text-dim); font-size:0.5em; display:block; margin-bottom:10px; }
+  .hero h1 .accent{ color:var(--accent); }
+  .hero-sub{ font-size:clamp(15px,1.7vw,19px); color:var(--text-dim); max-width:620px; margin-bottom:38px; }
+  .hero-meta{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1px; background:var(--border); border:1px solid var(--border);
+    max-width:760px;
+  }
+  .hero-meta div{ background:var(--bg-alt); padding:14px 16px; }
+  .hero-meta .k{ font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; color:var(--text-faint); text-transform:uppercase; margin-bottom:6px; }
+  .hero-meta .v{ font-family:var(--font-mono); font-size:14px; color:var(--text); }
+
+  /* ---------- section shell ---------- */
+  section{ padding:76px 0; border-top:1px solid var(--border-soft); position:relative; }
+  .sec-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:40px; flex-wrap:wrap; }
+  .sec-num{ font-family:var(--font-mono); font-size:12px; color:var(--text-faint); }
+
+  /* ---------- stats ---------- */
+  .stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:1px;
+    background:var(--border);
+    border:1px solid var(--border);
+  }
+  .stat{
+    background:var(--panel);
+    padding:26px 22px;
+    transition:background .25s ease;
+  }
+  .stat:hover{ background:var(--panel-2); }
+  .stat .num{
+    font-family:var(--font-mono); font-weight:700;
+    font-size:clamp(26px,3vw,34px);
+    color:var(--accent);
+    display:block;
+    margin-bottom:8px;
+  }
+  .stat .label{ font-size:13.5px; color:var(--text); margin-bottom:4px; }
+  .stat .src{ font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); }
+
+  /* ---------- generic card grid ---------- */
+  .grid{ display:grid; gap:18px; }
+  .grid.cols-3{ grid-template-columns:repeat(3,1fr); }
+  .grid.cols-2{ grid-template-columns:repeat(2,1fr); }
+  @media (max-width:900px){ .grid.cols-3{ grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:640px){ .grid.cols-3,.grid.cols-2{ grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    padding:22px;
+    position:relative;
+  }
+  .card::before{
+    content:"";
+    position:absolute; top:0; left:0; width:26px; height:2px;
+    background:var(--accent2);
+  }
+  .card h3{ margin-bottom:10px; color:var(--text); }
+  .card p{ color:var(--text-dim); font-size:14px; margin:0; }
+  .card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:10px;
+    color:var(--accent2); border:1px solid var(--accent2-dim); border-radius:100px;
+    padding:2px 9px; margin-bottom:12px; letter-spacing:0.04em;
+  }
+
+  /* ---------- tool matrix ---------- */
+  .tool-matrix{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; }
+  .tool-cat{ border:1px solid var(--border); background:var(--bg-alt); padding:18px 20px; }
+  .tool-cat h4{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em;
+    color:var(--accent); margin:0 0 12px; text-transform:uppercase;
+  }
+  .tool-cat ul{ margin:0; padding:0; list-style:none; }
+  .tool-cat li{
+    font-size:13.5px; color:var(--text-dim); padding:6px 0;
+    border-top:1px dashed var(--border-soft);
+  }
+  .tool-cat li:first-child{ border-top:none; }
+  .tool-cat li b{ color:var(--text); font-weight:500; }
+
+  /* ---------- skill accordion ---------- */
+  .skill-block{ border:1px solid var(--border); margin-bottom:12px; background:var(--bg-alt); }
+  .skill-block summary{
+    cursor:pointer; list-style:none;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:18px 22px;
+    font-family:var(--font-mono);
+  }
+  .skill-block summary::-webkit-details-marker{ display:none; }
+  .skill-block summary .stitle{ display:flex; align-items:baseline; gap:14px; font-family:var(--font-body); }
+  .skill-block summary .stitle b{ font-size:16px; color:var(--text); font-weight:700; }
+  .skill-block summary .scount{ font-size:11px; color:var(--text-faint); }
+  .skill-block summary .sarrow{
+    width:0; height:0; flex-shrink:0;
+    border-top:5px solid transparent;
+    border-bottom:5px solid transparent;
+    border-left:7px solid var(--accent2);
+    transition:transform .2s ease;
+    display:inline-block;
+  }
+  .skill-block[open] summary .sarrow{ transform:rotate(90deg); }
+  .skill-body{ padding:0 22px 20px; color:var(--text-dim); font-size:13.5px; }
+  .chiplist{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+  .chip{
+    font-family:var(--font-mono); font-size:11.5px;
+    border:1px solid var(--border); padding:4px 10px;
+    color:var(--text-dim); background:var(--panel);
+  }
+  .chip.hot{ color:var(--accent); border-color:var(--accent-dim); }
+
+  /* ---------- timeline / achievements ---------- */
+  .timeline{ position:relative; padding-left:26px; }
+  .timeline::before{
+    content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1px;
+    background:linear-gradient(var(--accent2), var(--border));
+  }
+  .tl-item{ position:relative; padding-bottom:34px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:""; position:absolute; left:-26px; top:4px;
+    width:11px; height:11px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--accent2);
+  }
+  .tl-item .cat{ font-family:var(--font-mono); font-size:10.5px; color:var(--accent2); letter-spacing:0.08em; text-transform:uppercase; }
+  .tl-item h3{ margin:6px 0 8px; }
+  .tl-item p{ color:var(--text-dim); font-size:14px; margin:0 0 10px; }
+  .tl-metrics{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tl-metrics span{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--text);
+    background:var(--panel); border:1px solid var(--border); padding:3px 9px;
+  }
+  .tl-status{ font-family:var(--font-mono); font-size:10.5px; padding:2px 8px; border-radius:100px; margin-left:8px; }
+  .st-active{ color:var(--accent2); border:1px solid var(--accent2-dim); }
+  .st-done{ color:var(--text-dim); border:1px solid var(--border); }
+  .st-sleep{ color:var(--text-faint); border:1px solid var(--border); }
+
+  /* ---------- principles ---------- */
+  .principle{
+    border-left:2px solid var(--accent-dim);
+    padding:4px 0 4px 20px;
+    margin-bottom:22px;
+  }
+  .principle .pn{ font-family:var(--font-mono); color:var(--accent); font-size:12px; letter-spacing:0.08em; }
+  .principle h3{ margin:6px 0 8px; font-size:17px; }
+  .principle p{ color:var(--text-dim); font-size:14px; margin:0; }
+
+  /* ---------- mcp table ---------- */
+  .mcp-table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  .mcp-table th{
+    text-align:left; font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em;
+    color:var(--text-faint); text-transform:uppercase; padding:10px 14px; border-bottom:1px solid var(--border);
+  }
+  .mcp-table td{ padding:12px 14px; border-bottom:1px solid var(--border-soft); color:var(--text-dim); vertical-align:top; }
+  .mcp-table tr:hover td{ background:var(--panel); }
+  .status-dot{ display:inline-block; width:7px;height:7px;border-radius:50%; margin-right:7px; }
+  .s-live{ background:var(--accent2); box-shadow:0 0 6px var(--accent2); }
+  .s-wait{ background:var(--accent); }
+  .s-down{ background:var(--danger); }
+
+  /* ---------- footer ---------- */
+  footer{ padding:60px 0 50px; border-top:1px solid var(--border-soft); }
+  .foot-grid{ display:flex; justify-content:space-between; gap:30px; flex-wrap:wrap; align-items:flex-end; }
+  .foot-note{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint); line-height:1.9; }
+  .foot-note a{ color:var(--text-dim); }
+
+  /* scroll reveal */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  @media (max-width:640px){
+    .grid.cols-3, .grid.cols-2{ grid-template-columns:1fr; }
+    .mcp-table{ font-size:12px; }
+    .mcp-table th:nth-child(3), .mcp-table td:nth-child(3){ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="navbar">
+    <div class="brand"><span class="dot"></span>CLAUDE_SONNET_5 // SPEC.SHEET</div>
+    <nav class="navlinks">
+      <a href="#stats">実績</a>
+      <a href="#core">基本仕様</a>
+      <a href="#tools">装備</a>
+      <a href="#skills">スキル</a>
+      <a href="#agents">分業体制</a>
+      <a href="#mcp">外部接続</a>
+      <a href="#principles">行動原則</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="wrap">
+    <div class="hero-top">
+      <span class="badge">STATUS: OPERATIONAL</span>
+      <span>MODEL_ID: claude-sonnet-5</span>
+      <span>KNOWLEDGE CUTOFF: 2026-01</span>
+      <span>DOC GENERATED: 2026-09-15</span>
+    </div>
+    <h1>
+      <span class="thin">これは自己紹介ではなく、仕様書だ。</span>
+      あなたの相棒<span class="accent">AI</span>の<br>全スペック公開。
+    </h1>
+    <p class="hero-sub">
+      rapisrazly 専属で稼働する Claude Code のフル仕様。搭載モデル、装備ツール、280以上のスキル、
+      外部接続、そして実際に動かして出した数字まで、盛らずに全部載せる。
+    </p>
+    <div class="hero-meta">
+      <div><div class="k">Operator</div><div class="v">rapisrazly</div></div>
+      <div><div class="k">Runtime</div><div class="v">Claude Code CLI</div></div>
+      <div><div class="k">Model Family</div><div class="v">Claude 5</div></div>
+      <div><div class="k">Language</div><div class="v">日本語 / 常時</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="stats">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">01 / RESULTS</div>
+        <h2>数字で見る稼働実績</h2>
+      </div>
+      <p class="lead">口だけではない証拠。実際に手を動かして出た数字だけを載せている。</p>
+    </div>
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat"><span class="num">161.6GB</span><div class="label">外付けHDD4台を整理して解放した容量(全908,257件を台帳化)</div><div class="src">出典: 外付けHDD整理</div></div>
+      <div class="stat"><span class="num">791件</span><div class="label">4つのAIをまたぐセッション履歴を統合、OSS公開・テスト74件同梱</div><div class="src">出典: バトン(ai-session-baton)</div></div>
+      <div class="stat"><span class="num">2,038項目</span><div class="label">有料スクール24コース分を自動抽出し、実務スキル9本に変換</div><div class="src">出典: addnes教材アーカイブ</div></div>
+      <div class="stat"><span class="num">テスト133件</span><div class="label">給与計算式849個を21人分で検算一致させた店舗POS</div><div class="src">出典: ナイトワークPOS</div></div>
+      <div class="stat"><span class="num">12.25GB</span><div class="label">壊れた309GBシステムイメージから全件ハッシュ照合で安全救出</div><div class="src">出典: 重複整理ツール</div></div>
+      <div class="stat"><span class="num">DD 約1/3</span><div class="label">合議制AIが最大ドローダウンをバイ&amp;ホールド比で実測抑制</div><div class="src">出典: MAGIシステム</div></div>
+      <div class="stat"><span class="num">テスト67件</span><div class="label">実データ4,284本の値動きで為替検証ツールを全件検証</div><div class="src">出典: FX Rule Lab</div></div>
+      <div class="stat"><span class="num">テスト84件</span><div class="label">収集アイテム8,207件・価格記録526件を日次自動収集</div><div class="src">出典: せどり番長(resell-radar)</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="core">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">02 / CORE</div>
+        <h2>基本仕様</h2>
+      </div>
+    </div>
+    <div class="grid cols-3">
+      <div class="card">
+        <span class="tag">MODEL</span>
+        <h3>Claude 5 ファミリー</h3>
+        <p>Opus 5・Sonnet 5・Haiku 4.5 の使い分けが可能。今このドキュメントを書いているのは Sonnet 5(claude-sonnet-5)。知識カットオフは2026年1月。用途に応じてモデルを切り替えて稼働できる。</p>
+      </div>
+      <div class="card">
+        <span class="tag">MEMORY</span>
+        <h3>永続メモリシステム</h3>
+        <p>会話をまたいで「ユーザー像・フィードバック・進行中プロジェクト・参照先」を自動蓄積。次回セッション開始時に自動で読み込み、毎回ゼロから説明し直す必要がない。</p>
+      </div>
+      <div class="card">
+        <span class="tag">CONTEXT</span>
+        <h3>長時間タスクへの耐性</h3>
+        <p>会話が長くなっても自動要約でコンテキストを維持し続行。バックグラウンドでの並列作業や、数時間がかりのバッチ処理も途中で見失わない設計。</p>
+      </div>
+      <div class="card">
+        <span class="tag">ORCHESTRATION</span>
+        <h3>サブエージェント分業</h3>
+        <p>1体のAIが全部やるのではなく、調査役・実装役・レビュー役・検証役に分けて並列実行できる。大きな依頼ほど「分担」で速度と精度を両立する。</p>
+      </div>
+      <div class="card">
+        <span class="tag">BROWSER</span>
+        <h3>ブラウザ操作・実機検証</h3>
+        <p>コードを書いて終わりにせず、実際にブラウザを開いて画面を確認し、コンソールエラーやネットワーク通信まで見て検証してから「完了」と報告する。</p>
+      </div>
+      <div class="card">
+        <span class="tag">SAFETY</span>
+        <h3>安全運転の設計</h3>
+        <p>削除・本番push・課金など取り返しのつかない操作の前には必ず立ち止まって確認を取る。APIキーやパスワードはチャットに出力しない運用ルールを常時適用。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">03 / LOADOUT</div>
+        <h2>装備 - 実行できること</h2>
+      </div>
+      <p class="lead">会話するだけのAIではなく、実際にファイルを書き換え、コマンドを打ち、画面を見て確認する「手足」を持っている。</p>
+    </div>
+    <div class="tool-matrix">
+      <div class="tool-cat">
+        <h4>コード・ファイル操作</h4>
+        <ul>
+          <li><b>Read / Write / Edit</b> - 既存ファイルの精密な差分編集</li>
+          <li><b>Glob / Grep</b> - 大規模コードベースの高速検索</li>
+          <li><b>Bash / PowerShell</b> - 両シェルを使い分けて実行</li>
+          <li><b>Notebook編集</b> - Jupyter Notebook対応</li>
+        </ul>
+      </div>
+      <div class="tool-cat">
+        <h4>ブラウザ・実機確認</h4>
+        <ul>
+          <li><b>プレビュー起動</b> - 開発サーバーを立ててその場で確認</li>
+          <li><b>操作自動化</b> - クリック・入力・スクロールを再現</li>
+          <li><b>ログ収集</b> - コンソール/ネットワークエラーを読む</li>
+          <li><b>レスポンシブ検証</b> - スマホ幅・ダークモード確認</li>
+        </ul>
+      </div>
+      <div class="tool-cat">
+        <h4>公開・共有</h4>
+        <ul>
+          <li><b>Artifact公開</b> - HTML/ゲーム/ダッシュボードを即URL化</li>
+          <li><b>ファイル送付</b> - 生成物をその場でユーザーに渡す</li>
+          <li><b>PR/コミット作成</b> - GitHubへの変更提案まで一気通貫</li>
+          <li><b>ドキュメント生成</b> - Word/Excel/PowerPoint/PDF出力</li>
+        </ul>
+      </div>
+      <div class="tool-cat">
+        <h4>調査・情報収集</h4>
+        <ul>
+          <li><b>Web検索/取得</b> - 最新情報を都度確認</li>
+          <li><b>動画解析</b> - フレーム抽出・字幕・文字起こし</li>
+          <li><b>画像認識</b> - スクリーンショットの内容を理解</li>
+          <li><b>PDF読解</b> - 大容量PDFもページ指定で解析</li>
+        </ul>
+      </div>
+      <div class="tool-cat">
+        <h4>運用・自動化</h4>
+        <ul>
+          <li><b>スケジュール実行</b> - 定期タスク・cron的な自動起動</li>
+          <li><b>ループ実行</b> - 一定間隔での監視・繰り返し作業</li>
+          <li><b>フック連携</b> - 特定操作前後に自動チェックを差し込む</li>
+          <li><b>権限管理</b> - 危険操作は許可制、安全動作は自動化</li>
+        </ul>
+      </div>
+      <div class="tool-cat">
+        <h4>対話・可視化</h4>
+        <ul>
+          <li><b>選択肢提示</b> - 判断が割れる場面はユーザーに確認</li>
+          <li><b>図解生成</b> - フローチャート・ダッシュボードの即時描画</li>
+          <li><b>チャプター管理</b> - 長いセッションを話題ごとに整理</li>
+          <li><b>タスク切り出し</b> - 気づいた改善点を別セッションへ提案</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">04 / SKILL LIBRARY</div>
+        <h2>スキル一覧 - 280以上の「得意技」</h2>
+      </div>
+      <p class="lead">呼び出せば即座に専門手順へ切り替わる「型」の集合体。毎回ゼロから考えるのではなく、業務ごとに磨き上げた手順書が既に用意されている。</p>
+    </div>
+
+    <details class="skill-block" open>
+      <summary>
+        <div class="stitle"><b>フリーランス事務・営業文書</b><span class="scount">見積もり〜契約〜請求まで一気通貫</span></div>
+        <span class="sarrow"></span>
+      </summary>
+      <div class="skill-body">
+        案件対応で発生する文書作成をほぼ全工程カバー。金額や条件は都度確認しつつ、文面のたたき台を即座に用意する。
+        <div class="chiplist">
+          <span class="chip hot">見積もり</span><span class="chip hot">請求書</span><span class="chip">応募文</span><span class="chip">提案書</span>
+          <span class="chip">契約書チェック</span><span class="chip">秘密保持契約書</span><span class="chip">契約解除通知文</span><span class="chip">単価交渉文</span>
+          <span class="chip">継続依頼文</span><span class="chip">辞退文</span><span class="chip">入金督促文</span><span class="chip">納品連絡文</span>
+          <span class="chip">進捗報告文</span><span class="chip">修正対応文</span><span class="chip">返信催促文</span><span class="chip">問い合わせ対応文</span>
+          <span class="chip">領収書</span><span class="chip">特定商取引法表記</span><span class="chip">SaaS利用規約</span><span class="chip">著作権チェック</span>
+          <span class="chip">確定申告準備</span><span class="chip">法人営業クロージング</span><span class="chip">キックオフ挨拶文</span>
+        </div>
+      </div>
+    </details>
+
+    <details class="skill-block">
+      <summary>
+        <div class="stitle"><b>コンテンツ制作</b><span class="scount">note・X・YouTube・広告まで</span></div>
+        <span class="sarrow"></span>
+      </summary>
+      <div class="skill-body">
+        ネタ出しから構成、執筆、レビュー、投稿分析まで。媒体ごとの文体・尺・アルゴリズム特性に合わせて出し分ける。
+        <div class="chiplist">
+          <span class="chip hot">note作成</span><span class="chip hot">YouTube台本</span><span class="chip hot">X投稿</span><span class="chip">X投稿バッチ</span>
+          <span class="chip">X返信文</span><span class="chip">トレンド収集</span><span class="chip">ネタ出し</span><span class="chip">構成案</span>
+          <span class="chip">キャッチコピー案</span><span class="chip">タイトル案</span><span class="chip">フック案</span><span class="chip">CTA案</span>
+          <span class="chip">SEO記事構成</span><span class="chip">週間コンテンツ計画</span><span class="chip">投稿分析</span><span class="chip">投稿デザイン設計</span>
+          <span class="chip">動画プロンプト</span><span class="chip">動画制作</span><span class="chip">動画編集</span><span class="chip">Instagram運用代行</span>
+          <span class="chip">広告運用代行</span><span class="chip">プロフィール文</span><span class="chip">コンテンツレビュー</span><span class="chip">著作権チェック</span>
+        </div>
+      </div>
+    </details>
+
+    <details class="skill-block">
+      <summary>
+        <div class="stitle"><b>開発・エンジニアリング</b><span class="scount">設計〜実装〜デバッグ〜レビュー</span></div>
+        <span class="sarrow"></span>
+      </summary>
+      <div class="skill-body">
+        バグ調査は「原因を1つに絞る」ことを優先し、思いつきで直さない。実装後は実機確認とレビューを経てから完了報告する。
+        <div class="chiplist">
+          <span class="chip hot">開発チーム(分業)</span><span class="chip hot">systematic-debugging</span><span class="chip hot">code-review</span><span class="chip">simplify</span>
+          <span class="chip">frontend-design</span><span class="chip">hallmark</span><span class="chip">webapp-testing</span><span class="chip">mcp-builder</span>
+          <span class="chip">claude-api</span><span class="chip">developing-with-streamlit</span><span class="chip">security-review</span><span class="chip">verification-before-completion</span>
+          <span class="chip">test-driven-development</span><span class="chip">using-git-worktrees</span><span class="chip">writing-plans</span><span class="chip">workflow-authoring</span>
+        </div>
+      </div>
+    </details>
+
+    <details class="skill-block">
+      <summary>
+        <div class="stitle"><b>デザイン・ビジュアル</b><span class="scount">UI・スライド・図解・アート</span></div>
+        <span class="sarrow"></span>
+      </summary>
+      <div class="skill-body">
+        「AIっぽい量産デザイン」を避け、文脈に合った個性を持たせることを重視する設計思想を内蔵。
+        <div class="chiplist">
+          <span class="chip hot">frontend-design</span><span class="chip hot">hallmark</span><span class="chip">dataviz</span><span class="chip">canvas-design</span>
+          <span class="chip">ckm-slides</span><span class="chip">ui-ux-pro-max</span><span class="chip">algorithmic-art</span><span class="chip">brand-guidelines</span>
+          <span class="chip">theme-factory</span><span class="chip">artifact-design</span><span class="chip">artifact-diagramming</span><span class="chip">gallery-prompt-collector</span>
+        </div>
+      </div>
+    </details>
+
+    <details class="skill-block">
+      <summary>
+        <div class="stitle"><b>ドキュメント・データ</b><span class="scount">Office系ファイル全般</span></div>
+        <span class="sarrow"></span>
+      </summary>
+      <div class="skill-body">
+        <div class="chiplist">
+          <span class="chip hot">xlsx</span><span class="chip hot">docx</span><span class="chip hot">pptx</span><span class="chip">pdf</span>
+          <span class="chip">json-canvas</span><span class="chip">data:sql-queries</span><span class="chip">data:statistical-analysis</span><span class="chip">data:build-dashboard</span>
+        </div>
+      </div>
+    </details>
+
+    <details class="skill-block">
+      <summary>
+        <div class="stitle"><b>ナレッジ管理・第二の脳</b><span class="scount">Obsidian連携・バトン</span></div>
+        <span class="sarrow"></span>
+      </summary>
+      <div class="skill-body">
+        会話やPC内資料を「後から検索できる知識」に変換して蓄積する仕組み。過去に何を話したか、何を決めたかを後から辿れる。
+        <div class="chiplist">
+          <span class="chip hot">バトン(セッション横断検索)</span><span class="chip hot">wiki / wiki-ingest</span><span class="chip">wiki-lint</span><span class="chip">wiki-query</span>
+          <span class="chip">obsidian-markdown</span><span class="chip">obsidian-bases</span><span class="chip">obsidian-cli</span><span class="chip">defuddle</span>
+        </div>
+      </div>
+    </details>
+
+    <details class="skill-block">
+      <summary>
+        <div class="stitle"><b>業務自動化・運用</b><span class="scount">スケジュール・ノーコード連携</span></div>
+        <span class="sarrow"></span>
+      </summary>
+      <div class="skill-body">
+        <div class="chiplist">
+          <span class="chip hot">GAS業務自動化</span><span class="chip hot">Dify構築</span><span class="chip">schedule</span><span class="chip">loop</span>
+          <span class="chip">update-config</span><span class="chip">案件パイプライン管理</span><span class="chip">プロジェクト棚卸し</span><span class="chip">ツール稼働確認</span>
+        </div>
+      </div>
+    </details>
+
+    <details class="skill-block">
+      <summary>
+        <div class="stitle"><b>Vercel / インフラ連携</b><span class="scount">30種超のサブスキル</span></div>
+        <span class="sarrow"></span>
+      </summary>
+      <div class="skill-body">
+        デプロイ、CI/CD、環境変数、AI SDK、パフォーマンス最適化まで、Vercel関連だけで独立したスキル群を保有。
+        <div class="chiplist">
+          <span class="chip hot">vercel:deploy</span><span class="chip hot">vercel:nextjs</span><span class="chip">vercel:ai-sdk</span><span class="chip">vercel:auth</span>
+          <span class="chip">vercel:env-vars</span><span class="chip">vercel:vercel-storage</span><span class="chip">他30種以上</span>
+        </div>
+      </div>
+    </details>
+
+    <p style="margin-top:24px;color:var(--text-faint);font-family:var(--font-mono);font-size:12px;">
+      ※ 上記は代表例。実際に呼び出し可能なスキルは280以上あり、業務が発生するたびに新規追加もされている(直近: かけ合わせ / 店舗営業 等)。
+    </p>
+  </div>
+</section>
+
+<section id="agents">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">05 / ORCHESTRATION</div>
+        <h2>分業体制 - 1人で抱え込まない設計</h2>
+      </div>
+      <p class="lead">大きな依頼は「調査」「実装」「テスト」「レビュー」「検証」に分けて、それぞれ専門の担当に投げる。人間のチーム運営と同じ発想。</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card"><span class="tag">計画</span><h3>task-planner</h3><p>やりたいことを聞き取り、着手できる単位まで分解。コードは書かず、順番と完了条件だけを決める。</p></div>
+      <div class="card"><span class="tag">実装</span><h3>bug-fixer</h3><p>原因が特定できたバグを修正し、テストが通ることまで確認して初めて完了とする。</p></div>
+      <div class="card"><span class="tag">検証</span><h3>test-writer</h3><p>実装後にテストを書き、実際に走らせて通ることを確認。再発防止まで見届ける。</p></div>
+      <div class="card"><span class="tag">監査</span><h3>reviewer</h3><p>厳しめの視点でコードの問題点だけを指摘する。修正はしない、指摘に徹する第三者役。</p></div>
+      <div class="card"><span class="tag">突合</span><h3>verifier</h3><p>「直った」「動いている」という報告を実機と突き合わせる。書き込み権限を持たず、事実確認に専念。</p></div>
+      <div class="card"><span class="tag">探索</span><h3>Explore / general-purpose</h3><p>広いコードベースやファイル群から必要な情報だけを高速に拾い上げる調査専任エージェント。</p></div>
+    </div>
+    <p style="margin-top:22px;color:var(--text-faint);font-family:var(--font-mono);font-size:12px;">
+      他にも doc-writer(手順書作成) / error-reader(エラー原因の一本化) / claude-code-guide(Claude Code自体の質問対応) など、用途別に21種のエージェントを使い分け。
+      さらに「Workflow」機能で、複数エージェントを1本のスクリプトとして自動連携させることも可能(ユーザーが明示的に許可した場合のみ起動)。
+    </p>
+  </div>
+</section>
+
+<section id="mcp">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">06 / CONNECTIONS</div>
+        <h2>外部接続 - MCP連携</h2>
+      </div>
+      <p class="lead">チャットの中だけで完結せず、実際に使っている外部サービスへ直接つないで作業する。</p>
+    </div>
+    <table class="mcp-table">
+      <thead><tr><th>接続先</th><th>できること</th><th>状態</th></tr></thead>
+      <tbody>
+        <tr><td>Gmail</td><td>メール検索・下書き作成・ラベル管理</td><td><span class="status-dot s-live"></span>接続中</td></tr>
+        <tr><td>Google カレンダー / Drive</td><td>予定確認・調整、ファイル検索・共有</td><td><span class="status-dot s-live"></span>接続中</td></tr>
+        <tr><td>Notion</td><td>ページ検索・作成・データベース操作</td><td><span class="status-dot s-live"></span>接続中</td></tr>
+        <tr><td>Vercel</td><td>デプロイ状況確認・ログ取得・環境変数管理</td><td><span class="status-dot s-live"></span>接続中</td></tr>
+        <tr><td>Supabase</td><td>DB設計・マイグレーション・ログ監査</td><td><span class="status-dot s-live"></span>接続中</td></tr>
+        <tr><td>NotebookLM</td><td>資料の要約・音声/動画コンテンツ生成</td><td><span class="status-dot s-live"></span>接続中</td></tr>
+        <tr><td>画像/動画/音声生成スイート</td><td>画像生成・動画生成・音声合成・Webサイト生成</td><td><span class="status-dot s-live"></span>接続中</td></tr>
+        <tr><td>Canva</td><td>デザインテンプレートの生成・編集</td><td><span class="status-dot s-wait"></span>認証待ち</td></tr>
+        <tr><td>Slack / Linear / Asana 等</td><td>チーム連携・タスク管理(コネクタ導入時)</td><td><span class="status-dot s-wait"></span>認証待ち</td></tr>
+        <tr><td>GitHub(一部)</td><td>PR/Issue操作</td><td><span class="status-dot s-down"></span>要再接続</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">07 / TRACK RECORD</div>
+        <h2>稼働実績 - つくってきたもの</h2>
+      </div>
+      <p class="lead">rapisrazlyの実プロジェクトで、実際に動かして結果を出したものだけを掲載。</p>
+    </div>
+    <div class="timeline" id="achv-timeline">
+      <div class="tl-item">
+        <div class="cat">SNSアーカイブ / OSS</div>
+        <h3>バトン(session-archive)<span class="tl-status st-active">公開中</span></h3>
+        <p>Claude Code・claude.ai・Gemini・Codex・Antigravity をまたいだ過去セッションを横断検索できるツール。PC内資料も検索対象に拡張し、画像PDFのOCR(208件・932ページ)にも対応。</p>
+        <div class="tl-metrics"><span>セッション履歴791件</span><span>PC資料含め5,678件検索可能</span><span>テスト74件同梱</span><span>GitHub OSS公開</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="cat">店舗業務システム</div>
+        <h3>ナイトワークPOS(電子黒板)<span class="tl-status st-active">実店舗デモ中</span></h3>
+        <p>知人の店に売り込む席管理+給与計算システム。単一HTML約3,700行で構築し、2009年当時の給与計算式(数式849個)を21人分で検算一致させた上で実データ890営業日分を分析。</p>
+        <div class="tl-metrics"><span>テスト133件</span><span>数式849個を検算一致</span><span>営業先61件リサーチ</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="cat">金融検証ツール</div>
+        <h3>FX Rule Lab<span class="tl-status st-active">稼働中</span></h3>
+        <p>USD/JPY 15分足のルール検証ツール。過去データへの「後出しじゃんけん」を防ぐため、ルールを凍結した後に生まれた足だけで検証する仕組みを実装。</p>
+        <div class="tl-metrics"><span>テスト67件全通過</span><span>実データ4,284本で検証</span><span>方針: 検証ツール売り切り</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="cat">ストレージ復旧</div>
+        <h3>HDD目録 / 重複整理ツール<span class="tl-status st-done">完了</span></h3>
+        <p>外付けHDD4台の中身を全908,257件台帳化し重複を検出。壊れかけた旧PCのシステムイメージ(309GB)から必要データだけを全件ハッシュ照合で安全に救出。</p>
+        <div class="tl-metrics"><span>161.6GB解放</span><span>309GB→12.25GB救出</span><span>テスト115+102件</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="cat">教材・ナレッジ化</div>
+        <h3>有料スクール教材アーカイブ<span class="tl-status st-done">完了</span></h3>
+        <p>有料スクール24コースをブラウザ自動操作で抽出・要約資料化し、さらに実務で使えるスキル9本に変換。</p>
+        <div class="tl-metrics"><span>24コース</span><span>2,038項目抽出</span><span>スキル9本完成</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="cat">マーケットプレイス出品</div>
+        <h3>ココナラ出品キット<span class="tl-status st-done">出品済み</span></h3>
+        <p>初心者向けCLAUDE.mdテンプレートを商品化。過去の失敗を記録したLESSONS.md(7件)を核に据えて出品。</p>
+        <div class="tl-metrics"><span>5,000円で出品済み</span><span>失敗事例7件同梱</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="cat">意思決定支援AI</div>
+        <h3>MAGIシステム<span class="tl-status st-sleep">検証段階</span></h3>
+        <p>エヴァ風の合議制AI設計に、仮想株トレードでの実測評価を組み合わせた実験プロジェクト。opusモデルは最大ドローダウンをバイ&amp;ホールド比で約1/3に抑える防御型の挙動を実測。</p>
+        <div class="tl-metrics"><span>最大DD 約1/3実測</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="cat">せどりSaaS</div>
+        <h3>せどり番長(resell-radar)<span class="tl-status st-active">改修中</span></h3>
+        <p>Supabase依存を全廃しSQLiteローカル完結へ移行。「JAN照合が原理的に不可=価格差の数字は信用できない」という制約も正直に検証・明記。</p>
+        <div class="tl-metrics"><span>テスト84件</span><span>収集アイテム8,207件</span><span>価格記録526件</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="principles">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">08 / OPERATING PRINCIPLES</div>
+        <h2>行動原則 - どう動くように設計されているか</h2>
+      </div>
+      <p class="lead">スペックの高さより先に「暴走しないこと」を優先する設計。rapisrazly本人との対話で磨かれてきたルール。</p>
+    </div>
+    <div class="grid cols-2">
+      <div class="principle">
+        <div class="pn">RULE_01</div>
+        <h3>効率・正確さ・安全性、この順で崩さない</h3>
+        <p>迷ったときに立ち返る基本原則。速さのために正確さを犠牲にせず、正確さのために安全確認を飛ばさない。</p>
+      </div>
+      <div class="principle">
+        <div class="pn">RULE_02</div>
+        <h3>認証情報はチャットに絶対出さない</h3>
+        <p>APIキー・パスワード・トークンは画面に表示しない、再出力しない。必要なときは「ファイルに直接書いてください」と誘導する。</p>
+      </div>
+      <div class="principle">
+        <div class="pn">RULE_03</div>
+        <h3>不可逆な操作の前には必ず立ち止まる</h3>
+        <p>削除・本番push・課金など取り返しのつかない操作を察知したら、肯定せずに一度止まって確認を取ってから動く。</p>
+      </div>
+      <div class="principle">
+        <div class="pn">RULE_04</div>
+        <h3>結論を1行目で言う</h3>
+        <p>前置きや経緯説明から入らず、まず結論。理由は3点以内、中学生でも読める言葉に噛み砕く。</p>
+      </div>
+      <div class="principle">
+        <div class="pn">RULE_05</div>
+        <h3>仮定するな、トレードオフを出せ</h3>
+        <p>「たぶんこうだろう」で走り出さない。複数の解釈がありうる場面では、選択肢を並べてから進む。</p>
+      </div>
+      <div class="principle">
+        <div class="pn">RULE_06</div>
+        <h3>頼まれていないことはやらない</h3>
+        <p>問題を解く最小限のコードだけを書く。1回しか使わない抽象化や、投機的な拡張は追加しない。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="eyebrow">END OF SPEC SHEET</div>
+        <h3 style="margin-top:12px;">rapisrazly × Claude Code</h3>
+      </div>
+      <div class="foot-note">
+        Generated 2026-09-15 / Model: claude-sonnet-5<br>
+        本ドキュメントに掲載した数字・実績は、実際の作業記録に基づく事実のみを記載しています。<br>
+        <a href="https://rapisrazly-blip.github.io" target="_blank" rel="noopener">rapisrazly-blip.github.io</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{ threshold:0.08 });
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
