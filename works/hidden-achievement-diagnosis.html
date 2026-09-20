@@ -28,9 +28,9 @@
       line-height: 1.8;
       letter-spacing: .025em;
     }
-    button, textarea { font: inherit; }
+    button, textarea, input, select { font: inherit; }
     button { cursor: pointer; }
-    button:focus-visible, textarea:focus-visible { outline: 3px solid #28698c; outline-offset: 3px; }
+    button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px solid #28698c; outline-offset: 3px; }
 
     .page {
       width: min(100% - 32px, 1040px);
@@ -90,7 +90,7 @@
     .section-title b { color: var(--amber); font-size: 13px; letter-spacing: .08em; }
     .progress {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(8, 1fr);
       gap: 5px;
       margin-bottom: 38px;
     }
@@ -119,6 +119,7 @@
       line-height: 1.85;
     }
     textarea::placeholder { color: #8a989f; }
+    textarea.compact { min-height: 112px; }
     .field-note { display: flex; justify-content: space-between; margin-top: 7px; color: var(--muted); font-size: 12px; }
     .form-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
     .button {
@@ -135,7 +136,28 @@
     .button.ghost { border-color: transparent; color: var(--muted); }
     .button.copy { border-color: var(--amber); color: #805414; }
     .button.copy:hover { background: var(--amber-light); }
+    .button.small { padding: 9px 16px; font-size: 14px; }
     .validation { min-height: 1.8em; margin: 12px 0 0; color: var(--danger); font-size: 14px; }
+
+    .option-list { display: grid; gap: 12px; }
+    .option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 17px 20px;
+      background: rgba(255,255,255,.7);
+      color: var(--ink);
+      font-weight: 400;
+      line-height: 1.75;
+    }
+    .option:hover { border-color: var(--navy); background: var(--white); }
+    .option.selected { border: 2px solid var(--navy); background: var(--white); padding: 16px 19px; }
+    .option b { display: block; color: var(--navy); font-size: 16px; margin-bottom: 4px; }
+    .option span { font-size: 14px; color: #45565f; }
+    .option-extra { margin-top: 16px; }
+    .option-extra.hidden { display: none; }
 
     .result { display: none; max-width: 920px; }
     .result.visible { display: block; }
@@ -146,18 +168,53 @@
     .result-head p { margin: 16px 0 0; color: var(--muted); }
     .result-block { padding: 0 0 34px; margin-bottom: 34px; border-bottom: 1px solid var(--line); }
     .result-block h3 { margin: 0 0 15px; color: var(--navy); font-size: 21px; }
-    .result-block p { margin: 0 0 15px; }
+    .result-block > p { margin: 0 0 15px; }
     .result-block ul { padding-left: 1.3em; margin: 12px 0; }
-    .evidence {
-      margin: 20px 0 0;
-      padding: 17px 20px;
-      border-left: 4px solid var(--amber);
-      background: rgba(255,255,255,.58);
-      color: #41525b;
-      font-size: 14px;
+    .block-lead { color: var(--muted); font-size: 14px; }
+
+    .power-card {
+      border-left: 4px solid var(--navy);
+      background: rgba(255,255,255,.66);
+      padding: 20px 22px;
+      margin-bottom: 16px;
     }
-    .evidence b { display: block; color: var(--navy); margin-bottom: 7px; font-size: 12px; }
-    .strength-copy { padding: 20px; background: var(--navy); color: var(--white); font-size: 17px; line-height: 1.9; }
+    .power-card h4 { margin: 0 0 8px; color: var(--navy); font-size: 18px; }
+    .power-card p { margin: 0; }
+    .power-card .basis { display: block; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); color: #4d5d66; font-size: 13px; }
+    .power-card .basis b { color: var(--navy); font-size: 12px; }
+
+    .recheck { margin-top: 22px; padding: 18px 20px; background: rgba(255,255,255,.55); border: 1px dashed var(--line); }
+    .recheck p { margin: 0 0 12px; font-size: 14px; color: #45565f; }
+    .recheck .form-actions { margin-top: 0; }
+
+    .reframe { display: grid; gap: 0; border: 1px solid var(--line); background: rgba(255,255,255,.66); }
+    .reframe > div { padding: 20px 22px; }
+    .reframe .before { border-bottom: 3px solid var(--amber); }
+    .reframe .label { display: block; color: var(--amber); font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+    .reframe .before .label { color: var(--muted); }
+    .reframe .before p { margin: 0; color: #4d5d66; }
+    .reframe .after p { margin: 0; font-size: 17px; line-height: 1.85; }
+    .reframe .after .tail { margin-top: 12px; font-size: 14px; color: #45565f; }
+
+    .switch-box { padding: 20px 22px; background: var(--amber-light); border-left: 4px solid var(--amber); }
+    .switch-box p { margin: 0 0 10px; }
+    .switch-box p:last-child { margin: 0; }
+    .switch-box b { color: #7a4f13; }
+
+    .copy-card { border: 1px solid var(--line); background: rgba(255,255,255,.7); margin-bottom: 18px; }
+    .copy-card .head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; padding: 13px 18px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.5); }
+    .copy-card .head b { color: var(--navy); font-size: 15px; }
+    .copy-card .body { padding: 20px 22px; line-height: 1.95; white-space: pre-wrap; }
+
+    .action-grid { display: grid; gap: 12px; margin-bottom: 20px; }
+    .time-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; font-size: 14px; }
+    .time-row select { border: 1px solid var(--line); border-radius: var(--radius); padding: 9px 12px; background: var(--white); color: var(--ink); }
+    .pledge { padding: 22px; background: var(--navy); color: var(--white); font-size: 18px; line-height: 1.85; }
+    .pledge.hidden { display: none; }
+    .draft-box { margin-top: 16px; }
+    .draft-box.hidden { display: none; }
+    .draft-box p { margin: 0 0 8px; font-size: 14px; color: var(--muted); }
+
     .prompt-block { background: #e5ebed; padding: 30px; border-top: 5px solid var(--amber); }
     .prompt-block h3 { margin: 0 0 8px; color: var(--navy); font-size: 22px; }
     .prompt-block p { margin: 0 0 18px; font-size: 14px; color: #43535c; }
@@ -182,6 +239,9 @@
       .form-actions { flex-direction: column-reverse; }
       .progress { gap: 3px; }
       .prompt-block { margin-left: -12px; margin-right: -12px; padding: 23px 18px; }
+      .copy-card .head { flex-direction: column; align-items: flex-start; }
+      .copy-card .head .button { width: 100%; }
+      .time-row select { width: 100%; }
     }
     @media (prefers-reduced-motion: no-preference) { .question-shell, .result-head { animation: appear .28s ease both; } @keyframes appear { from { opacity: .2; transform: translateY(5px); } to { opacity: 1; transform: none; } } }
   </style>
@@ -191,8 +251,8 @@
     <header class="masthead"><span>見えなかった仕事を言葉にする診断</span><span>試作版 / 回答はこのブラウザ内だけで扱います</span></header>
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <h1 id="page-title">あなたが止めずに<br>回してきたものを、<br>言葉にする。</h1>
-        <p>これは性格を判定する診断ではありません。現場であなたが見て、整え、先回りしてきた行動を振り返り、実績として説明できる言葉へ変えるための記録です。</p>
+        <h1 id="page-title">資格がなくても、<br>通ってきた現場は<br>消えない。</h1>
+        <p>これは性格を判定する診断ではありません。あなたが実際に繰り返してきたこと、耐えてきたこと、当たり前にやってきたことを聞き出して、人に説明できる言葉へ翻訳するための8つの質問です。</p>
       </div>
       <div class="stamp">答えにない実績は作りません。<br>根拠のない褒め言葉も使いません。</div>
     </section>
@@ -205,154 +265,785 @@
           <p class="question-number" id="questionNumber"></p>
           <h2 id="questionText"></h2>
           <p class="question-help" id="questionHelp"></p>
-          <label for="answer" class="sr-only" style="position:absolute;clip:rect(0,0,0,0)">回答</label>
-          <textarea id="answer" maxlength="800" aria-describedby="fieldNote"></textarea>
-          <div class="field-note" id="fieldNote"><span>短くてもかまいません。思い出せる事実を書いてください。</span><span id="charCount">0 / 800</span></div>
+
+          <div id="textPane">
+            <label for="answer" class="sr-only" style="position:absolute;clip:rect(0,0,0,0)">回答</label>
+            <textarea id="answer" maxlength="800" aria-describedby="fieldNote"></textarea>
+            <div class="field-note" id="fieldNote"><span>短くてもかまいません。思い出せる事実を書いてください。</span><span id="charCount">0 / 800</span></div>
+          </div>
+
+          <div id="choicePane" hidden>
+            <div class="option-list" id="optionList"></div>
+            <div class="option-extra hidden" id="optionExtra">
+              <label for="extraText" class="sr-only" style="position:absolute;clip:rect(0,0,0,0)">自分の言葉で書く</label>
+              <textarea id="extraText" class="compact" maxlength="300" placeholder="では、実際はどうでしたか。自分の言葉で書いてください。"></textarea>
+            </div>
+          </div>
+
           <p class="validation" id="validation"></p>
           <div class="form-actions">
             <button type="button" class="button ghost" id="backButton">前の質問へ</button>
             <button type="button" class="button primary" id="nextButton">次の質問へ</button>
           </div>
         </div>
-        <p class="note">この試作は外部AIやサーバーへ回答を送信しません。結果は、入力内容をもとにした固定の言語化ロジックです。</p>
+        <p class="note">この試作は外部AIやサーバーへ回答を送信しません。結果は、入力内容をもとにこのブラウザの中だけで組み立てています。</p>
       </div>
 
       <section class="result" id="result" aria-labelledby="resultTitle">
         <div class="result-head">
           <p class="eyebrow">あなたの診断結果</p>
-          <h2 id="resultTitle">あなたが現場を止めずに回してきた仕事</h2>
-          <p>これは診断名ではありません。あなた自身の回答から、繰り返してきた行動を言葉にしたものです。</p>
+          <h2 id="resultTitle">あなたが資格の代わりに持っているもの</h2>
+          <p>これは診断名ではありません。あなた自身が書いた事実から、そこまで言えることだけを書いています。</p>
         </div>
+
         <article class="result-block">
-          <h3>あなたの隠れた実績</h3>
-          <p id="achievement"></p>
-          <div class="evidence"><b>この結果の根拠として拾った回答</b><span id="achievementEvidence"></span></div>
+          <h3>1. 資格の代わりにあなたが持つ3つの現場力</h3>
+          <p class="block-lead" id="powerLead"></p>
+          <div id="powerList"></div>
+          <div class="recheck">
+            <p id="recheckText">この見立て、ズレていますか。押すと角度を変えて組み直します。</p>
+            <div class="form-actions">
+              <button type="button" class="button small" id="flipSource">力の出どころが違う</button>
+              <button type="button" class="button small" id="flipStyle">やり方の説明が違う</button>
+              <button type="button" class="button small" id="flipField">現場の描き方が違う</button>
+            </div>
+          </div>
         </article>
+
         <article class="result-block">
-          <h3>その行動が支えていた価値</h3>
-          <p id="valueIntro"></p>
-          <ul id="valueList"></ul>
-          <div class="evidence"><b>この結果の根拠として拾った回答</b><span id="valueEvidence"></span></div>
+          <h3>2. 事実の再定義</h3>
+          <p class="block-lead">あなたが引け目として書いたことを、別の角度から言い直します。事実は変えていません。見る向きだけを変えています。</p>
+          <div class="reframe">
+            <div class="before"><span class="label">あなたが書いたこと</span><p id="reframeBefore"></p></div>
+            <div class="after"><span class="label">同じ事実の、別の呼び方</span><p id="reframeAfter"></p><p class="tail" id="reframeTail"></p></div>
+          </div>
         </article>
+
         <article class="result-block">
-          <h3>明日から使える自分の強みの説明文</h3>
-          <p class="strength-copy" id="strengthCopy"></p>
-          <div class="evidence"><b>この結果の根拠として拾った回答</b><span id="strengthEvidence"></span></div>
+          <h3>3. 本気が出る条件と、出ない条件</h3>
+          <p class="block-lead">同じ人でも、環境が合っていないと力は出ません。あなたの回答から読み取れる条件です。</p>
+          <div class="switch-box">
+            <p id="switchOn"></p>
+            <p id="switchOff"></p>
+          </div>
         </article>
+
+        <article class="result-block">
+          <h3>4. そのまま使える自己紹介文</h3>
+          <p class="block-lead">資格欄が空でも書ける文章です。あなたの回答の言葉をそのまま使っています。直して構いません。</p>
+          <div class="copy-card">
+            <div class="head"><b>応募文・提案文の冒頭に使う</b><button type="button" class="button copy small" data-copy="copyApply">この文をコピー</button></div>
+            <div class="body" id="copyApply"></div>
+          </div>
+          <div class="copy-card">
+            <div class="head"><b>プロフィール欄に使う（短い版）</b><button type="button" class="button copy small" data-copy="copyProfile">この文をコピー</button></div>
+            <div class="body" id="copyProfile"></div>
+          </div>
+          <p class="toast" id="toastCopy" role="status"></p>
+        </article>
+
+        <article class="result-block">
+          <h3>5. 明日やる1つ</h3>
+          <p class="block-lead">読んで終わると、明日には元の不安に戻ります。履歴が残る行動を1つだけ選んでください。</p>
+          <div class="action-grid" id="actionList"></div>
+          <div class="time-row">
+            <label for="actionTime">やる時間帯</label>
+            <select id="actionTime">
+              <option value="朝（起きてすぐ）">朝（起きてすぐ）</option>
+              <option value="昼（仕事の合間）">昼（仕事の合間）</option>
+              <option value="夕方" selected>夕方</option>
+              <option value="夜（仕事のあと）">夜（仕事のあと）</option>
+            </select>
+          </div>
+          <p class="pledge hidden" id="pledge"></p>
+          <div class="draft-box hidden" id="draftBox">
+            <p>下書きです。そのまま使っても、直しても構いません。</p>
+            <div class="copy-card">
+              <div class="head"><b>下書き</b><button type="button" class="button copy small" data-copy="draftBody">下書きをコピー</button></div>
+              <div class="body" id="draftBody"></div>
+            </div>
+          </div>
+        </article>
+
         <section class="prompt-block" aria-labelledby="promptTitle">
-          <h3 id="promptTitle">さらに自分の強みを深掘りしたい方へ<br>AI活用プロンプト</h3>
-          <p>ChatGPTやClaudeなどのAIをお使いなら、以下をそのまま送ってください。診断結果を基に、面接や書類で使える表現と、次に掘り下げる質問を作ります。</p>
+          <h3 id="promptTitle">ここから先を、自分のAIに続けさせる</h3>
+          <p>ChatGPTやClaudeなどをお使いなら、以下をそのまま送ってください。あなたの回答そのものが入っているので、この診断の続きから深掘りできます。</p>
           <textarea class="prompt-output" id="promptOutput" readonly aria-label="コピー用プロンプト"></textarea>
           <button type="button" class="button copy" id="copyButton">プロンプトをコピーする</button>
           <p class="toast" id="toast" role="status"></p>
         </section>
+
         <p class="privacy">この試作では、回答内容を保存・送信しません。AI連携用プロンプトを外部AIに送る場合だけ、コピーした内容がそのAIサービスへ送られます。</p>
-        <div class="form-actions"><button type="button" class="button" id="editButton">回答を修正する</button><button type="button" class="button ghost" id="restartButton">最初からやり直す</button></div>
+        <div class="form-actions"><button type="button" class="button" id="editButton">回答を見直す（1問目から・入力は残ります）</button><button type="button" class="button ghost" id="restartButton">全部消して最初からやり直す</button></div>
       </section>
     </section>
   </main>
 
   <script>
-    const questions = [
-      { q: "現場で急なトラブルが起きたとき、最初に確認していたことは何ですか？", h: "人員、優先順位、お客様への連絡、数字、在庫、関係者の様子など。何を先に見ていたかを書いてください。", p: "例：欠員が出たら、まず今日の予約と動ける人を確認していた" },
-      { q: "周囲は後回しにしがちだが、自分が放っておけず整えていたことは何ですか？", h: "引き継ぎ、手順、シフト、数字、報告、空気、人の配置など、つい自分が整えていたものを書いてください。", p: "例：誰が見ても分かるように、口頭の手順をメモにしていた" },
-      { q: "自分が休むと、どの仕事や判断が止まりやすかったですか？", h: "誰が困ったかではなく、何が進まなくなったかを思い出してください。", p: "例：急な変更時に、誰が何を決めるか分からず連絡が止まった" },
-      { q: "部下・後輩・同僚が仕事をしやすくなるために、先回りしていたことは何ですか？", h: "教える順番、相談の場、確認表、役割分担など、実際にしていた工夫を書いてください。", p: "例：忙しい時間に質問が集中しないよう、見本を先に置いていた" },
-      { q: "大きな問題になる前に収まった出来事を一つ書いてください。", h: "そのとき何に気付き、誰へ何を伝え、何を決めたかを書いてください。", p: "例：不満が広がる前に一人ずつ話を聞き、担当を調整した" },
-      { q: "自分は当たり前にやっただけだと思ってきた仕事を一つ書いてください。", h: "それをしなかった場合、現場で何が起きていたと思うかも添えてください。", p: "例：新人の確認に付き合った。いなければ同じミスが続いていたと思う" }
+  (function () {
+    "use strict";
+
+    var byId = function (id) { return document.getElementById(id); };
+
+    /* ========== 語彙辞書：回答から軸へ点を入れる ========== */
+    var LEX = {
+      needed:  /人|客|仲間|後輩|新人|部下|同僚|上司|頼ら|頼まれ|相談|感謝|喜|助け|支え|チーム|店|接客|声をかけ|話を聞/g,
+      control: /自分で|自分が|判断|決め|任さ|任せ|裁量|段取|工夫|改善|効率|管理|仕切|回し|組み立て|考えて/g,
+      endure:  /続け|毎日|同じ|黙々|淡々|我慢|耐え|こなし|繰り返|欠かさ|休まず|辞めな|遅刻|遅れず|何年|年間/g,
+      arrange: /準備|先に|前もって|整え|仕組|手順|メモ|記録|片付|並べ|揃え|確認|見直|予測|気付|気づ|備え|用意/g,
+      rough:   /怒鳴|クレーム|トラブル|理不尽|急|深夜|炎天|寒|暑|重い|危険|汚|酔|揉め|喧嘩|怒ら|無茶|残業|夜中/g,
+      precise: /正確|ミス|ずれ|数字|チェック|検品|品質|丁寧|細か|静か|一人|黙|間違|抜け|漏れ|合わせ/g
+    };
+
+    function countHits(text, rx) {
+      if (!text) { return 0; }
+      rx.lastIndex = 0;
+      var m = text.match(rx);
+      return m ? m.length : 0;
+    }
+
+    /* ========== 質問 ========== */
+    var STEPS = [
+      {
+        id: "daily", type: "text", min: 12,
+        q: "これまで一番長く続いた仕事で、毎日くりかえしていたことは何ですか。",
+        h: "立派なことでなくて構いません。開ける、並べる、数える、声をかける、記録する。体が覚えている動きをそのまま書いてください。",
+        p: "例：開店前に在庫を数えて、足りない分を発注してから売り場を作っていた"
+      },
+      {
+        id: "mirror", type: "mirror",
+        q: "あなたが書いたことから、こう見えました。一番近いものを選んでください。",
+        h: "外れていても構いません。違うと選んでもらえた方が、この先の結果は正確になります。"
+      },
+      {
+        id: "endure", type: "text", min: 10,
+        q: "周りが辞めたり愚痴を言っていた中で、自分はなぜか受け流せたことは何ですか。",
+        h: "みんながキツいと言うのに、自分は平気だったことです。当たり前すぎて強みだと思っていない場所に、いちばん値段が付きます。",
+        p: "例：怒鳴られるのは慣れていた。言っている中身だけ拾えばいいと思っていた"
+      },
+      {
+        id: "code", type: "text", min: 8,
+        q: "仕事の中で、これだけは守りたかった自分の筋は何ですか。",
+        h: "会社に決められたルールではなく、自分で決めていたことです。破ったときに気分が悪くなるもの、と考えると出てきます。",
+        p: "例：頼まれたことは、できないならできないとその日のうちに言う"
+      },
+      {
+        id: "unfair", type: "text", min: 10,
+        q: "一番理不尽だった出来事と、そのときどうやり過ごしましたか。",
+        h: "解決できていなくて構いません。耐えた、受け流した、距離を取った。実際にやったことをそのまま書いてください。",
+        p: "例：炎天下で立ちっぱなしの現場。次の休憩まで何分かを数えて、そこだけ見ていた"
+      },
+      {
+        id: "pain", type: "choice",
+        q: "この2人なら、どちらが自分に近いですか。",
+        h: "どちらが正しいかではありません。しんどさの種類で、直感で選んでください。",
+        options: [
+          { v: "a", t: "Aさんの方が近い", d: "人としてはちゃんとやっている。周りとの関係も悪くない。ただ、成果が出ていないことが苦しい。" },
+          { v: "b", t: "Bさんの方が近い", d: "成果や評価は出ている。ただ、これは自分じゃない、本当はこうじゃない、という感覚が苦しい。" }
+        ]
+      },
+      {
+        id: "flaw", type: "text", min: 6,
+        q: "自分の引け目だと思っていることを、1つ書いてください。",
+        h: "ここが一番大事な質問です。飾らずに書いてください。結果では、その事実を消さずに、別の角度から言い直します。",
+        p: "例：人付き合いを避けてきた／資格が何もない／長く続かない／中身を分かっていない"
+      },
+      {
+        id: "tool", type: "choice",
+        q: "今、どれなら時間を忘れてやれそうですか。",
+        h: "得意かどうかではなく、苦にならないかで選んでください。",
+        options: [
+          { v: "pc",     t: "画面に向かって、手を動かす作業", d: "入力、整理、調べもの、資料づくり、文章を直すなど。" },
+          { v: "hands",  t: "体を使って、物を扱う作業",       d: "運ぶ、作る、並べる、検品する、現場に出るなど。" },
+          { v: "people", t: "人と話して、間に立つ仕事",       d: "聞く、つなぐ、説明する、まとめる、間を取り持つなど。" },
+          { v: "unsure", t: "まだ分からない",                 d: "今は手応えのあるものが無い。ここから探したい。" }
+        ]
+      }
     ];
 
-    let step = 0;
-    const answers = Array(questions.length).fill("");
-    const byId = id => document.getElementById(id);
-    const answer = byId("answer");
+    /* ========== 状態 ========== */
+    var state = {
+      step: 0,
+      text: {},
+      choice: {},
+      mirrorExtra: "",
+      flip: { source: false, style: false, field: false },
+      action: null,
+      mirrorCards: null
+    };
+    STEPS.forEach(function (s) { if (s.type === "text") { state.text[s.id] = ""; } });
 
-    function escapeHtml(text) {
-      return text.replace(/[&<>'\"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[char]));
+    /* ========== 見立て（仮説）カード ========== */
+    var MIRROR_CARDS = [
+      {
+        v: "keep",
+        t: "止めないことを引き受けてきた人",
+        d: "決めたことを、体調や気分に関係なく同じようにやる。誰も見ていなくても抜かない。派手ではないが、これが抜けると現場は止まる。",
+        score: { endure: 4, rough: 1 },
+        key: ["endure"]
+      },
+      {
+        v: "ahead",
+        t: "言われる前に用意していた人",
+        d: "次に何が必要になるかが見えていて、頼まれる前に手前で整えていた。だから自分がいる日は、誰も慌てずに済んでいた。",
+        score: { arrange: 4, control: 1 },
+        key: ["arrange"]
+      },
+      {
+        v: "watch",
+        t: "人の様子を見ながら回していた人",
+        d: "作業そのものより、人がどう動いているか、誰が困っているかを見ていた。手を出す先を、その場で決めていた。",
+        score: { needed: 4, arrange: 1 },
+        key: ["needed"]
+      }
+    ];
+
+    function orderedMirrorCards() {
+      var t = state.text.daily || "";
+      var scored = MIRROR_CARDS.map(function (c) {
+        var n = 0;
+        c.key.forEach(function (k) { n += countHits(t, LEX[k]); });
+        return { card: c, n: n };
+      });
+      scored.sort(function (a, b) { return b.n - a.n; });
+      return scored.map(function (x) { return x.card; });
     }
-    function shortQuote(text) {
-      const trimmed = text.trim().replace(/\s+/g, " ");
-      return `「${escapeHtml(trimmed.length > 110 ? trimmed.slice(0, 110) + "…" : trimmed)}」`;
+
+    /* ========== 集計 ========== */
+    function computeScores() {
+      var s = { needed: 0, control: 0, endure: 0, arrange: 0, rough: 0, precise: 0 };
+      var add = function (key, n) { s[key] += n; };
+
+      var texts = [
+        { t: state.text.daily,  w: 1 },
+        { t: state.text.endure, w: 1 },
+        { t: state.text.code,   w: 1 },
+        { t: state.text.unfair, w: 1 },
+        { t: state.mirrorExtra, w: 1 }
+      ];
+      texts.forEach(function (item) {
+        if (!item.t) { return; }
+        Object.keys(LEX).forEach(function (k) { add(k, countHits(item.t, LEX[k]) * item.w); });
+      });
+
+      // 質問そのものの性質による固定の傾き
+      if (state.text.endure) { add("endure", 2); }
+      if (state.text.unfair) { add("rough", 1); }
+
+      // 見立ての選択
+      var picked = state.choice.mirror;
+      MIRROR_CARDS.forEach(function (c) {
+        if (c.v === picked) {
+          Object.keys(c.score).forEach(function (k) { add(k, c.score[k]); });
+        }
+      });
+
+      // しんどさの種類
+      if (state.choice.pain === "a") { add("needed", 3); }
+      if (state.choice.pain === "b") { add("control", 3); }
+
+      // 手が動く場所
+      if (state.choice.tool === "pc") { add("precise", 3); }
+      if (state.choice.tool === "hands") { add("rough", 2); add("endure", 1); }
+      if (state.choice.tool === "people") { add("needed", 3); }
+
+      return s;
     }
-    function renderQuestion() {
-      byId("questionNumber").textContent = `質問 ${step + 1} / ${questions.length}`;
-      byId("questionText").textContent = questions[step].q;
-      byId("questionHelp").textContent = questions[step].h;
-      answer.value = answers[step];
-      answer.placeholder = questions[step].p;
-      byId("charCount").textContent = `${answer.value.length} / 800`;
+
+    function axes() {
+      var s = computeScores();
+      var a = { source: s.needed >= s.control ? "needed" : "control",
+                style:  s.endure > s.arrange ? "endure" : "arrange",
+                field:  s.rough >= s.precise ? "rough" : "precise",
+                raw: s };
+      if (state.flip.source) { a.source = a.source === "needed" ? "control" : "needed"; }
+      if (state.flip.style)  { a.style  = a.style === "endure" ? "arrange" : "endure"; }
+      if (state.flip.field)  { a.field  = a.field === "rough" ? "precise" : "rough"; }
+      return a;
+    }
+
+    /* ========== 文言 ========== */
+    var POWER = {
+      needed: {
+        h: "人の動きを見て、困る前に手を出す力",
+        p: "あなたは自分の作業だけを見ていません。誰が詰まっているか、どこで止まりそうかを見ながら動いています。これは教えて身につくものではなく、現場で人を見てきた時間でしか作れません。求人票には書かれませんが、人が入れ替わる現場では、これがある人がいるかどうかで定着率が変わります。"
+      },
+      control: {
+        h: "その場で決めて、先に進める力",
+        p: "あなたは誰かの指示を待つのではなく、自分の判断で次を決めて動いてきました。判断には責任がついてきます。それを引き受けてきたということは、決めることに慣れているということです。これは、指示待ちの人を何人集めても代わりになりません。"
+      },
+      endure: {
+        h: "条件が悪くても、同じ質で続ける力",
+        p: "一日だけ全力を出せる人はいます。あなたがやってきたのは、機嫌や体調に左右されずに同じ水準を出し続けることです。周りが辞めていく中で残っていたなら、それは根性ではなく、負荷の受け流し方を身につけていたということです。仕事を任せる側が一番欲しいのはここです。"
+      },
+      arrange: {
+        h: "先を読んで、手前で整えておく力",
+        p: "あなたは起きてから動くのではなく、起きる前に手を打ってきました。だから、あなたがいる日は何も起きなかったように見える。問題が起きなかった日は誰にも評価されませんが、それを作っていたのはあなたです。仕事の言葉で言えば、これは段取りと予防です。"
+      },
+      rough: {
+        h: "荒れた場面でも、やることが分かっている力",
+        p: "条件の悪い現場、怒っている相手、崩れた段取り。多くの人はここで固まります。あなたは固まらずに、次に何をするかが分かっている。これは度胸ではなく経験の蓄積で、静かな環境しか知らない人には作れないものです。"
+      },
+      precise: {
+        h: "抜けやズレを見つけて、止める力",
+        p: "あなたは違和感に気付けます。数字が合わない、いつもと違う、話がずれている。それを見つけて止められる人は多くありません。多くの人は見つけても面倒で流します。あなたが流さなかったことは、結果的に誰かの手戻りを減らしています。"
+      }
+    };
+
+    var SWITCH_ON = {
+      "needed|endure":  "誰かに必要とされていて、かつ自分のペースで続けさせてもらえるとき。あなたは頼られている実感があると、時間を気にせず動けるタイプです。",
+      "needed|arrange": "誰かに必要とされていて、かつ自分で段取りを組ませてもらえるとき。人のために先回りする裁量があると、一気に力が出ます。",
+      "control|endure": "自分の判断で動ける範囲があり、口を出されないとき。任されていると分かった瞬間から、黙って最後までやり切れるタイプです。",
+      "control|arrange": "自分の判断で全体を組み立てられるとき。部分だけを渡されるより、最初から最後まで任された方が力が出ます。"
+    };
+    var SWITCH_OFF = {
+      "needed|endure":  "誰からも反応が返ってこないとき。作業そのものがきついのではなく、やっても誰も困らない・誰も気付かない状態が一番こたえます。",
+      "needed|arrange": "先回りしても無駄になる環境のとき。整えたそばから崩される、提案しても通らない、という状況で気持ちが切れます。",
+      "control|endure": "自分ではどうにもできない条件に置かれ、ただ耐えるしかないとき。天候、待ち時間、他人の都合。ここが一番削られます。",
+      "control|arrange": "決定権が無いまま責任だけ渡されるとき。口は出されるのに任されない、という形が一番力を殺します。"
+    };
+
+    /* ========== 引け目の言い換え ========== */
+    var REFRAMES = [
+      { rx: /人付き合い|人間関係|人と関わ|コミュ|人見知り|話すのが|社交|孤立|一人でいた|友達|友人が少/,
+        after: "不要な摩擦を避けて、目の前の仕事に集中できるということです。",
+        tail: "人と関わらなかった分、あなたは気を遣う相手がいない状態で成果だけを積んできました。これは、人脈で仕事を取ってきた人には作れない身軽さです。今から人と関わるとしても、しがらみゼロの状態から選べます。" },
+      { rx: /資格|学歴|大学|高卒|中卒|免許|証明|肩書/,
+        after: "紙で証明する道を通っていないだけで、現場の運用そのもので証明してきたということです。",
+        tail: "資格は「できるはず」の証明です。あなたが持っているのは「実際にやった」の記録です。証明の形式が違うだけで、後者の方が現場では強い場面があります。必要なのは資格を取ることではなく、やった記録を読める形にすることです。" },
+      { rx: /続かな|長続き|転職|辞め|飽き|続けられ|バラバラ|いろいろやって|職を転々/,
+        after: "合わない環境を見切る判断が早いということです。",
+        tail: "全部が続かなかったわけではありません。一番長く続いた場所があるなら、そこに答えがあります。続いた現場と続かなかった現場の違いが、あなたが働ける条件そのものです。" },
+      { rx: /自信|怖|不安|拒絶|断られ|評価されるのが|人前|緊張|臆病/,
+        after: "根拠のないことを言わないということです。",
+        tail: "自信が無いのではなく、確かめていないことを断言できない人です。これは仕事では信用の土台になります。実際にやった1件が出れば、その慎重さがそのまま説得力に変わります。今足りないのは度胸ではなく、1件目の事実です。" },
+      { rx: /中身|仕組みが|理解して|分かって|AI|ツール|使ってるだけ|頼って|丸投げ/,
+        after: "道具の内部構造に固執せず、目的のために使い倒せるということです。",
+        tail: "車の整備ができなくても運転で仕事はできます。求められているのは、中身の説明ではなく「これを使うと何がどう変わるか」を言えることです。あなたはすでに使える側にいます。" },
+      { rx: /体力|年齢|歳|年|若くな|衰え|持病|体調|無理がき/,
+        after: "力ずくで解決しない段取りを組めるということです。",
+        tail: "無理が効かないと分かっている人は、先に手を打ちます。体力で押し切れる人はそれをしません。長く回り続ける現場を作るのは、前者です。" },
+      { rx: /決められ|流され|優柔|押しが弱|強く言えな|遠慮|断れな/,
+        after: "即断で人を巻き込まないということです。",
+        tail: "決めるのが遅いのではなく、確かめてから決める人です。ここに期限だけ足せば、慎重さは弱点ではなくなります。決めない癖ではなく、決める日を先に置く習慣の問題です。" },
+      { rx: /単純作業|何もして|誰でもでき|大したこと|普通の|平凡|取り柄/,
+        after: "止まると困る仕事を、誰にも気付かれずに支えてきたということです。",
+        tail: "誰でもできる仕事だったなら、抜けても誰も困らないはずです。実際には、抜けたら困る場所にいたはずです。当たり前にできてしまうことを、人は価値だと思えません。それが一番見落とされている資産です。" }
+    ];
+
+    function reframeFor(text) {
+      for (var i = 0; i < REFRAMES.length; i++) {
+        if (REFRAMES[i].rx.test(text)) { return REFRAMES[i]; }
+      }
+      return {
+        after: "それを引け目だと感じていること自体が、自分の仕事を採点する物差しを持っている証拠です。",
+        tail: "物差しを持っていない人は、引け目も感じません。あなたは自分に足りないものが見えている。見えているなら、埋める順番も決められます。分からないのは中身ではなく、順番だけです。"
+      };
+    }
+
+    /* ========== 明日の1つ ========== */
+    var ACTIONS = {
+      pc: [
+        { v: "apply", t: "クラウドソーシングで1件応募する", d: "クラウドワークス・ランサーズ・ココナラのどれかで、今日できそうな案件に1件だけ提案を送る。通らなくてよい。履歴が1件増えればその日は成功。" },
+        { v: "note",  t: "できることを1枚にまとめる",       d: "自分が今できる作業を箇条書きで10個。見せる相手はまだ決めなくてよい。書き出すと、応募のときに毎回悩まなくなる。" },
+        { v: "reach", t: "知り合い1人に1通送る",             d: "昔の職場、知人、前に話した相手。売り込まず「今こういうことをやっている」とだけ伝える1通。" }
+      ],
+      hands: [
+        { v: "note",  t: "できることを1枚にまとめる",       d: "現場でやってきた作業を箇条書きで10個。体が覚えていることほど書き漏らすので、1日の流れを順に思い出しながら書く。" },
+        { v: "apply", t: "求人・案件に1件応募する",           d: "条件が完璧でなくてよい。1件送って、返事の有無を見る。反応があった条件が、あなたの実際の相場。" },
+        { v: "reach", t: "知り合い1人に1通送る",             d: "前の現場でつながっていた相手に、近況を1通。仕事の話は出さなくてよい。" }
+      ],
+      people: [
+        { v: "reach", t: "知り合い1人に1通送る",             d: "評価されにいくのではなく、相手の状況を聞きにいく1通。売り込む文より返事が来る。" },
+        { v: "apply", t: "クラウドソーシングで1件応募する", d: "人と話す仕事（電話対応・問い合わせ対応・運用代行）で1件だけ提案を送る。" },
+        { v: "note",  t: "できることを1枚にまとめる",       d: "人に対してやってきたこと（間を取り持った、教えた、揉め事を収めた）を10個書き出す。" }
+      ],
+      unsure: [
+        { v: "note",  t: "できることを1枚にまとめる",       d: "今日やる1つはこれで十分です。できることが見えていないまま応募しても、書く手が止まります。箇条書きで10個だけ。" },
+        { v: "apply", t: "求人・案件を10件だけ見る",         d: "応募しなくてよい。10件見て、自分が読めた仕事と読めなかった仕事を分けるだけ。それが次の材料になる。" },
+        { v: "reach", t: "知り合い1人に1通送る",             d: "近況を伝えるだけの1通。返事が来るかどうかで、今の自分の立ち位置が分かる。" }
+      ]
+    };
+
+    function toolWords() {
+      var t = state.choice.tool;
+      if (t === "pc") { return "画面に向かう作業（整理や入力、確認まわり）"; }
+      if (t === "hands") { return "現場で手を動かす作業"; }
+      if (t === "people") { return "人の間に入って進める役回り"; }
+      return "これまで現場でやってきた作業";
+    }
+
+    var DRAFTS = {
+      reach: function () {
+        return "お疲れ様です。ご無沙汰しています。\n最近、" + toolWords() + "で仕事を受けられるように動いていて、少しずつ形にしています。\nもし今、手が回っていないことや面倒になっている作業があれば、一度聞かせてもらえませんか。売り込みではなく、現場でどこが詰まるのかを知りたいだけです。";
+      },
+      apply: function (ax) {
+        return "はじめまして。ご依頼を拝見して連絡しました。\n" + (ax.style === "arrange" ? "決まった手順が無い状態から、段取りを組んで回す仕事" : "決まった作業を、同じ質で続ける仕事") + "を長くやってきました。\n今回の件で、まず確認しておきたいのは次の2点です。\n・優先したいのは速さと正確さのどちらですか\n・今、一番手が止まっているのはどの工程ですか\nそこが分かれば、進め方を具体的に出します。";
+      },
+      note: function () {
+        return "今できること（10個）\n1. \n2. \n3. \n4. \n5. \n6. \n7. \n8. \n9. \n10. \n\n書き方のこつ：立派に書こうとしない。「毎日やっていたこと」をそのまま書く。";
+      }
+    };
+
+    /* ========== 表示 ========== */
+    function escapeHtml(t) {
+      return String(t).replace(/[&<>'"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c];
+      });
+    }
+    function clip(t, n) {
+      var s = String(t || "").trim().replace(/\s+/g, " ");
+      return s.length > n ? s.slice(0, n) + "..." : s;
+    }
+    // 文章に差し込む用。最初の一文だけを取り、長すぎるときは読点で切る
+    function firstSentence(t, max) {
+      var s = String(t || "").trim().replace(/\s+/g, " ");
+      var i = s.indexOf("。");
+      if (i > 0) { s = s.slice(0, i); }
+      if (s.length > max) {
+        var cut = s.slice(0, max);
+        var j = cut.lastIndexOf("、");
+        s = j > max * 0.4 ? cut.slice(0, j) : cut;
+      }
+      return s.replace(/[、。\s]+$/, "");
+    }
+
+    function renderStep() {
+      var s = STEPS[state.step];
+      byId("questionNumber").textContent = "質問 " + (state.step + 1) + " / " + STEPS.length;
+      byId("questionText").textContent = s.q;
+      byId("questionHelp").textContent = s.h;
       byId("validation").textContent = "";
-      byId("backButton").style.visibility = step === 0 ? "hidden" : "visible";
-      byId("nextButton").textContent = step === questions.length - 1 ? "結果を読む" : "次の質問へ";
-      byId("progress").innerHTML = questions.map((_, i) => `<span class="${i <= step ? "active" : ""}"></span>`).join("");
-      answer.focus();
+      byId("backButton").style.visibility = state.step === 0 ? "hidden" : "visible";
+      byId("nextButton").textContent = state.step === STEPS.length - 1 ? "結果を読む" : "次の質問へ";
+      byId("progress").innerHTML = STEPS.map(function (_, i) {
+        return '<span class="' + (i <= state.step ? "active" : "") + '"></span>';
+      }).join("");
+
+      var isText = s.type === "text";
+      byId("textPane").hidden = !isText;
+      byId("choicePane").hidden = isText;
+
+      if (isText) {
+        var ta = byId("answer");
+        ta.value = state.text[s.id] || "";
+        ta.placeholder = s.p || "";
+        byId("charCount").textContent = ta.value.length + " / 800";
+        ta.focus();
+      } else {
+        renderOptions(s);
+      }
     }
-    function saveCurrent() { answers[step] = answer.value.trim(); }
-    function requireAnswer() {
-      saveCurrent();
-      if (answers[step].length < 12) {
-        byId("validation").textContent = "12文字以上で、思い出せる場面を少しだけ書いてください。";
+
+    function renderOptions(s) {
+      var list = byId("optionList");
+      var extra = byId("optionExtra");
+      var html = "";
+
+      if (s.type === "mirror") {
+        if (!state.mirrorCards) { state.mirrorCards = orderedMirrorCards(); }
+        state.mirrorCards.forEach(function (c) {
+          var sel = state.choice.mirror === c.v ? " selected" : "";
+          html += '<button type="button" class="option' + sel + '" data-v="' + c.v + '"><b>' + escapeHtml(c.t) + "</b><span>" + escapeHtml(c.d) + "</span></button>";
+        });
+        var selNone = state.choice.mirror === "none" ? " selected" : "";
+        html += '<button type="button" class="option' + selNone + '" data-v="none"><b>どれも違う</b><span>ここに書かれているのは自分ではない。実際はもっと別のことをしていた。</span></button>';
+        extra.classList.toggle("hidden", state.choice.mirror !== "none");
+        byId("extraText").value = state.mirrorExtra;
+      } else {
+        s.options.forEach(function (o) {
+          var sel = state.choice[s.id] === o.v ? " selected" : "";
+          html += '<button type="button" class="option' + sel + '" data-v="' + o.v + '"><b>' + escapeHtml(o.t) + "</b><span>" + escapeHtml(o.d) + "</span></button>";
+        });
+        extra.classList.add("hidden");
+      }
+      list.innerHTML = html;
+
+      Array.prototype.forEach.call(list.querySelectorAll(".option"), function (btn) {
+        btn.addEventListener("click", function () {
+          var v = btn.getAttribute("data-v");
+          state.choice[s.id] = v;
+          byId("validation").textContent = "";
+          renderOptions(s);
+        });
+      });
+    }
+
+    function validateStep() {
+      var s = STEPS[state.step];
+      if (s.type === "text") {
+        state.text[s.id] = byId("answer").value.trim();
+        if (state.text[s.id].length < s.min) {
+          byId("validation").textContent = s.min + "文字以上で、思い出せる場面を少しだけ書いてください。";
+          return false;
+        }
+        if (s.id === "daily") { state.mirrorCards = null; }
+        return true;
+      }
+      if (!state.choice[s.id]) {
+        byId("validation").textContent = "ひとつ選んでください。";
         return false;
+      }
+      if (s.type === "mirror") {
+        state.mirrorExtra = byId("extraText").value.trim();
+        if (state.choice.mirror === "none" && state.mirrorExtra.length < 8) {
+          byId("validation").textContent = "実際はどうだったかを、ひと言だけ書いてください。";
+          return false;
+        }
       }
       return true;
     }
-    function detectSignals() {
-      const all = answers.join(" ");
-      const tests = [
-        ["混乱が広がる前に、状況を見て順番を決める", /トラブル|問題|クレーム|揉め|不満|急な|欠員|事故|ミス|苦情/],
-        ["人が迷わず動けるよう、手順や役割を見える形にする", /手順|マニュアル|メモ|引き継ぎ|確認|順番|整理|仕組み|ルール/],
-        ["人が仕事を覚え、続けられるよう、教え方や相談の場を整える", /新人|後輩|部下|教え|相談|育成|フォロー|話を聞/],
-        ["優先順位と配置を見直し、現場の判断が止まらないようにする", /優先|配置|シフト|判断|担当|予約|人員|段取り/]
-      ];
-      const found = tests.filter(([, rx]) => rx.test(all)).map(([label]) => label);
-      return found.length ? found.slice(0, 2) : ["現場で起きていることを見落とさず、次に必要な動きを考える"];
+
+    function saveCurrentQuiet() {
+      var s = STEPS[state.step];
+      if (s.type === "text") { state.text[s.id] = byId("answer").value.trim(); }
+      if (s.type === "mirror") { state.mirrorExtra = byId("extraText").value.trim(); }
     }
-    function createResult() {
-      const signals = detectSignals();
-      const factA = answers[0];
-      const factB = answers[1];
-      const factC = answers[4];
-      const factD = answers[5];
-      const action = signals[0].replace(/。$/, "");
-      const actionSecond = signals[1] ? signals[1].replace(/。$/, "") : "";
-      byId("achievement").innerHTML = `回答から読む限り、あなたは${action}仕事を繰り返してきた人です。${actionSecond ? `さらに、${actionSecond}動きもしてきたようです。` : ""} これは性格の評価ではなく、あなたが書いた場面に現れている行動です。`;
-      byId("achievementEvidence").innerHTML = `${shortQuote(factA)}<br>${shortQuote(factB)}`;
-      byId("valueIntro").textContent = "あなたの回答にある行動が支えていた価値を、会社の外でも説明できる形にすると、次のようになります。";
-      const values = [
-        "急な変更や問題が起きても、次の判断が止まりにくい状態",
-        "経験の少ない人でも、何を確認すればよいか分かる状態",
-        "小さな違和感が、大きな対立ややり直しに広がる前に話せる状態"
-      ];
-      byId("valueList").innerHTML = values.map(v => `<li>${v}</li>`).join("");
-      byId("valueEvidence").innerHTML = `${shortQuote(factC)}<br>${shortQuote(factD)}`;
-      const strengthSentences = {
-        "混乱が広がる前に、状況を見て順番を決める": "私は、混乱が広がる前に状況を見て、次の順番を決めることを続けてきました。",
-        "人が迷わず動けるよう、手順や役割を見える形にする": "私は、人が迷わず動けるように、手順や役割を見える形にすることを続けてきました。",
-        "人が仕事を覚え、続けられるよう、教え方や相談の場を整える": "私は、人が仕事を覚え、続けられるように、教え方や相談の場を整えてきました。",
-        "優先順位と配置を見直し、現場の判断が止まらないようにする": "私は、優先順位と配置を見直し、現場の判断が止まらないようにしてきました。"
+
+    /* ========== 結果 ========== */
+    function renderResult() {
+      var ax = axes();
+      var keySwitch = ax.source + "|" + ax.style;
+
+      var mirrorLabel = "";
+      var mirrorPhrase = "";
+      if (state.choice.mirror === "none") {
+        mirrorLabel = "本人が書き直した見立て（" + clip(state.mirrorExtra, 40) + "）";
+        mirrorPhrase = "あなたが自分で書き直した内容";
+      } else {
+        MIRROR_CARDS.forEach(function (c) {
+          if (c.v === state.choice.mirror) { mirrorLabel = c.t; mirrorPhrase = "「" + c.t + "」という見立て"; }
+        });
+      }
+
+      byId("powerLead").textContent = "履歴書の資格欄には書けませんが、仕事を渡す側が実際に見ているのはここです。3つとも、あなたが書いた事実から出しています。";
+
+      var order = [ax.source, ax.style, ax.field];
+      var basisText = {
+        needed:  state.text.daily,
+        control: state.text.code,
+        endure:  state.text.endure,
+        arrange: state.text.daily,
+        rough:   state.text.unfair,
+        precise: state.text.code
       };
-      const copy = `${strengthSentences[signals[0]] || "私は、現場で起きていることを見落とさず、次に必要な動きを考えてきました。"} 特に、急な変更や判断が止まりやすい場面で、状況を整理し、次に何を確認し、誰が動くかを見える形にすることを続けてきました。`;
-      byId("strengthCopy").textContent = copy;
-      byId("strengthEvidence").innerHTML = `${shortQuote(answers[2])}<br>${shortQuote(answers[3])}`;
-      byId("promptOutput").value = buildPrompt(byId("achievement").textContent, byId("valueIntro").textContent + "\n" + [...byId("valueList").querySelectorAll("li")].map(x => "・" + x.textContent).join("\n"), copy);
+      var basisLabel = {
+        needed:  "毎日くりかえしていたこと",
+        control: "守っていた自分の筋",
+        endure:  "周りが辞める中で受け流せたこと",
+        arrange: "毎日くりかえしていたこと",
+        rough:   "一番理不尽だった出来事",
+        precise: "守っていた自分の筋"
+      };
+
+      byId("powerList").innerHTML = order.map(function (k, i) {
+        var d = POWER[k];
+        var src = basisText[k] || state.text.daily;
+        return '<div class="power-card"><h4>' + (i + 1) + ". " + escapeHtml(d.h) + "</h4><p>" + escapeHtml(d.p) + '</p><span class="basis"><b>この判断の根拠（' + escapeHtml(basisLabel[k]) + "）</b><br>「" + escapeHtml(clip(src, 120)) + "」</span></div>";
+      }).join("");
+
+      byId("recheckText").textContent = "この結果は、" + mirrorPhrase + "を軸に組んでいます。ズレていたら、押すと角度を変えて組み直します。";
+
+      var rf = reframeFor(state.text.flaw);
+      byId("reframeBefore").textContent = "「" + state.text.flaw + "」";
+      byId("reframeAfter").textContent = rf.after;
+      byId("reframeTail").textContent = rf.tail;
+
+      byId("switchOn").innerHTML = "<b>力が出るとき：</b>" + escapeHtml(SWITCH_ON[keySwitch]);
+      byId("switchOff").innerHTML = "<b>力が出ないとき：</b>" + escapeHtml(SWITCH_OFF[keySwitch]);
+
+      byId("copyApply").textContent = buildApplyCopy(ax);
+      byId("copyProfile").textContent = buildProfileCopy(ax);
+
+      renderActions();
+      byId("promptOutput").value = buildPrompt(ax, mirrorLabel, rf);
     }
-    function buildPrompt(achievement, value, strength) {
-      return `あなたは優秀なキャリアカウンセラー兼インタビュアーです。\n私は先ほど、自己診断ツールで以下の結果を受け取りました。\n\n【私の診断結果】\n・隠れた実績：${achievement}\n・現場目線の価値：${value}\n・強みの説明文：${strength}\n\nこの結果を踏まえ、私の経験を現実の強みとして活かすために以下の3点を作成してください。\n\n1. 現場再現ストーリー（150字程度）：当時の状況や工夫を客観的に評価した短い文章\n2. 自己PRへの変換文（箇条書き2パターン）：書類や提案文でそのまま使える言い回し\n3. 私への深掘り質問（1問のみ）：私の無意識のこだわりをさらに引き出す、具体的で答えやすい質問\n\n※専門用語やお世辞は不要です。事実と行動に基づいて、客観的かつ温かみのある言葉で回答してください。`;
+
+    function buildApplyCopy(ax) {
+      var powerA = POWER[ax.source].h.replace(/力$/, "こと");
+      var powerB = POWER[ax.style].h.replace(/力$/, "こと");
+      var lines = [];
+      lines.push("これまで現場で、" + firstSentence(state.text.daily, 70) + "、という仕事を続けてきました。");
+      lines.push("その中で身についたのは、" + powerA + "と、" + powerB + "です。");
+      lines.push("周りが負担に感じていた場面でも、" + firstSentence(state.text.endure, 60) + "、という形で回してきました。");
+      lines.push("仕事の進め方として守っているのは、" + firstSentence(state.text.code, 50) + "、という一点です。");
+      var tails = {
+        "endure|rough":   "華やかな経歴ではありませんが、条件が悪い日でも同じ質で回すことと、途中で投げないことには自信があります。",
+        "endure|precise": "華やかな経歴ではありませんが、同じ作業を同じ質で続けることと、違いに気付いて手を止めることには自信があります。",
+        "arrange|rough":  "華やかな経歴ではありませんが、崩れた段取りを組み直すことと、その場で次を決めることには自信があります。",
+        "arrange|precise": "華やかな経歴ではありませんが、先に確認して抜けを潰すことと、手順を人が分かる形に残すことには自信があります。"
+      };
+      lines.push(tails[ax.style + "|" + ax.field]);
+      return lines.join("\n");
     }
+
+    function buildProfileCopy(ax) {
+      var powerA = POWER[ax.source].h.replace(/力$/, "こと");
+      var fieldWord = ax.field === "rough" ? "条件が整っていない現場" : "抜けやズレが許されない作業";
+      return firstSentence(state.text.daily, 60) + "、という仕事を長く続けてきました。\n"
+        + fieldWord + "で、" + powerA + "を続けてきたタイプです。\n"
+        + "守っているのは「" + firstSentence(state.text.code, 40) + "」の一点です。";
+    }
+
+    function renderActions() {
+      var tool = state.choice.tool || "unsure";
+      var list = ACTIONS[tool];
+      byId("actionList").innerHTML = list.map(function (a) {
+        var sel = state.action === a.v ? " selected" : "";
+        return '<button type="button" class="option' + sel + '" data-a="' + a.v + '"><b>' + escapeHtml(a.t) + "</b><span>" + escapeHtml(a.d) + "</span></button>";
+      }).join("");
+
+      Array.prototype.forEach.call(byId("actionList").querySelectorAll(".option"), function (btn) {
+        btn.addEventListener("click", function () {
+          state.action = btn.getAttribute("data-a");
+          renderActions();
+          renderPledge();
+        });
+      });
+      renderPledge();
+    }
+
+    function tomorrowLabel() {
+      var d = new Date(Date.now() + 86400000);
+      return (d.getMonth() + 1) + "月" + d.getDate() + "日";
+    }
+
+    function renderPledge() {
+      var pledge = byId("pledge");
+      var draftBox = byId("draftBox");
+      if (!state.action) {
+        pledge.classList.add("hidden");
+        draftBox.classList.add("hidden");
+        return;
+      }
+      var tool = state.choice.tool || "unsure";
+      var found = null;
+      ACTIONS[tool].forEach(function (a) { if (a.v === state.action) { found = a; } });
+      if (!found) { return; }
+
+      pledge.textContent = tomorrowLabel() + "の" + byId("actionTime").value + "に、" + found.t + "。"
+        + "うまくいったかどうかではなく、やった履歴が1つ残れば、その日は前に進んでいます。";
+      pledge.classList.remove("hidden");
+
+      var draft = DRAFTS[state.action];
+      if (draft) {
+        byId("draftBody").textContent = draft(axes());
+        draftBox.classList.remove("hidden");
+      } else {
+        draftBox.classList.add("hidden");
+      }
+    }
+
+    function buildPrompt(ax, mirrorLabel, rf) {
+      var painText = state.choice.pain === "a"
+        ? "まじめにやっているのに成果が出ていないことが苦しい（Aタイプ）"
+        : "成果は出ているが自分らしくない感覚が苦しい（Bタイプ）";
+      var toolText = { pc: "画面に向かって手を動かす作業", hands: "体を使って物を扱う作業", people: "人と話して間に立つ仕事", unsure: "まだ分からない" }[state.choice.tool || "unsure"];
+
+      return [
+        "あなたは、資格や目立つ実績を持たない人の職歴を、人に説明できる言葉へ翻訳する役割です。",
+        "お世辞や励ましは書かないでください。私が書いた事実からそこまで言えることだけを書いてください。",
+        "",
+        "【私が答えたこと】",
+        "1. 一番長く続いた仕事で毎日くりかえしていたこと：" + state.text.daily,
+        "2. 自分への見立て：" + mirrorLabel + (state.mirrorExtra ? "（本人の補足：" + state.mirrorExtra + "）" : ""),
+        "3. 周りが辞める中で受け流せたこと：" + state.text.endure,
+        "4. 守っていた自分の筋：" + state.text.code,
+        "5. 一番理不尽だった出来事とやり過ごし方：" + state.text.unfair,
+        "6. しんどさの種類：" + painText,
+        "7. 自分の引け目だと思っていること：" + state.text.flaw,
+        "8. 苦にならない作業：" + toolText,
+        "",
+        "【診断ツールが出した見立て】",
+        "・力の出どころ：" + POWER[ax.source].h,
+        "・やり方の特徴：" + POWER[ax.style].h,
+        "・向いている現場：" + POWER[ax.field].h,
+        "・引け目の言い換え：" + rf.after,
+        "",
+        "【やってほしいこと】",
+        "1. 上の回答の中から、私自身が価値だと思っていないのに実は価値がある行動を3つ挙げ、なぜ価値なのかを一般論ではなく私の回答の言葉を引用しながら説明してください。",
+        "2. その3つを、求人応募と、クラウドソーシングの提案文で使える表現にそれぞれ書き換えてください。数字を作らないでください。",
+        "3. 私の回答の中で、情報が足りずに判断できなかった点を1つだけ指摘し、それを埋めるための質問を1つしてください。質問は1つだけにしてください。",
+        "",
+        "褒めずに、事実だけで書いてください。"
+      ].join("\n");
+    }
+
     function showResult() {
-      createResult();
+      renderResult();
       byId("formFlow").classList.add("hidden");
       byId("result").classList.add("visible");
       byId("result").scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    answer.addEventListener("input", () => { byId("charCount").textContent = `${answer.value.length} / 800`; });
-    byId("nextButton").addEventListener("click", () => { if (!requireAnswer()) return; if (step === questions.length - 1) showResult(); else { step += 1; renderQuestion(); } });
-    byId("backButton").addEventListener("click", () => { saveCurrent(); if (step > 0) { step -= 1; renderQuestion(); } });
-    byId("editButton").addEventListener("click", () => { byId("result").classList.remove("visible"); byId("formFlow").classList.remove("hidden"); renderQuestion(); });
-    byId("restartButton").addEventListener("click", () => { answers.fill(""); step = 0; byId("result").classList.remove("visible"); byId("formFlow").classList.remove("hidden"); renderQuestion(); });
-    byId("copyButton").addEventListener("click", async () => { const text = byId("promptOutput").value; try { await navigator.clipboard.writeText(text); byId("toast").textContent = "コピーしました。ご自身のAIに貼り付けて使えます。"; } catch { byId("promptOutput").select(); byId("toast").textContent = "コピーできない場合は、枠内を選択してコピーしてください。"; } });
-    renderQuestion();
+    /* ========== イベント ========== */
+    byId("answer").addEventListener("input", function () {
+      byId("charCount").textContent = byId("answer").value.length + " / 800";
+    });
+    byId("optionExtra").addEventListener("input", function () {
+      state.mirrorExtra = byId("extraText").value;
+    });
+    byId("nextButton").addEventListener("click", function () {
+      if (!validateStep()) { return; }
+      if (state.step === STEPS.length - 1) { showResult(); return; }
+      state.step += 1;
+      renderStep();
+    });
+    byId("backButton").addEventListener("click", function () {
+      saveCurrentQuiet();
+      if (state.step > 0) { state.step -= 1; renderStep(); }
+    });
+    byId("editButton").addEventListener("click", function () {
+      // 最後の質問だけ出ると直しにくいので、1問目から見直す（回答は残したまま）
+      state.step = 0;
+      byId("result").classList.remove("visible");
+      byId("formFlow").classList.remove("hidden");
+      renderStep();
+      byId("formFlow").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    byId("restartButton").addEventListener("click", function () {
+      state.step = 0;
+      state.choice = {};
+      state.mirrorExtra = "";
+      state.flip = { source: false, style: false, field: false };
+      state.action = null;
+      state.mirrorCards = null;
+      Object.keys(state.text).forEach(function (k) { state.text[k] = ""; });
+      byId("result").classList.remove("visible");
+      byId("formFlow").classList.remove("hidden");
+      renderStep();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    byId("flipSource").addEventListener("click", function () { state.flip.source = !state.flip.source; renderResult(); });
+    byId("flipStyle").addEventListener("click", function () { state.flip.style = !state.flip.style; renderResult(); });
+    byId("flipField").addEventListener("click", function () { state.flip.field = !state.flip.field; renderResult(); });
+    byId("actionTime").addEventListener("change", renderPledge);
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var text = byId(btn.getAttribute("data-copy")).textContent;
+        copyText(text, byId("toastCopy"));
+      });
+    });
+    byId("copyButton").addEventListener("click", function () {
+      copyText(byId("promptOutput").value, byId("toast"));
+    });
+
+    function copyText(text, toastEl) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          toastEl.textContent = "コピーしました。";
+        }, function () {
+          toastEl.textContent = "コピーできませんでした。文章を選択してコピーしてください。";
+        });
+      } else {
+        toastEl.textContent = "コピーできませんでした。文章を選択してコピーしてください。";
+      }
+    }
+
+    renderStep();
+  })();
   </script>
 </body>
 </html>
