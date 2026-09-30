@@ -11,3 +11,14 @@ index.html.bak
 _newhero.html
 .aidesigner/*
 !.aidesigner/.gitkeep
+
+# 公開リポジトリに載せない内部文書・設計書・ローカル資材（2026-10-01）
+# このリモートは GitHub Pages の公開リポジトリ。ルート直下のものだけを対象にする（先頭の / ）。
+# 注意：ここに書いても、既に追跡済みのファイルは無視されない（git rm --cached が要る）。
+# 注意：既に履歴に入っている過去のコミットも消えない。これらを含むコミットは push しないこと。
+/CLAUDE.md
+/docs/superpowers/
+/scripts/
+/tests/
+# 環境変数・シークレット（.env / .env.local の個別指定に加えて、変種をまとめて塞ぐ）
+.env*
