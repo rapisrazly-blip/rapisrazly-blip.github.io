@@ -22,3 +22,6 @@ _newhero.html
 /tests/
 # 環境変数・シークレット（.env / .env.local の個別指定に加えて、変種をまとめて塞ぐ）
 .env*
+
+# Manus MCP result logs (may contain tokens; never publish)
+.manus/
